@@ -1,0 +1,98 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/143fadd5-1f4c-49a6-bd9c-957af9b2b118')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/143fadd5-1f4c-49a6-bd9c-957af9b2b118')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-09-01-preview",
+            "properties": {
+                "displayName": "Mails containing Watchlist URL",
+                "description": "Zugestellte Mails welche URLS aus der domainwatchlist enthalten",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "let liste = (_GetWatchlist('domainwatchlist') | project SearchKey);\r\n\r\nEmailUrlInfo\r\n| join EmailEvents on NetworkMessageId\r\n| where DeliveryAction == \"Delivered\"\r\n| where Url has_any (liste)\r\n| project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
+                "queryFrequency": "PT1H",
+                "queryPeriod": "PT1H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 1,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [],
+                "techniques": [],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": {
+                    "alertDisplayNameFormat": "Mail contains URL from Watchlist",
+                    "alertDescriptionFormat": "Delivered Mail contains an URL from the \"domainwatchlist\"",
+                    "alertTacticsColumnName": null,
+                    "alertSeverityColumnName": null
+                },
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Mailbox",
+                        "fieldMappings": [
+                            {
+                                "identifier": "MailboxPrimaryAddress",
+                                "columnName": "SenderFromAddress"
+                            },
+                            {
+                                "identifier": "DisplayName",
+                                "columnName": "SenderDisplayName"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "RecipientEmailAddress"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "URL",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Url",
+                                "columnName": "Url"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "MailMessage",
+                        "fieldMappings": [
+                            {
+                                "identifier": "NetworkMessageId",
+                                "columnName": "NetworkMessageId"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
