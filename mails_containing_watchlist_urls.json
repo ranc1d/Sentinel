@@ -15,7 +15,7 @@
             "apiVersion": "2021-09-01-preview",
             "properties": {
                 "displayName": "Mails containing Watchlist URL",
-                "description": "Zugestellte Mails welche URLS aus der domainwatchlist enthalten",
+                "description": "Delivered mails that contain urls marked as malicious via the url-watchlist",
                 "severity": "Medium",
                 "enabled": true,
                 "query": "let liste = (_GetWatchlist('domainwatchlist') | project SearchKey);\r\n\r\nEmailUrlInfo\r\n| join EmailEvents on NetworkMessageId\r\n| where DeliveryAction == \"Delivered\"\r\n| where Url has_any (liste)\r\n| project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
