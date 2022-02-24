@@ -17,7 +17,7 @@
                 "displayName": "Mails containing Watchlist URL",
                 "description": "Delivered mails that contain urls marked as malicious via the url-watchlist",
                 "severity": "Medium",
-                "enabled": true,
+                "enabled": false,
                 "query": "let liste = (_GetWatchlist('domainwatchlist') | project SearchKey);\r\n\r\nEmailUrlInfo\r\n| join EmailEvents on NetworkMessageId\r\n| where DeliveryAction == \"Delivered\"\r\n| where Url has_any (liste)\r\n| project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
                 "queryFrequency": "PT1H",
                 "queryPeriod": "PT1H",
