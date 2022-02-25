@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/0d4d2834-78d5-4e1d-8447-f3f15a1d45be')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0d4d2834-78d5-4e1d-8447-f3f15a1d45be')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-09-01-preview",
+            "properties": {
+                "displayName": "NOBELIUM - Script payload stored in Registry",
+                "description": "This query idenifies when a process execution commandline indicates that a registry value is written to allow for later execution a malicious script\n References: https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "let cmdTokens0 = dynamic(['vbscript','jscript']);\nlet cmdTokens1 = dynamic(['mshtml','RunHTMLApplication']);\nlet cmdTokens2 = dynamic(['Execute','CreateObject','RegRead','window.close']);\nSecurityEvent\n| where TimeGenerated >= ago(14d)\n| where EventID == 4688\n| where CommandLine has @'\\Microsoft\\Windows\\CurrentVersion'\n| where not(CommandLine has_any (@'\\Software\\Microsoft\\Windows\\CurrentVersion\\Run', @'\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce'))\n// If you are receiving false positives, then it may help to make the query more strict by uncommenting one or both of the lines below to refine the matches\n//| where CommandLine has_any (cmdTokens0)\n//| where CommandLine has_all (cmdTokens1)\n| where CommandLine has_all (cmdTokens2)\n| project TimeGenerated, Computer, Account, Process, NewProcessName, CommandLine, ParentProcessName, _ResourceId\n| extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = Account",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "Execution"
+                ],
+                "techniques": [],
+                "alertRuleTemplateName": "00cb180c-08a8-4e55-a276-63fb1442d5b5",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "HostCustomEntity"
+                            }
+                        ]
+                    }
+                ],
+                "templateVersion": "1.0.0"
+            }
+        }
+    ]
+}
