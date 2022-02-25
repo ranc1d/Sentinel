@@ -1,1 +1,1 @@
-Analytic Rules
+Analytics Rules
