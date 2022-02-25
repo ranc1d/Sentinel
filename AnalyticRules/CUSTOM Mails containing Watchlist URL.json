@@ -14,7 +14,7 @@
             "kind": "Scheduled",
             "apiVersion": "2021-09-01-preview",
             "properties": {
-                "displayName": "Mails containing Watchlist URL",
+                "displayName": "Custom - Mails containing Watchlist URL",
                 "description": "Delivered mails that contain urls marked as malicious via the url-watchlist",
                 "severity": "Medium",
                 "enabled": true,
