@@ -8,17 +8,17 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/f9b63285-0492-4845-a9e2-367237bcfe75')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f9b63285-0492-4845-a9e2-367237bcfe75')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/37fc8dda-35b7-4932-bc4a-3b7b2ae67e35')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/37fc8dda-35b7-4932-bc4a-3b7b2ae67e35')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2021-09-01-preview",
             "properties": {
-                "displayName": "User account added to built in domain local or global group",
-                "description": "Identifies when a user account has been added to a privileged built in domain local group or global group \nsuch as the Enterprise Admins, Cert Publishers or DnsAdmins. Be sure to verify this is an expected addition.",
+                "displayName": "New user created and added to the built-in administrators group",
+                "description": "Identifies when a user account was created and then added to the builtin Administrators group in the same day.\nThis should be monitored closely and all additions reviewed.",
                 "severity": "Low",
                 "enabled": true,
-                "query": "// For AD SID mappings - https://docs.microsoft.com/windows/security/identity-protection/access-control/active-directory-security-groups\nlet WellKnownLocalSID = \"S-1-5-32-5[0-9][0-9]$\";\nlet WellKnownGroupSID = \"S-1-5-21-[0-9]*-[0-9]*-[0-9]*-5[0-9][0-9]$|S-1-5-21-[0-9]*-[0-9]*-[0-9]*-1102$|S-1-5-21-[0-9]*-[0-9]*-[0-9]*-1103$|S-1-5-21-[0-9]*-[0-9]*-[0-9]*-498$|S-1-5-21-[0-9]*-[0-9]*-[0-9]*-1000$\";\nSecurityEvent \n// When MemberName contains '-' this indicates addition of a group to a group\n| where AccountType == \"User\" and MemberName != \"-\"\n// 4728 - A member was added to a security-enabled global group\n// 4732 - A member was added to a security-enabled local group\n// 4756 - A member was added to a security-enabled universal group\n| where EventID in (4728, 4732, 4756)   \n| where TargetSid matches regex WellKnownLocalSID or TargetSid matches regex WellKnownGroupSID\n// Exclude Remote Desktop Users group: S-1-5-32-555\n| where TargetSid !in (\"S-1-5-32-555\")\n| extend SimpleMemberName = substring(MemberName, 3, indexof_regex(MemberName, @\",OU|,CN\") - 3)\n| project TimeGenerated, EventID, Activity, Computer, SimpleMemberName, MemberName, MemberSid, TargetUserName, TargetDomainName, TargetSid, UserPrincipalName, SubjectUserName, SubjectUserSid\n| extend timestamp = TimeGenerated, AccountCustomEntity = SimpleMemberName, HostCustomEntity = Computer",
+                "query": "SecurityEvent\n| where EventID == 4720\n| where AccountType == \"User\"\n| project CreatedUserTime = TimeGenerated, CreatedUserEventID = EventID, CreatedUserActivity = Activity, Computer = toupper(Computer), \nCreatedUser = tolower(TargetAccount), CreatedUserSid = TargetSid, AccountUsedToCreateUser = strcat(SubjectAccount), SidofAccountUsedToCreateUser = SubjectUserSid\n| join (\nSecurityEvent \n| where AccountType == \"User\"\n// 4732 - A member was added to a security-enabled local group\n| where EventID == 4732\n//TargetSid is the builin Admins group: S-1-5-32-544\n| where TargetSid == \"S-1-5-32-544\"\n| project GroupAddTime = TimeGenerated, GroupAddEventID = EventID, GroupAddActivity = Activity, Computer = toupper(Computer), GroupName = tolower(TargetAccount), \nGroupSid = TargetSid, AccountThatAddedUser = SubjectAccount, SIDofAccountThatAddedUser = SubjectUserSid, CreatedUserSid = MemberSid\n)\non CreatedUserSid\n//Create User first, then the add to the group.\n| project Computer, CreatedUserTime, CreatedUserEventID, CreatedUserActivity, CreatedUser, CreatedUserSid, GroupAddTime, GroupAddEventID, \nGroupAddActivity, AccountUsedToCreateUser, GroupName, GroupSid, AccountThatAddedUser, SIDofAccountThatAddedUser \n| extend timestamp = CreatedUserTime, AccountCustomEntity = CreatedUser, HostCustomEntity = Computer",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
@@ -30,7 +30,7 @@
                     "PrivilegeEscalation"
                 ],
                 "techniques": [],
-                "alertRuleTemplateName": "a35f2c18-1b97-458f-ad26-e033af18eb99",
+                "alertRuleTemplateName": "aa1eff90-29d4-49dc-a3ea-b65199f516db",
                 "incidentConfiguration": {
                     "createIncident": true,
                     "groupingConfiguration": {
@@ -55,6 +55,10 @@
                             {
                                 "identifier": "FullName",
                                 "columnName": "AccountCustomEntity"
+                            },
+                            {
+                                "identifier": "Sid",
+                                "columnName": "CreatedUserSid"
                             }
                         ]
                     },
@@ -68,7 +72,7 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.0"
+                "templateVersion": "1.0.0"
             }
         }
     ]
