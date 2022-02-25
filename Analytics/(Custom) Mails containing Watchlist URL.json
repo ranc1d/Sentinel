@@ -14,8 +14,8 @@
             "kind": "Scheduled",
             "apiVersion": "2021-09-01-preview",
             "properties": {
-                "displayName": "(Custom) Mails containing Malicious Domains",
-                "description": "Delivered mails that contain domains marked as malicious via the MaliciousDomains watchlist",
+                "displayName": "(Custom) Mails containing malicious domains",
+                "description": "This rule alerts on delivered mails that contain urls or domains marked as malicious via the MaliciousDomains watchlist",
                 "severity": "Medium",
                 "enabled": true,
                 "query": "let watchlist = (_GetWatchlist('MaliciousDomains') | project SearchKey);\r\n\r\nEmailUrlInfo\r\n| join EmailEvents on NetworkMessageId\r\n| where DeliveryAction == \"Delivered\"\r\n| where Url has_any (watchlist)\r\n| project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
