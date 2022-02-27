@@ -18,7 +18,7 @@
                 "description": "",
                 "severity": "Informational",
                 "enabled": true,
-                "query": "AuditLogs\n| where Category == \"Policy\" \n| where ActivityDisplayName has_any (\"Update conditional access policy\", \"Update policy\")\n| project ActivityDateTime, OperationName, AdditionalDetails[0].value, TargetResources[0].displayName, InitiatedBy.user.userPrincipalName",
+                "query": "AuditLogs\n| where Category == \"Policy\" \n| where ActivityDisplayName has_any (\"Update conditional access policy\", \"Update policy\", \"Add policy\")\n| project ActivityDateTime, OperationName, AdditionalDetails[0].value, TargetResources[0].displayName, InitiatedBy.user.userPrincipalName",
                 "queryFrequency": "PT1H",
                 "queryPeriod": "PT1H",
                 "triggerOperator": "GreaterThan",
