@@ -14,7 +14,7 @@
             "kind": "Scheduled",
             "apiVersion": "2021-09-01-preview",
             "properties": {
-                "displayName": "Mails containing malicious domains (Custom)",
+                "displayName": "Mails containing malicious urls",
                 "description": "This rule alerts on delivered mails that contain urls or domains marked as malicious via the MaliciousDomains watchlist",
                 "severity": "Medium",
                 "enabled": true,
