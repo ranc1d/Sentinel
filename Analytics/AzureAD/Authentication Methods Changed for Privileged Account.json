@@ -18,7 +18,7 @@
                 "description": "Identifies authentication methods being changed for a privileged account. This could be an indicated of an attacker adding an auth method to the account so they can have continued access.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor-1",
                 "severity": "High",
                 "enabled": true,
-                "query": "let queryperiod = 14d;\nlet queryfrequency = 2h;\nlet VIPUsers = (\n    IdentityInfo\n    | where TimeGenerated > ago(queryperiod)\n    | summarize arg_max(TimeGenerated, *) by AccountUPN\n    | mv-expand AssignedRoles\n    | where AssignedRoles matches regex 'Admin'\n    | summarize by tolower(AccountUPN));\nAuditLogs\n| where TimeGenerated > ago(queryfrequency)\n| where Category =~ \"UserManagement\"\n| where ActivityDisplayName =~ \"User registered security info\"\n| where LoggedByService =~ \"Authentication Methods\"\n| extend AccountCustomEntity = tostring(TargetResources[0].userPrincipalName), IPCustomEntity = tostring(InitiatedBy.user.ipAddress)\n| where AccountCustomEntity in (VIPUsers)",
+                "query": "let queryperiod = 14d;\nlet queryfrequency = 2h;\nlet VIPUsers = (\n    IdentityInfo\n    | where TimeGenerated > ago(queryperiod)\n    | summarize arg_max(TimeGenerated, *) by AccountUPN\n    | mv-expand AssignedRoles\n    | where AssignedRoles matches regex 'Admin'\n    | summarize by tolower(AccountUPN));\nAuditLogs\n| where TimeGenerated > ago(queryfrequency)\n| where Category =~ \"UserManagement\"\n| where ActivityDisplayName =~ \"User registered security info\"\n| where LoggedByService =~ \"Authentication Methods\"\n| extend AccountCustomEntity = tolower(tostring(TargetResources[0].userPrincipalName)), IPCustomEntity = tostring(InitiatedBy.user.ipAddress)\n| where AccountCustomEntity in (VIPUsers)",
                 "queryFrequency": "PT2H",
                 "queryPeriod": "P14D",
                 "triggerOperator": "GreaterThan",
@@ -67,7 +67,7 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.2"
+                "templateVersion": "1.0.3"
             }
         }
     ]
