@@ -26,7 +26,8 @@
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
                 "tactics": [
-                    "CredentialAccess"
+                    "CredentialAccess",
+                    "Persistence"
                 ],
                 "techniques": [],
                 "alertRuleTemplateName": "65c78944-930b-4cae-bd79-c3664ae30ba7",
@@ -67,7 +68,7 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "templateVersion": "1.0.1"
             }
         }
     ]
