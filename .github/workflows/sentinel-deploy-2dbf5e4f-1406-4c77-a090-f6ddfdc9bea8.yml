@@ -16,6 +16,8 @@ on:
     - '**'
     - '!.github/workflows/**'  # this filter prevents other workflow changes from triggering this workflow
     - '.github/workflows/sentinel-deploy-2dbf5e4f-1406-4c77-a090-f6ddfdc9bea8.yml'
+    paths-ignore:
+      - '**/README.md'
 
 jobs:
   deploy-content:
