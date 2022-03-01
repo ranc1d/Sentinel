@@ -7,3 +7,4 @@ Modified policies:
 | Policy  | Modified value | Justification |
 | ------------- | ------------- | ------------- |
 | SharePointFileOperation via devices with previously unseen user agents | "createIncident": false  | Too many incidents, but alerts are of interest on demand |
+| SharePointFileOperation via previously unseen IPs | "createIncident": false  | Too many incidents, but alerts are of interest on demand |
