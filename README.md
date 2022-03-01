@@ -1,2 +1,2 @@
 # Sentinel
-Sentinel
+Sentinel Config
