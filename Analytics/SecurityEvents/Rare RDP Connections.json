@@ -8,8 +8,8 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/e4b97b99-0fe7-4501-adb0-15dec2102ef1')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e4b97b99-0fe7-4501-adb0-15dec2102ef1')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/bea6dc45-bb67-4a8c-9f9d-17f72da4fed1')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/bea6dc45-bb67-4a8c-9f9d-17f72da4fed1')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2021-09-01-preview",
@@ -18,7 +18,7 @@
                 "description": "Identifies when an RDP connection is new or rare related to any logon type by a given account today based on comparison with the previous 14 days.\nRDP connections are indicated by the EventID 4624 with LogonType = 10",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let starttime = 14d;\nlet endtime = 1d;\nSecurityEvent\n| where TimeGenerated >= ago(endtime)\n| where EventID == 4624 and LogonType == 10\n| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), ConnectionCount = count()\nby Account = tolower(Account), Computer = toupper(Computer), IpAddress, AccountType, Activity, LogonTypeName, ProcessName\n// use left anti to exclude anything from the previous 14 days that is not rare\n| join kind=leftanti (\nSecurityEvent\n| where TimeGenerated between (ago(starttime) .. ago(endtime))\n| where EventID == 4624\n| summarize by Computer = toupper(Computer), IpAddress, Account = tolower(Account)\n) on Account, Computer\n| summarize StartTime = min(StartTime), EndTime = max(EndTime), ConnectionCount = sum(ConnectionCount)\nby Account, Computer, IpAddress, AccountType, Activity, LogonTypeName, ProcessName\n| extend timestamp = StartTime, AccountCustomEntity = Account, HostCustomEntity = Computer, IPCustomEntity = IpAddress",
+                "query": "let starttime = 14d;\nlet endtime = 1d;\nlet Exclusionlist = (_GetWatchlist('JumpHosts') | project SearchKey);\nSecurityEvent\n| where not(Computer has_any (Exclusionlist))\n| where TimeGenerated >= ago(endtime)\n| where EventID == 4624 and LogonType == 10\n| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), ConnectionCount = count()\nby Account = tolower(Account), Computer = toupper(Computer), IpAddress, AccountType, Activity, LogonTypeName, ProcessName\n// use left anti to exclude anything from the previous 14 days that is not rare\n| join kind=leftanti (\nSecurityEvent\n| where TimeGenerated between (ago(starttime) .. ago(endtime))\n| where EventID == 4624\n| summarize by Computer = toupper(Computer), IpAddress, Account = tolower(Account)\n) on Account, Computer\n| summarize StartTime = min(StartTime), EndTime = max(EndTime), ConnectionCount = sum(ConnectionCount)\nby Account, Computer, IpAddress, AccountType, Activity, LogonTypeName, ProcessName\n| extend timestamp = StartTime, AccountCustomEntity = Account, HostCustomEntity = Computer, IPCustomEntity = IpAddress",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P14D",
                 "triggerOperator": "GreaterThan",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "LateralMovement"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1021"
+                ],
                 "alertRuleTemplateName": "45b903c5-6f56-4969-af10-ae62ac709718",
                 "incidentConfiguration": {
                     "createIncident": true,
