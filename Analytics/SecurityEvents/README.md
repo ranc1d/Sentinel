@@ -8,6 +8,7 @@ Modified policies:
 | ------------- | ------------- | ------------- |
 | RDP Nesting | Query | JumpHosts watchlist exclusions integration |
 | Rare RDP Connections | Query | JumpHosts watchlist exclusions integration |
+| Non Domain Controller Active Directory Replication | Query | NonDomainControllerReplicationExclusion watchlist exclusions integration |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
