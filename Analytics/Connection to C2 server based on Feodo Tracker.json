@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/d74cd75c-6914-47d8-9a51-8bba6042e3b8')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/d74cd75c-6914-47d8-9a51-8bba6042e3b8')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-09-01-preview",
+            "properties": {
+                "displayName": "Connection to C2 server based on Feodo Tracker",
+                "description": "",
+                "severity": "High",
+                "enabled": true,
+                "query": "externaldata(RemoteIP: string, RemotePort: int, Status: string)\n[\nh@\"https://feodotracker.abuse.ch/downloads/ipblocklist.json\"\n]\nwith(format=\"MultiJSON\", ingestionMapping='[{\"Column\":\"RemoteIP\",\"Properties\":{\"Path\":\"$.ip_address\"}}, {\"Column\":\"RemotePort\",\"Properties\":{\"Path\":\"$.port\"}}, {\"Column\":\"Status\",\"Properties\":{\"Path\":\"$.status\"}}]')\n| where Status == \"online\"\n| join kind=inner DeviceNetworkEvents on RemoteIP, RemotePort",
+                "queryFrequency": "PT1H",
+                "queryPeriod": "PT1H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "CommandAndControl"
+                ],
+                "techniques": [
+                    "T1102"
+                ],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "RemoteIP"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "LocalIP"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "HostName",
+                                "columnName": "DeviceName"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
