@@ -14,7 +14,7 @@
             "kind": "NRT",
             "apiVersion": "2021-09-01-preview",
             "properties": {
-                "displayName": "Break the glass admin account used for signin",
+                "displayName": "NRT Break the glass admin account used for signin",
                 "description": "",
                 "severity": "High",
                 "enabled": true,
