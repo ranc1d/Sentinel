@@ -18,7 +18,7 @@
                 "description": "This rule alerts on delivered mails that contain urls or domains marked as malicious via the MaliciousDomains watchlist",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let watchlist = (_GetWatchlist('MaliciousDomains') | project SearchKey);\r\n\r\nEmailUrlInfo\r\n| join EmailEvents on NetworkMessageId\r\n| where DeliveryAction == \"Delivered\"\r\n| where Url has_any (watchlist)\r\n| project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
+                "query": "EmailUrlInfo\r\n| join EmailEvents on NetworkMessageId\r\n| where DeliveryAction == \"Delivered\"\r\n| where Url has_any (externaldata(MaliciousDomain:string)[h@\"https://raw.githubusercontent.com/ranc1d/Sentinel/main/Watchlists/MaliciousDomains.list\"])\r\n| project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
                 "queryFrequency": "PT1H",
                 "queryPeriod": "PT1H",
                 "triggerOperator": "GreaterThan",
