@@ -6,10 +6,9 @@ Data sources:
 Modified policies:
 | Policy  | Modified value | Justification |
 | ------------- | ------------- | ------------- |
-|  |  |  |
+| Mails containing malicious urls | Query | external watchlist |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
 | ------------- | ------------- | ------------- | ------------- |
-| Mails containing malicious urls | MaliciousDomains | MaliciousDomains | domain or url |
 | Break the glass admin account used for signin | BreakGlassAccounts | BreakGlassAccounts | admin upn |
