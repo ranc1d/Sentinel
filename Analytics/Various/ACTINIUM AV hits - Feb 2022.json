@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/871f8efd-aae0-401c-911a-a56dfb5cc737')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/871f8efd-aae0-401c-911a-a56dfb5cc737')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-09-01-preview",
+            "properties": {
+                "displayName": "ACTINIUM AV hits - Feb 2022",
+                "description": "Identifies a match in the Security Alert table for MDATP hits related to the ACTINIUM actor",
+                "severity": "High",
+                "enabled": true,
+                "query": "let iocs = externaldata(DateAdded:string,IoC:string,Type:string) [@\"https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Sample%20Data/Feeds/ActiniumIOC.csv\"] with (format=\"csv\", ignoreFirstRecord=True);\nlet AVHits = (iocs | where Type =~ \"AVDetection\"| project IoC);\nSecurityAlert\n| where ProviderName == 'MDATP'\n| extend ThreatName_ = tostring(parse_json(ExtendedProperties).ThreatName)\n| where ThreatName_ has_any (AVHits)\n| extend Directory = tostring(parse_json(Entities)[0].Directory), SHA256 = tostring(parse_json(tostring(parse_json(Entities)[0].FileHashes))[2].Value), FileName = tostring(parse_json(Entities)[0].Name), Hostname = tostring(parse_json(Entities)[6].FQDN)| extend AccountName = tostring(parse_json(tostring(parse_json(Entities)[6].LoggedOnUsers))[0].AccountName)\n| project TimeGenerated, AlertName, ThreatName_, ProviderName, AlertSeverity, Description, RemediationSteps, ExtendedProperties, Entities, FileName,SHA256, Directory, Hostname, AccountName\n| extend timestamp = TimeGenerated, HostCustomEntity = Hostname , AccountCustomEntity = AccountName,  FileHashCustomEntity = SHA256",
+                "queryFrequency": "PT6H",
+                "queryPeriod": "PT6H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "Persistence"
+                ],
+                "techniques": [],
+                "alertRuleTemplateName": "18dbdc22-b69f-4109-9e39-723d9465f45f",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "HostCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "FileHash",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Value",
+                                "columnName": "FileHashCustomEntity"
+                            },
+                            {
+                                "identifier": "Algorithm",
+                                "columnName": "SHA256"
+                            }
+                        ]
+                    }
+                ],
+                "templateVersion": "1.0.0"
+            }
+        }
+    ]
+}
