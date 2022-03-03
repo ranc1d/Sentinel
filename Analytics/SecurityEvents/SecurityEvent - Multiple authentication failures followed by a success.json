@@ -31,7 +31,7 @@
                 "techniques": [],
                 "alertRuleTemplateName": "cf3ede88-a429-493b-9108-3e46d3c741f7",
                 "incidentConfiguration": {
-                    "createIncident": true,
+                    "createIncident": false,
                     "groupingConfiguration": {
                         "enabled": false,
                         "reopenClosedIncident": false,
