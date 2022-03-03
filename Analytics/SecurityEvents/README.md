@@ -11,6 +11,7 @@ Modified policies:
 | Non Domain Controller Active Directory Replication | Query | NonDomainControllerReplicationExclusion watchlist exclusions integration |
 | Multiple Password Reset by user | "createIncident": false  | Too many incidents, but alerts are of interest on demand |
 | AD user enabled and password not set within 48 hours | "createIncident": false  | Too many incidents, but alerts are of interest on demand |
+| SecurityEvent - Multiple authentication failures followed by a success | "createIncident": false  | Too many incidents, but alerts are of interest on demand |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
