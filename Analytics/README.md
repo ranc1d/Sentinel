@@ -17,6 +17,7 @@ Modified policies:
 | User Assigned Privileged Role | "createIncident": false  | Managed via PIM Mails, but alerts are of interest on demand |
 | User added to Azure Active Directory Privileged Groups | "createIncident": false  | Managed via PIM Mails, but alerts are of interest on demand |
 | Mails containing malicious urls | Query | external watchlist |
+| Missing Domain Controller Heartbeat | Query | DomainControllers watchlist integration |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
@@ -25,4 +26,4 @@ Watchlists:
 | RDP Nesting | JumpHosts | JumpHosts | excluded hosts fqdn |
 | Rare RDP Connections | JumpHosts | JumpHosts | excluded hosts fqdn |
 | Break the glass admin account used for signin | BreakGlassAccounts | BreakGlassAccounts | admin upn |
-
+| Missing Domain Controller Heartbeat | DomainControllers | DomainControllers | domain controller fqdn |
