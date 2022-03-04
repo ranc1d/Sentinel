@@ -1,6 +1,3 @@
-let watchlist = (_GetWatchlist('WatchlistName') | project SearchKey);
-SigninLogs
-| where UserPrincipalName has_any (watchlist)
 
 Modified policies:
 | Policy  | Modified value | Justification |
