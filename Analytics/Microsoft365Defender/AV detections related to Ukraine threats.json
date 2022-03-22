@@ -1,0 +1,65 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/c48ed5db-b25a-4a4b-bb6c-a73f83098637')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/c48ed5db-b25a-4a4b-bb6c-a73f83098637')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-10-01-preview",
+            "properties": {
+                "displayName": "AV detections related to Ukraine threats",
+                "description": "This query looks for Microsoft Defender AV detections for malware observed in relation to the war in Ukraine.\n  Ref: https://msrc-blog.microsoft.com/2022/02/28/analysis-resources-cyber-threat-activity-ukraine/ ",
+                "severity": "High",
+                "enabled": true,
+                "query": "let UA_threats = dynamic([\"FoxBlade\", \"WhisperGate\", \"Lasainraw\", \"SonicVote\"]);\n  SecurityAlert\n  | where ProviderName == \"MDATP\"\n  | extend ThreatFamilyName = tostring(parse_json(ExtendedProperties).ThreatFamilyName)\n  | where ThreatFamilyName in (UA_threats)",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "Impact"
+                ],
+                "techniques": [],
+                "alertRuleTemplateName": "b6685757-3ed1-4b05-a5bd-2cacadc86c2a",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "CompromisedEntity"
+                            }
+                        ]
+                    }
+                ],
+                "templateVersion": "1.1.0"
+            }
+        }
+    ]
+}
