@@ -12,13 +12,13 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/71594c6c-76a5-4636-8720-7f744bf1be32')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "Known STRONTIUM group domains - July 2019",
                 "description": "Matches domain name IOCs related to Strontium group activity published July 2019 with CommonSecurityLog, DnsEvents and VMConnection dataTypes.\nReferences: https://blogs.microsoft.com/on-the-issues/2019/07/17/new-cyberthreats-require-new-ways-to-protect-democracy/.",
                 "severity": "High",
                 "enabled": true,
-                "query": "let DomainNames = dynamic([\"irf.services\",\"microsoft-onthehub.com\",\"msofficelab.com\",\"com-mailbox.com\",\"my-sharefile.com\",\"my-sharepoints.com\",\n\"accounts-web-mail.com\",\"customer-certificate.com\",\"session-users-activities.com\",\"user-profile-credentials.com\",\"verify-linke.com\",\"support-servics.net\",\n\"onedrive-sharedfile.com\",\"onedrv-live.com\",\"transparencyinternational-my-sharepoint.com\",\"transparencyinternational-my-sharepoints.com\",\"soros-my-sharepoint.com\"]);\n(union isfuzzy=true\n(CommonSecurityLog \n| parse Message with * '(' DNSName ')' * \n| extend Account = SourceUserID, Host = DeviceName, IPAddress = SourceIP),\n(DnsEvents \n| extend IPAddress = ClientIP, DNSName = Name, Host = Computer),\n(imDns (domain_has_any=DomainNames)\n| extend IPAddress = SrcIpAddr, DNSName = DnsQuery, Host = Dvc),\n(VMConnection \n| parse RemoteDnsCanonicalNames with * '[\"' DNSName '\"]' *\n| extend IPAddress = RemoteIp, Host = Computer),\n(AzureDiagnostics\n| where ResourceType == \"AZUREFIREWALLS\"\n| where Category == \"AzureFirewallDnsProxy\"\n| parse msg_s with \"DNS Request: \" ClientIP \":\" ClientPort \" - \" QueryID \" \" Request_Type \" \" Request_Class \" \" Request_Name \". \" Request_Protocol \" \" Request_Size \" \" EDNSO_DO \" \" EDNS0_Buffersize \" \" Responce_Code \" \" Responce_Flags \" \" Responce_Size \" \" Response_Duration\n| extend DNSName = Request_Name\n| extend IPAddress = ClientIP),\n(AzureDiagnostics \n| where ResourceType == \"AZUREFIREWALLS\"\n| where Category == \"AzureFirewallApplicationRule\"\n| parse msg_s with Protocol 'request from ' SourceHost ':' SourcePort 'to ' DestinationHost ':' DestinationPort '. Action:' Action\n| extend DNSName = DestinationHost \n| extend IPAddress = SourceHost)\n)\n| where isnotempty(DNSName)\n| where DNSName  has_any (DomainNames)\n| extend timestamp = TimeGenerated, IPCustomEntity = IPAddress, AccountCustomEntity = Account, HostCustomEntity = Host",
+                "query": "let DomainNames = dynamic([\"irf.services\",\"microsoft-onthehub.com\",\"msofficelab.com\",\"com-mailbox.com\",\"my-sharefile.com\",\"my-sharepoints.com\",\n\"accounts-web-mail.com\",\"customer-certificate.com\",\"session-users-activities.com\",\"user-profile-credentials.com\",\"verify-linke.com\",\"support-servics.net\",\n\"onedrive-sharedfile.com\",\"onedrv-live.com\",\"transparencyinternational-my-sharepoint.com\",\"transparencyinternational-my-sharepoints.com\",\"soros-my-sharepoint.com\"]);\n(union isfuzzy=true\n  (CommonSecurityLog \n  | parse Message with * '(' DNSName ')' * \n  | extend Account = SourceUserID, Host = DeviceName, IPAddress = SourceIP\n  ),\n  (_Im_Dns(domain_has_any=DomainNames)\n  | extend IPAddress = SrcIpAddr, DNSName = DnsQuery, Host = Dvc),\n  (VMConnection \n  | parse RemoteDnsCanonicalNames with * '[\"' DNSName '\"]' *\n  | extend IPAddress = RemoteIp, Host = Computer\n  ),\n  (AzureDiagnostics \n  | where ResourceType == \"AZUREFIREWALLS\"\n  | where Category == \"AzureFirewallApplicationRule\"\n  | parse msg_s with Protocol 'request from ' SourceHost ':' SourcePort 'to ' DestinationHost ':' DestinationPort '. Action:' Action\n  | extend DNSName = DestinationHost \n  | extend IPAddress = SourceHost\n  ),\n  (\n    _Im_WebSession(url_has_any=DomainNames)\n    | extend IPCustomEntity=IpAddr, HostCustomEntity=Hostname, AccoutCustomEntity=User\n  )\n)\n| where isnotempty(DNSName)\n| where DNSName  has_any (DomainNames)\n| extend timestamp = TimeGenerated, IPCustomEntity = IPAddress, AccountCustomEntity = Account, HostCustomEntity = Host",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
@@ -76,7 +76,7 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.3.0"
+                "templateVersion": "1.4.0"
             }
         }
     ]
