@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/bc75fad1-b7e1-4b85-97bd-ddae76d261b5')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/bc75fad1-b7e1-4b85-97bd-ddae76d261b5')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-10-01-preview",
+            "properties": {
+                "displayName": "Global admin elevated access to User Access Management",
+                "description": "",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "CloudAppEvents\n| where ApplicationId == '12260'and Application == 'Microsoft Azure'\n| where parse_json(tostring(parse_json(tostring(RawEventData.authorization)).evidence)).roleDefinitionId == \"b21f0835cd464e508cf8e297ff563cb1\"\n| where RawEventData.operationName == \"Microsoft.Authorization/elevateAccess/action\"\n| where parse_json(tostring(parse_json(tostring(RawEventData.authorization)).evidence)).roleAssignmentScope == \"/\"\n| where parse_json(tostring(parse_json(tostring(RawEventData.authorization)).evidence)).roleAssignmentId == \"b507cd211c194747a82e1c2e8584c6da\"\n| extend ClientIPAddress = parse_json(tostring(RawEventData.httpRequest)).clientIpAddress\n| extend RoleAssignmentScope = parse_json(tostring(parse_json(tostring(RawEventData.authorization)).evidence)).roleAssignmentScope\n| extend RoleAssignmentId = parse_json(tostring(parse_json(tostring(RawEventData.authorization)).evidence)).roleAssignmentId",
+                "queryFrequency": "PT5H",
+                "queryPeriod": "PT5H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [],
+                "techniques": [],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": null
+            }
+        }
+    ]
+}
