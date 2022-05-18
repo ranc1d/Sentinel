@@ -12,13 +12,13 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/ce5f852a-630e-412d-a295-2f3be44ad7e1')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "Authentication Methods Changed for Privileged Account",
-                "description": "Identifies authentication methods being changed for a privileged account. This could be an indicated of an attacker adding an auth method to the account so they can have continued access.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor-1",
+                "description": "Identifies authentication methods being changed for a privileged account. This could be an indication of an attacker adding an auth method to the account so they can have continued access.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor-1",
                 "severity": "High",
                 "enabled": true,
-                "query": "let queryperiod = 14d;\nlet queryfrequency = 2h;\nlet VIPUsers = (\n    IdentityInfo\n    | where TimeGenerated > ago(queryperiod)\n    | summarize arg_max(TimeGenerated, *) by AccountUPN\n    | mv-expand AssignedRoles\n    | where AssignedRoles matches regex 'Admin'\n    | summarize by tolower(AccountUPN));\nAuditLogs\n| where TimeGenerated > ago(queryfrequency)\n| where Category =~ \"UserManagement\"\n| where ActivityDisplayName =~ \"User registered security info\"\n| where LoggedByService =~ \"Authentication Methods\"\n| extend AccountCustomEntity = tolower(tostring(TargetResources[0].userPrincipalName)), IPCustomEntity = tostring(InitiatedBy.user.ipAddress)\n| where AccountCustomEntity in (VIPUsers)",
+                "query": "let queryperiod = 14d;\nlet queryfrequency = 2h;\nlet security_info_actions = dynamic([\"User registered security info\", \"User changed default security info\", \"User deleted security info\", \"Admin updated security info\", \"User reviewed security info\", \"Admin deleted security info\", \"Admin registered security info\"]);\nlet VIPUsers = (\n    IdentityInfo\n    | where TimeGenerated > ago(queryperiod)\n    | mv-expand AssignedRoles\n    | where AssignedRoles matches regex 'Admin'\n    | summarize by tolower(AccountUPN));\nAuditLogs\n| where TimeGenerated > ago(queryfrequency)\n| where Category =~ \"UserManagement\"\n| where ActivityDisplayName in (security_info_actions)\n| extend Initiator = tostring(InitiatedBy.user.userPrincipalName)\n| extend IP = tostring(InitiatedBy.user.ipAddress)\n| extend Target = tolower(tostring(TargetResources[0].userPrincipalName))\n| where Target in (VIPUsers)\n| summarize Start=min(TimeGenerated), End=max(TimeGenerated), Actions = make_set(ResultReason, MaxSize=8), Targets=make_set(Target, MaxSize=256) by Initiator, IP, Result",
                 "queryFrequency": "PT2H",
                 "queryPeriod": "P14D",
                 "triggerOperator": "GreaterThan",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "Persistence"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098"
+                ],
                 "alertRuleTemplateName": "694c91ee-d606-4ba9-928e-405a2dd0ff0f",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -53,7 +55,7 @@
                         "fieldMappings": [
                             {
                                 "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
+                                "columnName": "Targets"
                             }
                         ]
                     },
@@ -62,12 +64,13 @@
                         "fieldMappings": [
                             {
                                 "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "columnName": "IP"
                             }
                         ]
                     }
                 ],
-                "templateVersion": "1.0.3"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.5"
             }
         }
     ]

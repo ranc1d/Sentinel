@@ -12,15 +12,15 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b08e35d1-82f5-4aa8-aebe-22678905dbc8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "User Accounts - Sign in Failure due to CA Spikes",
                 "description": " Identifies spike in failed sign-ins from user accounts due to conditional access policied.\nSpike is determined based on Time series anomaly which will look at historical baseline values.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-user-accounts#monitoring-for-failed-unusual-sign-ins",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let starttime = 14d;\nlet timeframe = 1d;\nlet scorethreshold = 3;\nlet baselinethreshold = 5;\nlet aadFunc = (tableName:string){\n  // Failed Signins attempts with reasoning related to conditional access policies.\n  table(tableName)\n  | where TimeGenerated between (startofday(ago(starttime))..startofday(ago(timeframe)))\n  | where ResultDescription has_any (\"conditional access\", \"CA\") or ResultType in (50005, 50131, 53000, 53001, 53002, 52003, 70044)\n  | extend UserPrincipalName = tolower(UserPrincipalName)\n| extend timestamp = TimeGenerated, AccountCustomEntity = UserPrincipalName\n};\nlet aadSignin = aadFunc(\"SigninLogs\");\nlet aadNonInt = aadFunc(\"AADNonInteractiveUserSignInLogs\");\nlet allSignins = union isfuzzy=true aadSignin, aadNonInt ;\nlet TimeSeriesData = union isfuzzy=true aadSignin, aadNonInt \n| project TimeGenerated, UserPrincipalName\n| make-series HourlyCount=count() on TimeGenerated from startofday(ago(starttime)) to startofday(now()) step timeframe by UserPrincipalName\n| project TimeGenerated, UserPrincipalName, HourlyCount;\nlet TimeSeriesAlerts = TimeSeriesData\n| extend (anomalies, score, baseline) = series_decompose_anomalies(HourlyCount, scorethreshold, -1, 'linefit')\n| mv-expand HourlyCount to typeof(double), TimeGenerated to typeof(datetime), anomalies to typeof(double),score to typeof(double), baseline to typeof(long)\n| where anomalies > 0 | extend AnomalyHour = TimeGenerated\n| where baseline > baselinethreshold // Filtering low count events per baselinethreshold\n| project UserPrincipalName, AnomalyHour, TimeGenerated, HourlyCount, baseline, anomalies, score;\nlet AnomalyHours = TimeSeriesAlerts | where TimeGenerated > ago(2d) | project TimeGenerated;\n// Filter the alerts for specified timeframe\nTimeSeriesAlerts\n| where TimeGenerated > ago(2d)\n| join kind=inner ( \nunion isfuzzy=true aadSignin, aadNonInt\n| where TimeGenerated > ago(2d)\n| extend DateHour = bin(TimeGenerated, 1h) // create a new column and round to hour\n| where DateHour in ((AnomalyHours)) //filter the dataset to only selected anomaly hours\n | summarize HourlyCount=count(), LatestAnomalyTime = arg_max(timestamp,*) by bin(TimeGenerated,1h),  OperationName, Category, ResultType, ResultDescription, UserPrincipalName, UserDisplayName, AppDisplayName, ClientAppUsed, IPAddress, ResourceDisplayName\n) on UserPrincipalName\n| project LatestAnomalyTime,  OperationName, Category, UserPrincipalName, UserDisplayName, ResultType, ResultDescription, AppDisplayName, ClientAppUsed, UserAgent, IPAddress, Location, AuthenticationRequirement, ConditionalAccessStatus, ResourceDisplayName, HourlyCount, baseline, anomalies, score\n| extend timestamp = LatestAnomalyTime, IPCustomEntity = IPAddress, AccountCustomEntity = UserPrincipalName",
+                "query": "let starttime = 14d;\nlet timeframe = 1d;\nlet scorethreshold = 3;\nlet baselinethreshold = 50;\nlet aadFunc = (tableName:string){\n  // Failed Signins attempts with reasoning related to conditional access policies.\n  table(tableName)\n  | where TimeGenerated between (startofday(ago(starttime))..startofday(now()))\n  | where ResultDescription has_any (\"conditional access\", \"CA\") or ResultType in (50005, 50131, 53000, 53001, 53002, 52003, 70044)\n  | extend UserPrincipalName = tolower(UserPrincipalName)\n  | extend timestamp = TimeGenerated, AccountCustomEntity = UserPrincipalName\n};\nlet aadSignin = aadFunc(\"SigninLogs\");\nlet aadNonInt = aadFunc(\"AADNonInteractiveUserSignInLogs\");\nlet allSignins = union isfuzzy=true aadSignin, aadNonInt;\nlet TimeSeriesAlerts = \nallSignins\n| make-series DailyCount=count() on TimeGenerated from startofday(ago(starttime)) to startofday(now()) step 1d by UserPrincipalName\n| extend (anomalies, score, baseline) = series_decompose_anomalies(DailyCount, scorethreshold, -1, 'linefit')\n| mv-expand DailyCount to typeof(double), TimeGenerated to typeof(datetime), anomalies to typeof(double), score to typeof(double), baseline to typeof(long)\n// Filtering low count events per baselinethreshold\n| where anomalies > 0 and baseline > baselinethreshold\n| extend AnomalyHour = TimeGenerated\n| project UserPrincipalName, AnomalyHour, TimeGenerated, DailyCount, baseline, anomalies, score;\n// Filter the alerts for specified timeframe\nTimeSeriesAlerts\n| where TimeGenerated > startofday(ago(timeframe))\n| join kind=inner ( \n  allSignins\n  | where TimeGenerated > startofday(ago(timeframe))\n  // create a new column and round to hour\n  | extend DateHour = bin(TimeGenerated, 1h)\n  | summarize PartialFailedSignins = count(), LatestAnomalyTime = arg_max(TimeGenerated, *) by bin(TimeGenerated, 1h), OperationName, Category, ResultType, ResultDescription, UserPrincipalName, UserDisplayName, AppDisplayName, ClientAppUsed, IPAddress, ResourceDisplayName\n) on UserPrincipalName, $left.AnomalyHour == $right.DateHour\n| project LatestAnomalyTime, OperationName, Category, UserPrincipalName, UserDisplayName, ResultType, ResultDescription, AppDisplayName, ClientAppUsed, UserAgent, IPAddress, Location, AuthenticationRequirement, ConditionalAccessStatus, ResourceDisplayName, PartialFailedSignins, TotalFailedSignins = DailyCount, baseline, anomalies, score\n| extend timestamp = LatestAnomalyTime, IPCustomEntity = IPAddress, AccountCustomEntity = UserPrincipalName",
                 "queryFrequency": "P1D",
-                "queryPeriod": "P1D",
+                "queryPeriod": "P14D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "InitialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1078"
+                ],
                 "alertRuleTemplateName": "3a9d5ede-2b9d-43a2-acc4-d272321ff77c",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

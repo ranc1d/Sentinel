@@ -12,13 +12,13 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0f17c706-e719-4905-956d-eed7f3093f4c')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "Brute force attack against Azure Portal",
                 "description": "Identifies evidence of brute force activity against Azure Portal by highlighting multiple authentication failures \nand by a successful authentication within a given time window. \n(The query does not enforce any sequence - eg requiring the successful authentication to occur last.)\nDefault Failure count is 5, Default Success count is 1 and default Time Window is 20 minutes.\nReferences: https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-sign-ins-error-codes.",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let failureCountThreshold = 5;\nlet successCountThreshold = 1;\nlet authenticationWindow = 20m;\nlet aadFunc = (tableName:string){\ntable(tableName)\n| extend DeviceDetail = todynamic(DeviceDetail), Status = todynamic(DeviceDetail), LocationDetails = todynamic(LocationDetails)\n| extend OS = DeviceDetail.operatingSystem, Browser = DeviceDetail.browser\n| extend StatusCode = tostring(Status.errorCode), StatusDetails = tostring(Status.additionalDetails)\n| extend State = tostring(LocationDetails.state), City = tostring(LocationDetails.city), Region = tostring(LocationDetails.countryOrRegion)\n| where AppDisplayName has \"Azure Portal\"\n// Split out failure versus non-failure types\n| extend FailureOrSuccess = iff(ResultType in (\"0\", \"50125\", \"50140\", \"70043\", \"70044\"), \"Success\", \"Failure\")\n| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), IPAddress = make_set(IPAddress), make_set(OS), make_set(Browser), make_set(City),\nmake_set(State), make_set(Region),make_set(ResultType), FailureCount = countif(FailureOrSuccess==\"Failure\"), SuccessCount = countif(FailureOrSuccess==\"Success\") \nby bin(TimeGenerated, authenticationWindow), UserDisplayName, UserPrincipalName, AppDisplayName, Type\n| where FailureCount >= failureCountThreshold and SuccessCount >= successCountThreshold\n| mvexpand IPAddress\n| extend IPAddress = tostring(IPAddress)\n| extend timestamp = StartTime, AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress \n};\nlet aadSignin = aadFunc(\"SigninLogs\");\nlet aadNonInt = aadFunc(\"AADNonInteractiveUserSignInLogs\");\nunion isfuzzy=true aadSignin, aadNonInt",
+                "query": "let failureCountThreshold = 5;\nlet successCountThreshold = 1;\nlet authenticationWindow = 20m;\nlet aadFunc = (tableName:string){\ntable(tableName)\n| where AppDisplayName has \"Azure Portal\"\n| extend\n    DeviceDetail = todynamic(DeviceDetail),\n    //Status = todynamic(Status),\n    LocationDetails = todynamic(LocationDetails)\n| extend\n    OS = DeviceDetail.operatingSystem,\n    Browser = DeviceDetail.browser,\n    //StatusCode = tostring(Status.errorCode),\n    //StatusDetails = tostring(Status.additionalDetails),\n    State = tostring(LocationDetails.state),\n    City = tostring(LocationDetails.city),\n    Region = tostring(LocationDetails.countryOrRegion)\n// Split out failure versus non-failure types\n| extend FailureOrSuccess = iff(ResultType in (\"0\", \"50125\", \"50140\", \"70043\", \"70044\"), \"Success\", \"Failure\")\n| summarize\n    StartTime = min(TimeGenerated),\n    EndTime = max(TimeGenerated),\n    IPAddress = make_set(IPAddress),\n    make_set(OS),\n    make_set(Browser),\n    make_set(City),\n    make_set(State),\n    make_set(Region),\n    make_set(ResultType),\n    FailureCount = countif(FailureOrSuccess==\"Failure\"),\n    SuccessCount = countif(FailureOrSuccess==\"Success\"),\n    take_anyif(UserPrincipalName, not(UserPrincipalName matches regex @\"[a-f\\d]+\\-[a-f\\d]+\\-[a-f\\d]+\\-[a-f\\d]+\\-[a-f\\d]+\")),\n    take_anyif(UserDisplayName, isnotempty(UserDisplayName))\n    by bin(TimeGenerated, authenticationWindow), UserId, AppDisplayName, Type\n| where FailureCount >= failureCountThreshold and SuccessCount >= successCountThreshold\n| mv-expand IPAddress\n| extend IPAddress = tostring(IPAddress)\n| extend timestamp = StartTime, AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress \n};\nlet aadSignin = aadFunc(\"SigninLogs\");\nlet aadNonInt = aadFunc(\"AADNonInteractiveUserSignInLogs\");\nunion isfuzzy=true aadSignin, aadNonInt",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "CredentialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1110"
+                ],
                 "alertRuleTemplateName": "28b42356-45af-40a6-a0b4-a554cdfd5d8a",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

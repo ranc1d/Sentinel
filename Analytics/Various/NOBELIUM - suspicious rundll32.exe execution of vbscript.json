@@ -12,13 +12,13 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/a7f491bd-d860-45b3-a223-c2154d10b142')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "NOBELIUM - suspicious rundll32.exe execution of vbscript",
                 "description": "This query idenifies when rundll32.exe executes a specific set of inline VBScript commands\n References: https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "SecurityEvent\n| where EventID == 4688\n| where Process =~ 'rundll32.exe' \n| where CommandLine has_all ('Execute','RegRead','window.close')\n| project TimeGenerated, Computer, Account, Process, NewProcessName, CommandLine, ParentProcessName, _ResourceId\n| extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = Account",
+                "query": "(union isfuzzy=true \n(SecurityEvent\n| where EventID == 4688\n| where Process =~ 'rundll32.exe' \n| where CommandLine has_all ('Execute','RegRead','window.close')\n| project TimeGenerated, Computer, Account, Process, NewProcessName, CommandLine, ParentProcessName, _ResourceId\n| extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = Account\n),\n(WindowsEvent\n| where EventID == 4688 and EventData has 'rundll32.exe' and EventData has_any ('Execute','RegRead','window.close')\n| extend NewProcessName = tostring(EventData.NewProcessName)\n| extend Process=tostring(split(NewProcessName, '\\\\')[-1])\n| where Process =~ 'rundll32.exe' \n| extend CommandLine = tostring(EventData.CommandLine)\n| where CommandLine has_all ('Execute','RegRead','window.close')\n| extend Account =  strcat(EventData.SubjectDomainName,\"\\\\\", EventData.SubjectUserName)\n| extend ParentProcessName = tostring(EventData.ParentProcessName)  \n| project TimeGenerated, Computer, Account, Process, NewProcessName, CommandLine, ParentProcessName, _ResourceId\n| extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = Account\n) )",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "Persistence"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1547"
+                ],
                 "alertRuleTemplateName": "d82e1987-4356-4a7b-bc5e-064f29b143c0",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.1.1"
             }
         }
     ]

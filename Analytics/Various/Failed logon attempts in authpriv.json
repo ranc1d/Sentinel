@@ -12,13 +12,13 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5ed2a807-322a-4917-9442-6a6a5a6eb460')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "Failed logon attempts in authpriv",
                 "description": "Identifies failed logon attempts from unknown users in Syslog authpriv logs. The unknown user means the account that tried to log in \nisn't provisioned on the machine. A few hits could indicate someone attempting to access a machine they aren't authorized to access. \nIf there are many of hits, especially from outside your network, it could indicate a brute force attack. \nDefault threshold for logon attempts is 15.",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let threshold = 15;\n// Below pulls messages from syslog-authpriv logs where there was an authentication failure with an unknown user.\n// IP address of system attempting logon is also extracted from the SyslogMessage field. Some of these messages\n// are aggregated.\nlet authfail = Syslog\n| where Facility =~ \"authpriv\"   // looks at authpriv messages\n| where SyslogMessage contains \"authentication failure\" and SyslogMessage contains \" uid=0\"\n| parse SyslogMessage with * \"rhost=\" ExternalIP\n| project TimeGenerated, Computer, ProcessName, HostIP, ExternalIP, ProcessID;  \n// Below pulls messages from syslog-authpriv logs that show each instance an unknown user tried to logon. \nlet userfail = Syslog \n| where Facility =~ \"authpriv\" \n| where SyslogMessage contains \"user unknown\"\n| project TimeGenerated, Computer, HostIP, ProcessID;\n// Join the two log messages above\nlet userauthfail = authfail | join (userfail) on Computer, HostIP, ProcessID\n| project TimeGenerated, Computer, HostIP, ExternalIP, ProcessID ;\n// Extract the EventTime of the first logon attempt\nlet firstfail = userauthfail\n| summarize arg_min(TimeGenerated, *) by Computer, ExternalIP\n| project Computer, ExternalIP, FirstLogonAttempt = TimeGenerated;\n// Extract the EventTime of the last logon attempt\nlet lastfail = userauthfail\n| summarize arg_max(TimeGenerated, *) by Computer, ExternalIP\n| project Computer, ExternalIP, LatestLogonAttempt = TimeGenerated;\n// Join first and last logon attempt data and calculate the time between them (AttemptPeriodLength).\nlet faildates = firstfail | join (lastfail) on Computer, ExternalIP\n| project ExternalIP, Computer, FirstLogonAttempt, LatestLogonAttempt, TimeBetweenLogonAttempts = LatestLogonAttempt - FirstLogonAttempt;\n// Count the number of failed logon attempts by External IP and internal machine\nlet totalfails = userauthfail\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), TotalLogonAttempts = count() by ExternalIP, Computer, HostIP\n| project StartTimeUtc, EndTimeUtc, ExternalIP, Computer, HostIP, TotalLogonAttempts;\n// Combine total attempts with timing data from above\nlet finalfails = totalfails | join (faildates) on Computer, ExternalIP\n| project StartTimeUtc, EndTimeUtc, SourceAddress = ExternalIP, DestinationHost = Computer, DestinationIP = HostIP, TotalLogonAttempts, FirstLogonAttempt, LatestLogonAttempt, TimeBetweenLogonAttempts\n| order by DestinationHost asc nulls last;\nfinalfails \n| where TotalLogonAttempts >= threshold\n| extend timestamp = StartTimeUtc, HostCustomEntity = DestinationHost, IPCustomEntity = DestinationIP",
+                "query": "let threshold = 15;\n// Below pulls messages from syslog-authpriv logs where there was an authentication failure with an unknown user.\n// IP address of system attempting logon is also extracted from the SyslogMessage field. Some of these messages\n// are aggregated.\nSyslog\n| where Facility =~ \"authpriv\"\n| where SyslogMessage has \"authentication failure\" and SyslogMessage has \" uid=0\"\n| parse SyslogMessage with * \"rhost=\" RemoteIP\n| project TimeGenerated, Computer, ProcessName, HostIP, RemoteIP, ProcessID\n| join kind=innerunique (\n    // Below pulls messages from syslog-authpriv logs that show each instance an unknown user tried to logon. \n    Syslog \n    | where Facility =~ \"authpriv\"\n    | where SyslogMessage has \"user unknown\"\n    | project Computer, HostIP, ProcessID\n    ) on Computer, HostIP, ProcessID\n// Count the number of failed logon attempts by External IP and internal machine\n| summarize FirstLogonAttempt = min(TimeGenerated), LatestLogonAttempt = max(TimeGenerated), TotalLogonAttempts = count() by Computer, HostIP, RemoteIP\n// Calculate the time between first and last logon attempt (AttemptPeriodLength)\n| extend TimeBetweenLogonAttempts = LatestLogonAttempt - FirstLogonAttempt\n| where TotalLogonAttempts >= threshold\n| project FirstLogonAttempt, LatestLogonAttempt, TimeBetweenLogonAttempts, TotalLogonAttempts, SourceAddress = RemoteIP, DestinationHost = Computer, DestinationAddress = HostIP\n| sort by DestinationHost asc nulls last\n| extend timestamp = FirstLogonAttempt, HostCustomEntity = DestinationHost, IPCustomEntity = DestinationAddress",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "CredentialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1110"
+                ],
                 "alertRuleTemplateName": "e7ec9fa6-e7f7-41ed-a34b-b956837a3ee6",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]
