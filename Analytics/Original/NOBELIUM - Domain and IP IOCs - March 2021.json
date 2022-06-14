@@ -28,7 +28,9 @@
                 "tactics": [
                     "CommandAndControl"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1102"
+                ],
                 "alertRuleTemplateName": "bb8a3481-dd14-4e76-8dcc-bbec8776d695",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -85,7 +87,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.3.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.3.1"
             }
         }
     ]
