@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/47c1ba8b-0428-4144-b7f9-f9be4d5c4b3e')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/47c1ba8b-0428-4144-b7f9-f9be4d5c4b3e')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2021-10-01-preview",
+            "properties": {
+                "displayName": "Detect Azure cloud shell",
+                "description": "",
+                "severity": "Low",
+                "enabled": true,
+                "query": "let watchlist = (_GetWatchlist('TrustedUsers') | project SearchKey); //Putting the Usernames from our Watchlist into memory to use later\nAzureActivity //the table - this is where Cloud Shell activity is logged\n| where Caller !in (watchlist) //filtering out our trusted users\n| where ResourceGroup startswith \"CLOUD-SHELL\" //filtering for Cloud Shell\n| where ResourceProviderValue == \"MICROSOFT.STORAGE\" //To not mistake this for some other Cloud Shell operation, also filtering on MICROSOFT.STORAGE. Storage is created anytime Cloud Shell runs.\n| where ActivityStatusValue == \"Start\" //Making sure that the activity is the spawning of a new Cloud Shell instance\n| summarize count() by TimeGenerated , ResourceGroup  , Caller , CallerIpAddress , ActivityStatusValue //Getting a count of how many times each individual has run Cloud Shell\n| extend AccountCustomEntity = Caller //Assigning the Caller column - name of person - to AccountCustomEntity - this is what is used for the User Entity in Microsoft Sentinel Incidents\n| extend IPCustomEntity = CallerIpAddress //Assigning the CallerIpAddress column - IP Address of user's system - to IPCustomEntity - this is what is used for the IP Entity in Microsoft Sentinel Incidents",
+                "queryFrequency": "PT5H",
+                "queryPeriod": "PT5H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [],
+                "techniques": [],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
+                    }
+                ],
+                "sentinelEntitiesMappings": null
+            }
+        }
+    ]
+}

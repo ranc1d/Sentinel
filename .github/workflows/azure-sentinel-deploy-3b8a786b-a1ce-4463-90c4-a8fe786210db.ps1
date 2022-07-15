@@ -2,6 +2,7 @@
 $CloudEnv = $Env:cloudEnv
 $ResourceGroupName = $Env:resourceGroupName
 $WorkspaceName = $Env:workspaceName
+$WorkspaceId = $Env:workspaceId
 $Directory = $Env:directory
 $Creds = $Env:creds
 $contentTypes = $Env:contentTypes
@@ -14,12 +15,18 @@ $contentTypeMapping = @{
     "Workbook"=@("Microsoft.Insights/workbooks");
 }
 $sourceControlId = $Env:sourceControlId 
+$rootDirectory = $Env:rootDirectory
 $githubAuthToken = $Env:githubAuthToken
 $githubRepository = $Env:GITHUB_REPOSITORY
 $branchName = $Env:branch
 $smartDeployment = $Env:smartDeployment
-$csvPath = ".sentinel\tracking_table_$sourceControlId.csv"
+$csvPath = "$rootDirectory\.sentinel\tracking_table_$sourceControlId.csv"
+$configPath = "$rootDirectory\sentinel-deployment.config"
 $global:localCsvTablefinal = @{}
+$global:updatedCsvTable = @{}
+$global:parameterFileMapping = @{}
+$global:prioritizedContentFiles = @()
+$global:excludeContentFiles = @()
 
 $guidPattern = '(\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b)'
 $namePattern = '([-\w\._\(\)]+)'
@@ -87,8 +94,9 @@ $secondsBetweenAttempts = 5
 #Converts hashtable to string that can be set as content when pushing csv file
 function ConvertTableToString {
     $output = "FileName, CommitSha`n"
-    $global:localCsvTablefinal.GetEnumerator() | ForEach-Object {
-        $output += "{0},{1}`n" -f $_.Key, $_.Value
+    $global:updatedCsvTable.GetEnumerator() | ForEach-Object {
+        $key = RelativePathWithBackslash $_.Key
+        $output += "{0},{1}`n" -f $key, $_.Value
     }
     return $output
 }
@@ -107,7 +115,8 @@ function GetGithubTree {
 
 #Gets blob commit sha of the csv file, used when updating csv file to repo 
 function GetCsvCommitSha($getTreeResponse) {
-    $shaObject = $getTreeResponse.tree | Where-Object { $_.path -eq $csvPath.Replace("\", "/") }
+    $relativeCsvPath = RelativePathWithBackslash $csvPath
+    $shaObject = $getTreeResponse.tree | Where-Object { $_.path -eq $relativeCsvPath }
     return $shaObject.sha
 }
 
@@ -115,9 +124,9 @@ function GetCsvCommitSha($getTreeResponse) {
 function GetCommitShaTable($getTreeResponse) {
     $shaTable = @{}
     $getTreeResponse.tree | ForEach-Object {
-    if ([System.IO.Path]::GetExtension($_.path) -eq ".json") 
+        $truePath = AbsolutePathWithSlash $_.path
+        if (([System.IO.Path]::GetExtension($_.path) -eq ".json") -or ($truePath -eq $configPath))
         {
-            $truePath =  $_.path.Replace("/", "\")
             $shaTable.Add($truePath, $_.sha)
         }
     }
@@ -126,9 +135,9 @@ function GetCommitShaTable($getTreeResponse) {
 
 #Pushes new/updated csv file to the user's repository. If updating file, will need csv commit sha. 
 function PushCsvToRepo($getTreeResponse) {
-    $path = $csvPath.Replace("\", "/")
+    $relativeCsvPath = RelativePathWithBackslash $csvPath
     $sha = GetCsvCommitSha $getTreeResponse
-    $createFileUrl = "https://api.github.com/repos/$githubRepository/contents/$path"
+    $createFileUrl = "https://api.github.com/repos/$githubRepository/contents/$relativeCsvPath"
     $content = ConvertTableToString
     $encodedContent = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($content))
     
@@ -153,18 +162,10 @@ function ReadCsvToTable {
     $HashTable=@{}
     foreach($r in $csvTable)
     {
-        $HashTable[$r.FileName]=$r.CommitSha
+        $key = AbsolutePathWithSlash $r.FileName 
+        $HashTable[$key]=$r.CommitSha
     }   
     return $HashTable    
-}
-
-#Checks and removes any deleted content files
-function CleanDeletedFilesFromTable {
-    $global:localCsvTablefinal.Clone().GetEnumerator() | ForEach-Object {
-        if (!(Test-Path -Path $_.Key)) {
-            $global:localCsvTablefinal.Remove($_.Key)
-        }
-    }
 }
 
 function AttemptInvokeRestMethod($method, $url, $body, $contentTypes, $maxRetries) {
@@ -332,7 +333,7 @@ function DoesContainWorkspaceParam($templateObject) {
     $templateObject.parameters.PSobject.Properties.Name -contains "workspace"
 }
 
-function AttemptDeployment($path, $deploymentName, $templateObject) {
+function AttemptDeployment($path, $parameterFile, $deploymentName, $templateObject) {
     Write-Host "[Info] Deploying $path with deployment name $deploymentName"
 
     $isValid = IsValidTemplate $path $templateObject
@@ -346,13 +347,26 @@ function AttemptDeployment($path, $deploymentName, $templateObject) {
         $currentAttempt ++
         Try 
         {
+            Write-Host "[Info] Deploy $path with parameter file: [$parameterFile]"
             if (DoesContainWorkspaceParam $templateObject) 
             {
-                New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $path -workspace $workspaceName -ErrorAction Stop | Out-Host
+                if ($parameterFile) {
+                    New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $path -workspace $workspaceName -TemplateParameterFile $parameterFile -ErrorAction Stop | Out-Host
+                }
+                else 
+                {
+                    New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $path -workspace $workspaceName -ErrorAction Stop | Out-Host
+                }
             }
             else 
             {
-                New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $path -ErrorAction Stop | Out-Host
+                if ($parameterFile) {
+                    New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $path -TemplateParameterFile $parameterFile -ErrorAction Stop | Out-Host
+                }
+                else 
+                {
+                    New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $path -ErrorAction Stop | Out-Host
+                }
             }
             AttemptDeployMetadata $deploymentName $ResourceGroupName $templateObject
 
@@ -388,38 +402,119 @@ function GenerateDeploymentName() {
     return "Sentinel_Deployment_$randomId"
 }
 
+#Load deployment configuration
+function LoadDeploymentConfig() {
+    Write-Host "[Info] load the deployment configuration from [$configPath]"
+    $global:parameterFileMapping = @{}
+    $global:prioritizedContentFiles = @()
+    $global:excludeContentFiles = @()
+    try {
+        if (Test-Path $configPath) {
+            $deployment_config = Get-Content $configPath | Out-String | ConvertFrom-Json
+            $parameterFileMappings = @{}
+            if ($deployment_config.parameterfilemappings) {
+                $deployment_config.parameterfilemappings.psobject.properties | ForEach { $parameterFileMappings[$_.Name] = $_.Value }
+            }
+            $key = ($parameterFileMappings.Keys | ? { $_ -eq $workspaceId })
+            if ($null -ne $key) {
+                $parameterFileMappings[$key].psobject.properties | ForEach { $global:parameterFileMapping[$_.Name] = $_.Value }
+            }
+            if ($deployment_config.prioritizedcontentfiles) {
+                $global:prioritizedContentFiles = $deployment_config.prioritizedcontentfiles
+            }
+            $excludeList = $global:parameterFileMapping.Values + $global:prioritizedcontentfiles
+            if ($deployment_config.excludecontentfiles) {
+                $excludeList = $excludeList + $deployment_config.excludecontentfiles
+            }
+            $global:excludeContentFiles = $excludeList | Where-Object { Test-Path (AbsolutePathWithSlash $_) }
+        }
+    }
+    catch {
+        Write-Host "[Warning] An error occurred while trying to load deployment configuration."
+        Write-Host "Exception details: $_"
+        Write-Host $_.ScriptStackTrace
+    }
+}
+
+function filterContentFile($fullPath) {
+	$temp = RelativePathWithBackslash $fullPath
+	return $global:excludeContentFiles | ? {$temp.StartsWith($_, 'CurrentCultureIgnoreCase')}
+}
+
+function RelativePathWithBackslash($absolutePath) {
+	return $absolutePath.Replace($rootDirectory + "\", "").Replace("\", "/")
+}
+
+function AbsolutePathWithSlash($relativePath) {
+	return Join-Path -Path $rootDirectory -ChildPath $relativePath
+}
+
+#resolve parameter file name, return $null if there is none.
+function GetParameterFile($path) {
+    $index = RelativePathWithBackslash $path
+    $key = ($global:parameterFileMapping.Keys | ? { $_ -eq $index })
+    if ($key) {
+        $mappedParameterFile = AbsolutePathWithSlash $global:parameterFileMapping[$key]
+        if (Test-Path $mappedParameterFile) {
+            return $mappedParameterFile
+        }
+    }
+
+    $parameterFilePrefix = $path.TrimEnd(".json")
+    
+    $workspaceParameterFile = $parameterFilePrefix + ".parameters-$WorkspaceId.json"
+    if (Test-Path $workspaceParameterFile) {
+        return $workspaceParameterFile
+    }
+    
+    $defaultParameterFile = $parameterFilePrefix + ".parameters.json"
+    if (Test-Path $defaultParameterFile) {
+        return $defaultParameterFile
+    }
+    
+    return $null
+}
+
 function Deployment($fullDeploymentFlag, $remoteShaTable, $tree) {
     Write-Host "Starting Deployment for Files in path: $Directory"
     if (Test-Path -Path $Directory) 
     {
         $totalFiles = 0;
         $totalFailed = 0;
-        Get-ChildItem -Path $Directory -Recurse -Filter *.json -exclude *metadata.json |
-        ForEach-Object {
-            $path = $_.FullName.Replace($Directory + "\", "")
+	      $iterationList = @()
+        $global:prioritizedContentFiles | ForEach-Object  { $iterationList += (AbsolutePathWithSlash $_) }
+        Get-ChildItem -Path $Directory -Recurse -Filter *.json -exclude *metadata.json, *.parameters*.json |
+                        Where-Object { $null -eq ( filterContentFile $_.FullName ) } |
+                        Select-Object -Property FullName |
+                        ForEach-Object { $iterationList += $_.FullName }
+        $iterationList | ForEach-Object {
+            $path = $_
+            Write-Host "[Info] Try to deploy $path"
+            if (-not (Test-Path $path)) {
+                Write-Host "[Warning] Skipping deployment for $path. The file doesn't exist."
+                return
+            }
             $templateObject = Get-Content $path | Out-String | ConvertFrom-Json
             if (-not (IsValidResourceType $templateObject))
             {
                 Write-Host "[Warning] Skipping deployment for $path. The file contains resources for content that was not selected for deployment. Please add content type to connection if you want this file to be deployed."
                 return
-            }                    
-            if ($fullDeploymentFlag) {
-                $result = FullDeployment $path $templateObject
-            }
-            else {
-                $result = SmartDeployment $remoteShaTable $path $templateObject
-            }
+            }       
+            $parameterFile = GetParameterFile $path
+            $result = SmartDeployment $fullDeploymentFlag $remoteShaTable $path $parameterFile $templateObject
             if ($result.isSuccess -eq $false) {
                 $totalFailed++
             }
             if (-not $result.skip) {
                 $totalFiles++
             }
-            if ($result.isSuccess) {
-                $global:localCsvTablefinal[$path] = $remoteShaTable[$path]
+            if ($result.isSuccess -or $result.skip) {
+                $global:updatedCsvTable[$path] = $remoteShaTable[$path]
+                if ($parameterFile) {
+                    $global:updatedCsvTable[$parameterFile] = $remoteShaTable[$parameterFile]
+                }
             }
         }
-        CleanDeletedFilesFromTable
         PushCsvToRepo $tree
         if ($totalFiles -gt 0 -and $totalFailed -gt 0) 
         {
@@ -433,32 +528,23 @@ function Deployment($fullDeploymentFlag, $remoteShaTable, $tree) {
     }
 }
 
-function FullDeployment($path, $templateObject) {
-    try {
-        $deploymentName = GenerateDeploymentName
-        return @{
-            skip = $false
-            isSuccess = AttemptDeployment $path $deploymentName $templateObject
-        }        
-    }
-    catch {
-        Write-Host "[Error] An error occurred while trying to deploy file $path. Exception details: $_"
-        Write-Host $_.ScriptStackTrace
-    }   
-}
-
-function SmartDeployment($remoteShaTable, $path, $templateObject) {
+function SmartDeployment($fullDeploymentFlag, $remoteShaTable, $path, $parameterFile, $templateObject) {
     try {
         $skip = $false
-        $existingSha = $global:localCsvTablefinal[$path]
-        $remoteSha = $remoteShaTable[$path]
-        if ((!$existingSha) -or ($existingSha -ne $remoteSha)) {
-            $deploymentName = GenerateDeploymentName
-            $isSuccess = AttemptDeployment $path $deploymentName $templateObject    
+        $isSuccess = $null
+        if (!$fullDeploymentFlag) {
+            $existingSha = $global:localCsvTablefinal[$path]
+            $remoteSha = $remoteShaTable[$path]
+            $skip = (($existingSha) -and ($existingSha -eq $remoteSha))
+            if ($skip -and $parameterFile) {
+                $existingShaForParameterFile = $global:localCsvTablefinal[$parameterFile]
+                $remoteShaForParameterFile = $remoteShaTable[$parameterFile]
+                $skip = (($existingShaForParameterFile) -and ($existingShaForParameterFile -eq $remoteShaForParameterFile))
+            }
         }
-        else {
-            $skip = $true
-            $isSuccess = $null  
+        if (!$skip) {
+            $deploymentName = GenerateDeploymentName
+            $isSuccess = AttemptDeployment $path $parameterFile $deploymentName $templateObject    
         }
         return @{
             skip = $skip
@@ -482,9 +568,19 @@ function main() {
         $global:localCsvTablefinal = ReadCsvToTable
     }
 
-    $fullDeploymentFlag = (-not (Test-Path $csvPath)) -or ($smartDeployment -eq "false")
+    LoadDeploymentConfig
+
     $tree = GetGithubTree
     $remoteShaTable = GetCommitShaTable $tree
+
+    $existingConfigSha = $global:localCsvTablefinal[$configPath]
+    $remoteConfigSha = $remoteShaTable[$configPath]
+    $modifiedConfig = ($existingConfigSha -xor $remoteConfigSha) -or ($existingConfigSha -and $remoteConfigSha -and ($existingConfigSha -ne $remoteConfigSha))
+    if ($remoteConfigSha) {
+        $global:updatedCsvTable[$configPath] = $remoteConfigSha
+    }
+
+    $fullDeploymentFlag = $modifiedConfig -or (-not (Test-Path $csvPath)) -or ($smartDeployment -eq "false")
     Deployment $fullDeploymentFlag $remoteShaTable $tree
 }
 

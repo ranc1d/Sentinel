@@ -28,7 +28,9 @@
                 "tactics": [
                     "Collection"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1005"
+                ],
                 "alertRuleTemplateName": "c37711a4-5f44-4472-8afc-0679bc0ef966",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -98,7 +100,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "2.1.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "2.1.1"
             }
         }
     ]

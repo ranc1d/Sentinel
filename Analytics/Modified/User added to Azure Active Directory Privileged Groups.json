@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8386d675-1f69-4ed7-b471-ba2bc64058b8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2021-10-01-preview",
             "properties": {
                 "displayName": "User added to Azure Active Directory Privileged Groups",
                 "description": "This will alert when a user is added to any of the Privileged Groups.\nFor further information on AuditLogs please see https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-audit-activities.\nFor Administrator role permissions in Azure Active Directory please see https://docs.microsoft.com/azure/active-directory/users-groups-roles/directory-assign-admin-roles",
@@ -29,7 +29,10 @@
                     "Persistence",
                     "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098",
+                    "T1078"
+                ],
                 "alertRuleTemplateName": "4d94d4a9-dc96-410a-8dea-4d4d4584188b",
                 "incidentConfiguration": {
                     "createIncident": false,
@@ -68,7 +71,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.2"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.3"
             }
         }
     ]
