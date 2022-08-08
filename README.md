@@ -1,6 +1,6 @@
 # Sentinel
 Sentinel Config
 
-Modify Sentinel/.github/workflows/*.yml to only deploy .json file commits
+Modify "paths" in Sentinel/.github/workflows/*.yml to only deploy .json file commits from Analytics
 - '**'
 - 'Analytics/**.json'
