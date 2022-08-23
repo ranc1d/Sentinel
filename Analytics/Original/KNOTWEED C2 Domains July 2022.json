@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/390074e0-9ebd-474c-be6a-3e22bc46452d')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/390074e0-9ebd-474c-be6a-3e22bc46452d')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2022-09-01-preview",
+            "properties": {
+                "displayName": "KNOTWEED C2 Domains July 2022",
+                "description": "This query looks for references to known KNOTWEED Domains in network logs.\n  This query was published July 2022.\n  Ref: https://www.microsoft.com/security/blog/2022/07/27/untangling-knotweed-european-private-sector-offensive-actor-using-0-day-exploits/",
+                "severity": "High",
+                "enabled": true,
+                "query": "let DomainNames = dynamic([\"acrobatrelay.com\", \"finconsult.cc\", \"realmetaldns.com\"]); \n(union isfuzzy=true \n(CommonSecurityLog  \n| parse Message with * '(' DNSName ')' *  \n| where DNSName in~ (DomainNames) \n| extend Account = SourceUserID, Computer = DeviceName, IPAddress =  DestinationIP \n), \n(_Im_Dns (domain_has_any=DomainNames)\n| extend DNSName = DnsQuery \n| extend IPAddress =  SrcIpAddr, Computer = Dvc\n), \n(_Im_WebSession (url_has_any=DomainNames)\n| extend DNSName = tostring(parse_url(Url)[\"Host\"])\n| extend IPAddress =  SrcIpAddr, Computer = Dvc\n), \n(VMConnection  \n| parse RemoteDnsCanonicalNames with * '[\"' DNSName '\"]' * \n| where isnotempty(DNSName) \n| where DNSName  in~ (DomainNames) \n| extend IPAddress = RemoteIp \n), \n( \n DeviceNetworkEvents \n| where isnotempty(RemoteUrl) \n| where RemoteUrl  has_any (DomainNames)  \n| extend IPAddress = RemoteIP \n| extend Computer = DeviceName \n),\n(AzureDiagnostics \n| where ResourceType == \"AZUREFIREWALLS\"\n| where Category == \"AzureFirewallApplicationRule\"\n| parse msg_s with Protocol 'request from ' SourceHost ':' SourcePort 'to ' DestinationHost ':' DestinationPort '. Action:' Action\n| where isnotempty(DestinationHost)\n| where DestinationHost has_any (DomainNames)  \n| extend DNSName = DestinationHost \n| extend IPAddress = SourceHost\n) \n) \n| extend timestamp = TimeGenerated, AccountCustomEntity = Account, HostCustomEntity = Computer, IPCustomEntity = IPAddress",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "CommandAndControl"
+                ],
+                "techniques": [
+                    "T1071"
+                ],
+                "alertRuleTemplateName": "ce02935c-cc67-4b77-9b96-93d9947e119a",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "HostName",
+                                "columnName": "HostCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
+                    }
+                ],
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.0"
+            }
+        }
+    ]
+}
