@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/5221f3b7-689c-4383-80d9-f75a1ad1cb24')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5221f3b7-689c-4383-80d9-f75a1ad1cb24')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "ThreatIntelligence",
+            "apiVersion": "2022-09-01-preview",
+            "properties": {
+                "enabled": true,
+                "alertRuleTemplateName": "0dd422ee-e6af-4204-b219-f59ac172e4c6",
+                "description": "This rule generates an alert when a Microsoft Threat Intelligence Indicator gets matched with your event logs. The alerts are very high fidelity.\n\nNote : It is advised to turn off any custom alert rules which match the threat intelligence indicators with the same event logs matched by this analytics to prevent duplicate alerts.",
+                "displayName": "(Preview) Microsoft Threat Intelligence Analytics",
+                "severity": "Medium",
+                "tactics": [
+                    "Persistence",
+                    "LateralMovement"
+                ],
+                "techniques": []
+            }
+        }
+    ]
+}
