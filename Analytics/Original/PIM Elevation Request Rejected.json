@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/7c7c184e-570f-4b2e-b84b-79e75245e756')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "PIM Elevation Request Rejected",
                 "description": "Identifies when a user is rejected for a privileged role elevation via PIM. Monitor rejections for indicators of attacker compromise of the requesting account.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-identity-management",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "Persistence"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1078"
+                ],
                 "alertRuleTemplateName": "7d7e20f8-3384-4b71-811c-f5e950e8306c",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -76,7 +78,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.1"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.2"
             }
         }
     ]

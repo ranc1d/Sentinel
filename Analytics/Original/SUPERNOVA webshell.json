@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/7bca5ac5-9174-4173-9499-88fb697739c1')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "SUPERNOVA webshell",
                 "description": "Identifies SUPERNOVA webshell based on W3CIISLog data.\n References:\n - https://unit42.paloaltonetworks.com/solarstorm-supernova/",
@@ -27,9 +27,12 @@
                 "suppressionEnabled": false,
                 "tactics": [
                     "Persistence",
-                    "PrivilegeEscalation"
+                    "CommandAndControl"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1505",
+                    "T1071"
+                ],
                 "alertRuleTemplateName": "2acc91c3-17c2-4388-938e-4eac2d5894e8",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -77,7 +80,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

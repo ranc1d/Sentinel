@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/4e2549cb-f45e-4b27-9d3d-eab810b9c510')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Azure VM Run Command operation executed during suspicious login window",
                 "description": "Identifies when the Azure Run Command operation is executed by a UserPrincipalName and IP Address  \nthat has resulted in a recent user entity behaviour alert.",
@@ -30,7 +30,8 @@
                     "CredentialAccess"
                 ],
                 "techniques": [
-                    "T1570"
+                    "T1570",
+                    "T1212"
                 ],
                 "alertRuleTemplateName": "11bda520-a965-4654-9a45-d09f372f71aa",
                 "incidentConfiguration": {
@@ -71,7 +72,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.3"
+                "templateVersion": "1.0.5"
             }
         }
     ]

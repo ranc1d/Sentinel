@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/326966c0-791a-4ec2-940d-08ce5c2e5f47')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "NOBELIUM - Domain, Hash and IP IOCs - May 2021",
                 "description": "Identifies a match across various data feeds for domains, hashes and IP IOCs related to NOBELIUM.\nRef: https://www.microsoft.com/security/blog/2021/05/27/new-sophisticated-email-based-attack-from-nobelium/",
@@ -29,7 +29,10 @@
                     "CommandAndControl",
                     "Execution"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1102",
+                    "T1204"
+                ],
                 "alertRuleTemplateName": "677da133-e487-4108-a150-5b926591a92b",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -86,7 +89,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.5.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.5.1"
             }
         }
     ]

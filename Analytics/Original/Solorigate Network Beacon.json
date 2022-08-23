@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/a4d728a6-60b3-4d34-8e74-a2f750ed62b4')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Solorigate Network Beacon",
                 "description": "Identifies a match across various data feeds for domains IOCs related to the Solorigate incident.\n References: https://blogs.microsoft.com/on-the-issues/2020/12/13/customers-protect-nation-state-cyberattacks/, \n https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html?1",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "CommandAndControl"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1102"
+                ],
                 "alertRuleTemplateName": "cecdbd4c-4902-403c-8d4b-32eb1efe460b",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -85,7 +87,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.4.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.4.1"
             }
         }
     ]

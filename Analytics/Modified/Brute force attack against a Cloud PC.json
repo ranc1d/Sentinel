@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/664b7a11-892a-41b0-afbd-0d2fafb23d68')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Brute force attack against a Cloud PC",
                 "description": "Identifies evidence of brute force activity against a Windows 365 Cloud PC by highlighting multiple authentication failures and by a successful authentication within a given time window.",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "CredentialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1110"
+                ],
                 "alertRuleTemplateName": "3fbc20a4-04c4-464e-8fcb-6667f53e4987",
                 "incidentConfiguration": {
                     "createIncident": false,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

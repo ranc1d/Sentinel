@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/088971ca-c959-4cf7-9916-d6e1d04f0257')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "New EXE deployed via Default Domain or Default Domain Controller Policies (ASIM Version)",
                 "description": "This detection highlights executables deployed to hosts via either the Default Domain or Default Domain Controller Policies. These policies apply to all hosts or Domain Controllers and best practice is that these policies should not be used for deployment of files.\n  A threat actor may use these policies to deploy files or scripts to all hosts in a domain.\n  This query uses the ASIM parsers and will need them deployed before usage - https://docs.microsoft.com/azure/sentinel/normalization",
@@ -63,7 +63,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.1"
+                "templateVersion": "1.0.2"
             }
         }
     ]

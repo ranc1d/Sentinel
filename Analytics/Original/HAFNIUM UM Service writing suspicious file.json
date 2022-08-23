@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/58d22464-ac4b-4fd1-8171-ddcb556eb76f')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "HAFNIUM UM Service writing suspicious file",
                 "description": "This query looks for the Exchange server UM process writing suspicious files that may be indicative of webshells.\nReference: https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "InitialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1190"
+                ],
                 "alertRuleTemplateName": "7d6d8a8e-b08a-4082-8dbb-d7fd2cbbc35e",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -94,7 +96,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.2.1"
             }
         }
     ]

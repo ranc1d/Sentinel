@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/25157ede-5dfc-4601-81c5-83068ce2441e')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Known NICKEL domains and hashes",
                 "description": "IOC domains and hash values for tools and malware used by NICKEL. \n Matches domain name, hash IOCs and M365 Defender sigs related to the NICKEL activity group with CommonSecurityLog, DnsEvents, VMConnection and SecurityEvents dataTypes.",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "CommandAndControl"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1071"
+                ],
                 "alertRuleTemplateName": "9122a9cb-916b-4d98-a199-1b7b0af8d598",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -76,7 +78,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.2.1"
             }
         }
     ]

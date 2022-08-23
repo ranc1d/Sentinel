@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f9b63285-0492-4845-a9e2-367237bcfe75')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "User account added to built in domain local or global group",
                 "description": "Identifies when a user account has been added to a privileged built in domain local group or global group \nsuch as the Enterprise Admins, Cert Publishers or DnsAdmins. Be sure to verify this is an expected addition.",
@@ -72,7 +72,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.3.1"
+                "templateVersion": "1.3.2"
             }
         }
     ]

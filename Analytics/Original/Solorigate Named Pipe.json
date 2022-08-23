@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e5eac45c-af12-4b4a-924d-60e16fc046b8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Solorigate Named Pipe",
                 "description": "Identifies a match across various data feeds for named pipe IOCs related to the Solorigate incident.\n For the sysmon events required for this detection, logging for Named Pipe Events needs to be configured in Sysmon config (Event ID 17 and Event ID 18)\n Reference: https://techcommunity.microsoft.com/t5/azure-sentinel/solarwinds-post-compromise-hunting-with-azure-sentinel/ba-p/1995095",
@@ -29,7 +29,9 @@
                     "DefenseEvasion",
                     "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1055"
+                ],
                 "alertRuleTemplateName": "11b4c19d-2a79-4da3-af38-b067e1273dee",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -68,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.2.1"
             }
         }
     ]

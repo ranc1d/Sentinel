@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f2dc294c-0da9-484e-9f29-d480d16c1933')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "New EXE deployed via Default Domain or Default Domain Controller Policies",
                 "description": "This detection highlights executables deployed to hosts via either the Default Domain or Default Domain Controller Policies. These policies apply to all hosts or Domain Controllers and best practice is that these policies should not be used for deployment of files.\nA threat actor may use these policies to deploy files or scripts to all hosts in a domain.",
@@ -29,7 +29,10 @@
                     "Execution",
                     "LateralMovement"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1072",
+                    "T1570"
+                ],
                 "alertRuleTemplateName": "05b4bccd-dd12-423d-8de4-5a6fb526bb4f",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -59,7 +62,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/3ec1b421-614a-4177-a6c8-0d88f70dd90a')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Known IRIDIUM IP",
                 "description": "IRIDIUM command and control IP. Identifies a match across various data feeds for IP IOCs related to the IRIDIUM activity group.",
@@ -76,7 +76,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.4.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.4.1"
             }
         }
     ]
