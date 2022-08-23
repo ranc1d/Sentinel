@@ -1,0 +1,95 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/2d66987f-a294-43c6-b4c2-f598e6b38a02')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2d66987f-a294-43c6-b4c2-f598e6b38a02')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2022-09-01-preview",
+            "properties": {
+                "displayName": "Mass Download & copy to USB device by single user",
+                "description": "This query looks for any mass download by a single user with possible file copy activity to a new USB drive. Malicious insiders may perform such activities that may cause harm to the organization. \nThis query could also reveal unintentional insider that had no intention of malicious activity but their actions may impact an organizations security posture.\nReference:https://docs.microsoft.com/defender-cloud-apps/policy-template-reference",
+                "severity": "Medium",
+                "enabled": true,
+                "query": "SecurityAlert\n| where AlertName =~ \"mass download by a single user\"\n| extend Extprop = parse_json(ExtendedProperties)\n| extend Computer = iff(isnotempty(toupper(tostring(Extprop[\"Compromised Host\"]))), toupper(tostring(Extprop[\"Compromised Host\"])), tostring(parse_json(Entities)[0].HostName))\n| extend Account = iff(isnotempty(tolower(tostring(Extprop[\"User Name\"]))), tolower(tostring(Extprop[\"User Name\"])), tolower(tostring(Extprop[\"user name\"])))\n| extend IpAddress = tostring(parse_json(ExtendedProperties).[\"IpAddress\"]) \n| project timestamp=TimeGenerated, AlertName, Computer, Account, IpAddress, ExtendedProperties\n| join kind=inner\n( \nDeviceEvents\n| where  ActionType == \"PnpDeviceConnected\"\n| extend parsed = parse_json(AdditionalFields)\n| project DeviceId, DriveClass = tostring(parsed.ClassName), UsbDeviceId = tostring(parsed.DeviceId), ClassId = tostring(parsed.DeviceId), DeviceDescription = tostring(parsed.DeviceDescription), VendorIds = tostring(parsed.VendorIds), AccountDomain,AccountName,TimeGenerated, ActionType, DeviceName, InitiatingProcessAccountDomain, InitiatingProcessAccountName, InitiatingProcessCommandLine, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessParentFileName, InitiatingProcessFileName, Type\n| where DriveClass == 'USB' and DeviceDescription == 'USB Mass Storage Device'\n) on $left.Account == $right.AccountName\n| join kind=inner \n(\nDeviceFileEvents\n| where FolderPath !startswith \"c\" and FolderPath !startswith @\"\\\"\n)  on DeviceId\n| project  TimeGenerated, ActionType, Computer, FileName, FileSize, IpAddress, InitiatingProcessCommandLine, InitiatingProcessFileName, Account\n| extend timestamp = TimeGenerated, CompromisedEntity = Computer, AccountCustomEntity=Account, ProcessCustomEntity = InitiatingProcessFileName, IPCustomEntity=IpAddress",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [
+                    "Exfiltration"
+                ],
+                "techniques": [
+                    "T1052"
+                ],
+                "alertRuleTemplateName": "6267ce44-1e9d-471b-9f1e-ae76a6b7aa84",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "AccountCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Host",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "CompromisedEntity"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Process",
+                        "fieldMappings": [
+                            {
+                                "identifier": "ProcessId",
+                                "columnName": "ProcessCustomEntity"
+                            }
+                        ]
+                    }
+                ],
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.0"
+            }
+        }
+    ]
+}
