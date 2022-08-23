@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/85d0179f-aeb5-4115-8fc1-37f44dbb9b54')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Known CERIUM domains and hashes",
                 "description": "CERIUM malicious webserver and hash values for maldocs and malware. \n Matches domain name IOCs related to the CERIUM activity group with CommonSecurityLog, DnsEvents, and VMConnection dataTypes.",
@@ -77,7 +77,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.2.1"
             }
         }
     ]

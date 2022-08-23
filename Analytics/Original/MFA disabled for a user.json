@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/43517f6a-3cf4-418b-88bf-d95cccb66b15')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "MFA disabled for a user",
                 "description": "Multi-Factor Authentication (MFA) helps prevent credential compromise. This alert identifies when an attempt has been made to disable MFA for a user ",
@@ -29,7 +29,10 @@
                     "CredentialAccess",
                     "Persistence"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098",
+                    "T1556"
+                ],
                 "alertRuleTemplateName": "65c78944-930b-4cae-bd79-c3664ae30ba7",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -68,7 +71,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.1"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.2"
             }
         }
     ]

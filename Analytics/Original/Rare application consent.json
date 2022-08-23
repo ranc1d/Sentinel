@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/4c531dcb-b391-4c82-ba11-e8563f84358d')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Rare application consent",
                 "description": "This will alert when the \"Consent to application\" operation occurs by a user that has not done this operation before or rarely does this.\nThis could indicate that permissions to access the listed Azure App were provided to a malicious actor. \nConsent to application, Add service principal and Add OAuth2PermissionGrant should typically be rare events. \nThis may help detect the Oauth2 attack that can be initiated by this publicly available tool - https://github.com/fireeye/PwnAuth\nFor further information on AuditLogs please see https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-audit-activities.",
@@ -27,10 +27,12 @@
                 "suppressionEnabled": false,
                 "tactics": [
                     "Persistence",
-                    "LateralMovement",
-                    "Collection"
+                    "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1136",
+                    "T1068"
+                ],
                 "alertRuleTemplateName": "83ba3057-9ea3-4759-bf6a-933f2e5bc7ee",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -78,7 +80,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.1.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.1.1"
             }
         }
     ]

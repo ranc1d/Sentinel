@@ -8,30 +8,30 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/5914484c-4bab-4e44-9647-7b200dd4627a')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5914484c-4bab-4e44-9647-7b200dd4627a')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/2e36dfbf-ee34-48fa-b3fd-9c1c3a138aa3')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2e36dfbf-ee34-48fa-b3fd-9c1c3a138aa3')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2022-09-01-preview",
             "properties": {
-                "displayName": "Account created or deleted by non-approved user",
-                "description": "Identifies accounts that were created or deleted by a defined list of non-approved user principal names. Add to this list before running the query for accurate results.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-user-accounts",
+                "displayName": "Conditional Access Policy Modified by New User",
+                "description": "Detects a Conditional Access Policy being modified by a user who has not modified a policy in the last 14 days.\n  A threat actor may try to modify policies to weaken the security controls in place.\n  Investigate any change to ensure they are approved.\n  Ref: https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-infrastructure#conditional-access",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "// Add non-approved user principal names to the list below to search for their account creation/deletion activity\n// ex: dynamic([\"UPN1\", \"upn123\"])\nlet nonapproved_users = dynamic([]);\nAuditLogs\n| where OperationName == \"Add user\" or OperationName == \"Delete user\"\n| where Result == \"success\"\n| extend InitiatingUser = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\n| where InitiatingUser has_any (nonapproved_users)\n| project-reorder TimeGenerated, ResourceId, OperationName, InitiatingUser, TargetResources\n| extend AccountCustomEntity = InitiatingUser, IPCustomEntity = tostring(parse_json(tostring(InitiatedBy.user)).ipAddress)",
+                "query": "let known_users = (AuditLogs\n  | where TimeGenerated between(ago(14d)..ago(1d))\n  | where OperationName has \"conditional access policy\"\n  | where Result =~ \"success\"\n  | extend userPrincipalName = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\n  | summarize by userPrincipalName);\n  AuditLogs\n  | where TimeGenerated > ago(1d)\n  | where OperationName has \"conditional access policy\"\n  | where Result =~ \"success\"\n  | extend userPrincipalName = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\n  | extend CAPolicyName = tostring(TargetResources[0].displayName)\n  | extend ipAddress = tostring(parse_json(tostring(InitiatedBy.user)).ipAddress)\n  | where userPrincipalName !in (known_users)\n  | extend NewPolicyValues = TargetResources[0].modifiedProperties[0].newValue\n  | extend OldPolicyValues = TargetResources[0].modifiedProperties[0].oldValue\n  | project-reorder TimeGenerated, OperationName, CAPolicyName, userPrincipalName, ipAddress, NewPolicyValues, OldPolicyValues",
                 "queryFrequency": "P1D",
-                "queryPeriod": "P1D",
+                "queryPeriod": "P7D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
                 "tactics": [
-                    "InitialAccess"
+                    "DefenseEvasion"
                 ],
                 "techniques": [
                     "T1078"
                 ],
-                "alertRuleTemplateName": "6d63efa6-7c25-4bd4-a486-aa6bf50fde8a",
+                "alertRuleTemplateName": "25a7f951-54b7-4cf5-9862-ebc04306c590",
                 "incidentConfiguration": {
                     "createIncident": true,
                     "groupingConfiguration": {
@@ -55,7 +55,7 @@
                         "fieldMappings": [
                             {
                                 "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
+                                "columnName": "userPrincipalName"
                             }
                         ]
                     },
@@ -64,13 +64,13 @@
                         "fieldMappings": [
                             {
                                 "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "columnName": "ipAddress"
                             }
                         ]
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.1"
+                "templateVersion": "1.0.0"
             }
         }
     ]

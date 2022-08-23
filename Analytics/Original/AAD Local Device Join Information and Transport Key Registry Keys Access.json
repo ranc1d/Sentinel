@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2cb6dc73-d6de-4095-837d-7a9a7ab79806')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "AAD Local Device Join Information and Transport Key Registry Keys Access",
                 "description": "This detection uses Windows security events to detect suspicious access attempts by the same process\n to registry keys that provide information about an AAD joined or registered devices and Transport keys (tkpub / tkpriv).\n This information can be used to export the Device Certificate (dkpub / dkpriv) and Transport key (tkpub/tkpriv).\n These set of keys can be used to impersonate existing Azure AD joined devices.\n This detection requires an access control entry (ACE) on the system access control list (SACL) of the following securable objects:\n HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CloudDomainJoin (AAD joined devices)\n HKCU:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\WorkplaceJoin (AAD registered devices)\n HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Cryptography\\Ngc\\KeyTransportKey (Transport Key)\n Make sure you set the SACL to propagate to its sub-keys. You can find more information in here https://github.com/OTRF/Set-AuditRule/blob/master/rules/registry/aad_connect_health_service_agent.yml\n Reference: https://o365blog.com/post/deviceidentity/",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "Discovery"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1012"
+                ],
                 "alertRuleTemplateName": "a356c8bd-c81d-428b-aa36-83be706be034",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

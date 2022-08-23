@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f5c8d43b-c542-408f-a68f-eaf581ecc2e2')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "SUNBURST and SUPERNOVA backdoor hashes",
                 "description": "Identifies SolarWinds SUNBURST and SUPERNOVA backdoor file hash IOCs in DeviceFileEvents\nReferences:\n- https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html\n- https://gist.github.com/olafhartong/71ffdd4cab4b6acd5cbcd1a0691ff82f",
@@ -30,7 +30,11 @@
                     "Persistence",
                     "InitialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1195",
+                    "T1059",
+                    "T1546"
+                ],
                 "alertRuleTemplateName": "a3c144f9-8051-47d4-ac29-ffb0c312c910",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -82,7 +86,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.2"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.3"
             }
         }
     ]

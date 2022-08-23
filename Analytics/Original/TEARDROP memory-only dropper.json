@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9080bc0b-c40d-459a-b492-66e6783e5c4d')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "TEARDROP memory-only dropper",
                 "description": "Identifies SolarWinds TEARDROP memory-only dropper IOCs in Window's defender Exploit Guard activity\nReferences:\n- https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html\n- https://gist.github.com/olafhartong/71ffdd4cab4b6acd5cbcd1a0691ff82f",
@@ -28,9 +28,13 @@
                 "tactics": [
                     "Execution",
                     "Persistence",
-                    "InitialAccess"
+                    "DefenseEvasion"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1543",
+                    "T1059",
+                    "T1027"
+                ],
                 "alertRuleTemplateName": "738702fd-0a66-42c7-8586-e30f0583f8fe",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -82,7 +86,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.1"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.3"
             }
         }
     ]

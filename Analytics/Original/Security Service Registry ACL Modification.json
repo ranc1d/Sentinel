@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/c9fdb55a-82c9-4bef-b54c-9962d80ad6eb')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Security Service Registry ACL Modification",
                 "description": "Identifies attempts to modify registry ACL to evade security solutions. In the Solorigate attack, the attackers were found modifying registry permissions so services.exe cannot access the relevant registry keys to start the service.\n The detection leverages Security Event as well as MDE data to identify when specific security services registry permissions are modified. \n Only some portions of this detection are related to Solorigate, it also includes coverage for some common tools that perform this activity. \n Reference on guidance for enabling registry auditing:\n - https://docs.microsoft.com/windows/security/threat-protection/auditing/advanced-security-auditing-faq\n - https://docs.microsoft.com/windows/security/threat-protection/auditing/appendix-a-security-monitoring-recommendations-for-many-audit-events\n - https://docs.microsoft.com/windows/security/threat-protection/auditing/audit-registry\n - https://docs.microsoft.com/windows/security/threat-protection/auditing/event-4670\n   - For the event 4670 to be created the audit policy for the registry must have auditing enabled for Write DAC and/or Write Owner\n - https://github.com/OTRF/Set-AuditRule \n - https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.registryrights?view=dotnet-plat-ext-5.0",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "DefenseEvasion"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1562"
+                ],
                 "alertRuleTemplateName": "473d57e6-f787-435c-a16b-b38b51fa9a4b",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.1.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.1.1"
             }
         }
     ]

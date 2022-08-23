@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9b7c5e2c-2a0e-4c4f-94a6-4bbf19272c84')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Failed AzureAD logons but success logon to host",
                 "description": "Identifies a list of IP addresses with a minimum number (default of 5) of failed logon attempts to Azure Active Directory.\nUses that list to identify any successful remote logons to hosts from these IPs within the same timeframe.",
@@ -29,7 +29,10 @@
                     "InitialAccess",
                     "CredentialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1078",
+                    "T1110"
+                ],
                 "alertRuleTemplateName": "8ee967a2-a645-4832-85f4-72b635bcb3a6",
                 "incidentConfiguration": {
                     "createIncident": false,
@@ -77,7 +80,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.1.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.1.1"
             }
         }
     ]

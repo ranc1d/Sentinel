@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/c48ed5db-b25a-4a4b-bb6c-a73f83098637')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "AV detections related to Ukraine threats",
                 "description": "This query looks for Microsoft Defender AV detections for malware observed in relation to the war in Ukraine.\n  Ref: https://msrc-blog.microsoft.com/2022/02/28/analysis-resources-cyber-threat-activity-ukraine/ ",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "Impact"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1485"
+                ],
                 "alertRuleTemplateName": "b6685757-3ed1-4b05-a5bd-2cacadc86c2a",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -58,7 +60,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.1.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.1.1"
             }
         }
     ]

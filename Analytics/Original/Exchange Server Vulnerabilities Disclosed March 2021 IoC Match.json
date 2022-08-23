@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/cb7f30c1-89c6-4cc9-a1f9-523d8643281d')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Exchange Server Vulnerabilities Disclosed March 2021 IoC Match",
                 "description": "This detection look for IoCs shared by Microsoft relating to attacks exploiting the Exchange Server vulnerabilities disclosed in March 2021. It looks for SHA256 file hashes, IP addresses and file paths in a number of data sources. This query can also be customized with additional data sources that may include these elements.\nRef: https://msrc-blog.microsoft.com/2021/03/02/multiple-security-updates-released-for-exchange-server/",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "InitialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1190"
+                ],
                 "alertRuleTemplateName": "d804b39c-03a4-417c-a949-bdbf21fa3305",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -74,9 +76,19 @@
                                 "columnName": "HostCustomEntity"
                             }
                         ]
+                    },
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPCustomEntity"
+                            }
+                        ]
                     }
                 ],
-                "templateVersion": "1.7.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.7.2"
             }
         }
     ]

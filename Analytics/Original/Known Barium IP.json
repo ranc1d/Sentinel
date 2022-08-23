@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5a5dcd8d-c9dc-4bfc-affb-7eba118dda4e')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Known Barium IP",
                 "description": "Identifies a match across various data feeds for IP IOCs related to the Barium activity group.  \n References: https://www.justice.gov/opa/pr/seven-international-cyber-defendants-including-apt41-actors-charged-connection-computer' ",
@@ -76,7 +76,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.3.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.3.1"
             }
         }
     ]

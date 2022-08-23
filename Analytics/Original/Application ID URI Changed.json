@@ -8,30 +8,31 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/b228f06e-d66d-4d92-b910-6271e36588a2')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b228f06e-d66d-4d92-b910-6271e36588a2')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/2d76c244-cb2d-49f5-90ee-ec52f1626beb')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/2d76c244-cb2d-49f5-90ee-ec52f1626beb')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2022-09-01-preview",
             "properties": {
-                "displayName": "MFA Rejected by User",
-                "description": "Identifies accurances where a user has rejected an MFA prompt. This could be an indicator that a threat actor has compromised the username and password of this user account and is using it to try and log into the account.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-user-accounts#monitoring-for-failed-unusual-sign-ins",
+                "displayName": "Application ID URI Changed",
+                "description": "Detects changes to an Application ID URI.\n  Monitor these changes to make sure that they were authorized.\n  Ref: https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-applications#appid-uri-added-modified-or-removed",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "SigninLogs\n| where ResultType == 500121\n| extend additionalDetails_ = tostring(Status.additionalDetails)\n| where additionalDetails_ =~ \"MFA denied; user declined the authentication\"\n| extend AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress",
-                "queryFrequency": "PT1H",
-                "queryPeriod": "PT1H",
+                "query": "AuditLogs\n  | where Category == \"ApplicationManagement\"\n  | where OperationName has_any (\"Update Application\", \"Update Service principal\")\n  | extend appName = tostring(parse_json(tostring(InitiatedBy.app)).displayName)\n  | extend UPN = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\n  | extend UpdatedBy = iif(isnotempty(appName), appName, UPN)\n  | extend mod_props = TargetResources[0].modifiedProperties\n  | extend AppName = tostring(TargetResources[0].displayName)\n  | mv-expand mod_props\n  | where mod_props.displayName has \"AppIdentifierUri\"\n  | extend OldURI = tostring(mod_props.oldValue)\n  | extend NewURI = tostring(mod_props.newValue)\n  | project-reorder TimeGenerated, OperationName, AppName, OldURI, NewURI, UpdatedBy",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
                 "tactics": [
-                    "InitialAccess"
+                    "Persistence",
+                    "PrivilegeEscalation"
                 ],
                 "techniques": [
                     "T1078"
                 ],
-                "alertRuleTemplateName": "d99cf5c3-d660-436c-895b-8a8f8448da23",
+                "alertRuleTemplateName": "9fb2ee72-959f-4c2b-bc38-483affc539e4",
                 "incidentConfiguration": {
                     "createIncident": true,
                     "groupingConfiguration": {
@@ -55,30 +56,22 @@
                         "fieldMappings": [
                             {
                                 "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
-                            },
-                            {
-                                "identifier": "AadUserId",
-                                "columnName": "UserId"
-                            },
-                            {
-                                "identifier": "AadTenantId",
-                                "columnName": "AADTenantId"
+                                "columnName": "UpdatedBy"
                             }
                         ]
                     },
                     {
-                        "entityType": "IP",
+                        "entityType": "URL",
                         "fieldMappings": [
                             {
-                                "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "identifier": "Url",
+                                "columnName": "NewURI"
                             }
                         ]
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.3"
+                "templateVersion": "1.0.0"
             }
         }
     ]

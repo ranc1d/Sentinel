@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/4ea3838d-8814-4843-9803-47f63036d908')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Azure AD Role Management Permission Grant",
                 "description": "Identifies when the Microsoft Graph RoleManagement.ReadWrite.Directory (Delegated or Application) permission is granted to a service principal.\nThis permission allows an application to read and manage the role-based access control (RBAC) settings for your company's directory.\nAn adversary could use this permission to add an Azure AD object to an Admin directory role and escalate privileges.\nRef : https://docs.microsoft.com/graph/permissions-reference#role-management-permissions\nRef : https://docs.microsoft.com/graph/api/directoryrole-post-members?view=graph-rest-1.0&tabs=http",
@@ -26,10 +26,13 @@
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
                 "tactics": [
-                    "PrivilegeEscalation",
-                    "Persistence"
+                    "Persistence",
+                    "Impact"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098",
+                    "T1078"
+                ],
                 "alertRuleTemplateName": "1ff56009-db01-4615-8211-d4fda21da02d",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -68,7 +71,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.2"
             }
         }
     ]

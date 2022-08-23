@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/6d2628bb-05f4-4383-9c4a-b4a3c9730b17')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Known Phosphorus group domains/IP",
                 "description": "Matches domain name IOCs related to Phosphorus group activity with CommonSecurityLog, DnsEvents, OfficeActivity and VMConnection dataTypes.\nReferences: https://blogs.microsoft.com/on-the-issues/2019/03/27/new-steps-to-protect-customers-from-hacking/.",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "CommandAndControl"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1071"
+                ],
                 "alertRuleTemplateName": "155f40c6-610d-497d-85fc-3cf06ec13256",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -76,7 +78,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.4.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.4.1"
             }
         }
     ]

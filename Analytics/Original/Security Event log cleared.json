@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0de1664f-c2d5-4160-af14-f0058e4530dc')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Security Event log cleared",
                 "description": "Checks for event id 1102 which indicates the security event log was cleared. \nIt uses Event Source Name \"Microsoft-Windows-Eventlog\" to avoid generating false positives from other sources, like AD FS servers for instance.",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "DefenseEvasion"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1070"
+                ],
                 "alertRuleTemplateName": "80da0a8f-cfe1-4cd0-a895-8bc1771a720e",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.1.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.1.1"
             }
         }
     ]

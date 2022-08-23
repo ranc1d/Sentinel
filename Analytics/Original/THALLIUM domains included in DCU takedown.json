@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/07f98a47-823a-4639-9b1b-0a624485f5a6')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "THALLIUM domains included in DCU takedown",
                 "description": "THALLIUM spearphishing and command and control domains included in December 2019 DCU/MSTIC takedown. \n Matches domain name IOCs related to the THALLIUM activity group with CommonSecurityLog, DnsEvents, VMConnection and SecurityEvents dataTypes.\n References: https://blogs.microsoft.com/on-the-issues/2019/12/30/microsoft-court-action-against-nation-state-cybercrime/ ",
@@ -77,7 +77,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.4.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.4.1"
             }
         }
     ]

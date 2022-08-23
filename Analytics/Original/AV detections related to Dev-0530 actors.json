@@ -8,30 +8,30 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/7c7c184e-570f-4b2e-b84b-79e75245e756')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/7c7c184e-570f-4b2e-b84b-79e75245e756')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/95994104-d3f8-4dc2-93bb-d2a764bdf571')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/95994104-d3f8-4dc2-93bb-d2a764bdf571')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2022-09-01-preview",
             "properties": {
-                "displayName": "PIM Elevation Request Rejected",
-                "description": "Identifies when a user is rejected for a privileged role elevation via PIM. Monitor rejections for indicators of attacker compromise of the requesting account.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-identity-management",
+                "displayName": "AV detections related to Dev-0530 actors",
+                "description": "This query looks for Microsoft Defender AV detections related to  Dev-0530 actors. In Microsoft Sentinel the SecurityAlerts table includes only the Device Name of the affected device, \n this query joins the DeviceInfo table to clearly connect other information such as Device group, ip, logged on users etc. This would allow the Microsoft Sentinel analyst to have more context related to the alert, if available.",
                 "severity": "High",
                 "enabled": true,
-                "query": "AuditLogs\n| where ActivityDisplayName =~'Add member to role completed (PIM activation)'\n| where Result == \"failure\"\n| extend Role = tostring(TargetResources[3].displayName)\n| extend User = tostring(TargetResources[2].displayName)\n| project-reorder TimeGenerated, User, Role, OperationName, Result, ResultDescription\n| extend InitiatingUser = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)\n| extend AccountCustomEntity = User, IPCustomEntity = tostring(parse_json(tostring(InitiatedBy.user)).ipAddress)",
-                "queryFrequency": "PT2H",
-                "queryPeriod": "PT2H",
+                "query": "let Dev0530_threats = dynamic([\"Trojan:Win32/SiennaPurple.A\", \"Ransom:Win32/SiennaBlue.A\", \"Ransom:Win32/SiennaBlue.B\"]);\nDeviceInfo\n| extend DeviceName = tolower(DeviceName)\n| join kind=inner ( SecurityAlert\n| where ProviderName == \"MDATP\"\n| extend ThreatName = tostring(parse_json(ExtendedProperties).ThreatName)\n| extend ThreatFamilyName = tostring(parse_json(ExtendedProperties).ThreatFamilyName)\n| where ThreatName in~ (Dev0530_threats) or ThreatFamilyName in~ (Dev0530_threats)\n| extend CompromisedEntity = tolower(CompromisedEntity)\n) on $left.DeviceName == $right.CompromisedEntity\n| summarize by DisplayName, ThreatName, ThreatFamilyName, PublicIP, AlertSeverity, Description, tostring(LoggedOnUsers), DeviceId, TenantId , bin(TimeGenerated, 1d), CompromisedEntity, tostring(LoggedOnUsers), ProductName, Entities",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
                 "tactics": [
-                    "Persistence"
+                    "Impact"
                 ],
                 "techniques": [
-                    "T1078"
+                    "T1486"
                 ],
-                "alertRuleTemplateName": "7d7e20f8-3384-4b71-811c-f5e950e8306c",
+                "alertRuleTemplateName": "5f171045-88ab-4634-baae-a7b6509f483b",
                 "incidentConfiguration": {
                     "createIncident": true,
                     "groupingConfiguration": {
@@ -51,20 +51,11 @@
                 "customDetails": null,
                 "entityMappings": [
                     {
-                        "entityType": "Account",
+                        "entityType": "Host",
                         "fieldMappings": [
                             {
                                 "identifier": "FullName",
-                                "columnName": "InitiatingUser"
-                            }
-                        ]
-                    },
-                    {
-                        "entityType": "Account",
-                        "fieldMappings": [
-                            {
-                                "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
+                                "columnName": "CompromisedEntity"
                             }
                         ]
                     },
@@ -73,13 +64,13 @@
                         "fieldMappings": [
                             {
                                 "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "columnName": "PublicIP"
                             }
                         ]
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.2"
+                "templateVersion": "1.0.0"
             }
         }
     ]
