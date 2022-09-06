@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/57fcb455-2cbe-4112-9e59-6c2b44f66058')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/57fcb455-2cbe-4112-9e59-6c2b44f66058')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2022-09-01-preview",
+            "properties": {
+                "displayName": "Track Active Directory group modifications",
+                "description": "",
+                "severity": "Informational",
+                "enabled": true,
+                "query": "IdentityDirectoryEvents\r\n| where Application == \"Active Directory\"\r\n| where ActionType == \"Group Membership changed\"\r\n| where DestinationDeviceName != \"\" // Exclude activites coming AD Sync changes. \r\n| extend ToGroup = tostring(parse_json(AdditionalFields).[\"TO.GROUP\"]) // Extracts the group name if action is add enity to a group.\r\n| extend FromGroup = tostring(parse_json(AdditionalFields).[\"FROM.GROUP\"]) // etracts the group name if action is remove entity from a group.\r\n| extend Action = iff(isempty(ToGroup), \"Remove\", \"Add\") // calculates if the action is Remove or Add\r\n| extend GroupModified = iff(isempty(ToGroup), FromGroup, ToGroup) // group name that the action was taken on \r\n| extend Target_Group = tostring(parse_json(AdditionalFields).[\"TARGET_OBJECT.GROUP\"])\r\n| project Timestamp, Action, GroupModified,  Target_Account = TargetAccountDisplayName, Target_UPN = TargetAccountUpn, Target_Group,  DC=DestinationDeviceName, Actor=AccountName, ActorDomain=AccountDomain, AdditionalFields\r\n| sort by Timestamp desc ",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "tactics": [],
+                "techniques": [],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": {
+                    "GroupModified": "GroupModified"
+                },
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "Target_Account"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "Actor"
+                            }
+                        ]
+                    }
+                ],
+                "sentinelEntitiesMappings": null
+            }
+        }
+    ]
+}
