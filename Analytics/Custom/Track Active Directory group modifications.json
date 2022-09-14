@@ -53,7 +53,7 @@
                         "fieldMappings": [
                             {
                                 "identifier": "FullName",
-                                "columnName": "Target_Account"
+                                "columnName": "Target_UPN"
                             }
                         ]
                     },
