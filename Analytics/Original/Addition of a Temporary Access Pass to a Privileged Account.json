@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f7f04a9c-748f-46c2-aa52-e09cd9899f95')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2022-09-01-preview",
+            "apiVersion": "2022-10-01-preview",
             "properties": {
                 "displayName": "Addition of a Temporary Access Pass to a Privileged Account",
                 "description": "Detects when a Temporary Access Pass (TAP) is created for a Privileged Account.\n  A Temporary Access Pass is a time-limited passcode issued by an admin that satisfies strong authentication requirements and can be used to onboard other authentication methods, including Passwordless ones such as Microsoft Authenticator or even Windows Hello.\n  A threat actor could use a TAP to register a new authentication method to maintain persistance to an account.\n  Review any TAP creations to ensure they were used legitimately.\n  Ref: https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#changes-to-privileged-accounts",
@@ -61,7 +61,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.0"
+                "templateVersion": "1.0.1"
             }
         }
     ]

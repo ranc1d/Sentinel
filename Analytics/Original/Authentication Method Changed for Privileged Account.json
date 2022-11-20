@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/80791731-a7d8-4418-962e-5bf245a8389b')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2022-09-01-preview",
+            "apiVersion": "2022-10-01-preview",
             "properties": {
                 "displayName": "Authentication Method Changed for Privileged Account",
                 "description": "Identifies authentication methods being changed for a privileged account. This could be an indicated of an attacker adding an auth method to the account so they can have continued access.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor-1",
@@ -70,7 +70,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.0"
+                "templateVersion": "1.0.1"
             }
         }
     ]

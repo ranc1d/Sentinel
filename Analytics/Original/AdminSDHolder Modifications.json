@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/365d1dcd-a406-468d-8bdd-a740b73bb098')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-10-01-preview",
             "properties": {
                 "displayName": "AdminSDHolder Modifications",
                 "description": "This query detects modification in the AdminSDHolder  in the Active Directory which could indicate an attempt for persistence. \nAdminSDHolder Modification is a persistence technique in which an attacker abuses the SDProp process in Active Directory to establish a persistent backdoor to Active Directory.\nThis query searches for the event id 5136 where the Object DN is AdminSDHolder.\nRef: https://attack.stealthbits.com/adminsdholder-modification-ad-persistence",
@@ -28,7 +28,9 @@
                 "tactics": [
                     "Persistence"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1078"
+                ],
                 "alertRuleTemplateName": "52aec824-96c1-4a03-8e44-bb70532e6cea",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +69,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.1"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.2"
             }
         }
     ]
