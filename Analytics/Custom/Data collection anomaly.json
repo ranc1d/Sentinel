@@ -18,9 +18,9 @@
                 "description": "",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "Usage\r\n| where TimeGenerated > ago(14d)\r\n| where DataType !in (\"SecurityAlert\",\"SecurityIncident\")\r\n| summarize max(TimeGenerated) by DataType\r\n| where max_TimeGenerated < ago(1d)\r\n| where max_TimeGenerated > ago(2d)",
+                "query": "Usage\r\n| where DataType !in (\"SecurityAlert\",\"SecurityIncident\")\r\n| summarize max(TimeGenerated) by DataType\r\n| where max_TimeGenerated < ago(1d)\r\n| where max_TimeGenerated > ago(2d)",
                 "queryFrequency": "P1D",
-                "queryPeriod": "P1D",
+                "queryPeriod": "P2D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
@@ -44,7 +44,9 @@
                     "aggregationKind": "AlertPerResult"
                 },
                 "alertDetailsOverride": null,
-                "customDetails": null,
+                "customDetails": {
+                    "Table": "DataType"
+                },
                 "entityMappings": null,
                 "sentinelEntitiesMappings": null
             }
