@@ -12,23 +12,26 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/5c36f9a3-39a8-4383-8d2b-c9104d6c788a')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "DNS events related to ToR proxies",
                 "description": "Identifies IP addresses performing DNS lookups associated with common ToR proxies.",
                 "severity": "Low",
                 "enabled": true,
-                "query": "DnsEvents\n| where Name contains \".\"\n| where Name has_any (\"tor2web.org\", \"tor2web.com\", \"torlink.co\", \"onion.to\", \"onion.ink\", \"onion.cab\", \"onion.nu\", \"onion.link\", \n\"onion.it\", \"onion.city\", \"onion.direct\", \"onion.top\", \"onion.casa\", \"onion.plus\", \"onion.rip\", \"onion.dog\", \"tor2web.fi\", \n\"tor2web.blutmagie.de\", \"onion.sh\", \"onion.lu\", \"onion.pet\", \"t2w.pw\", \"tor2web.ae.org\", \"tor2web.io\", \"tor2web.xyz\", \"onion.lt\", \n\"s1.tor-gateways.de\", \"s2.tor-gateways.de\", \"s3.tor-gateways.de\", \"s4.tor-gateways.de\", \"s5.tor-gateways.de\", \"hiddenservice.net\")\n| extend timestamp = TimeGenerated, IPCustomEntity = ClientIP, HostCustomEntity = Computer",
+                "query": "DnsEvents\n| where Name contains \".\"\n| where Name has_any (\"tor2web.org\", \"tor2web.com\", \"torlink.co\", \"onion.to\", \"onion.ink\", \"onion.cab\", \"onion.nu\", \"onion.link\",\n\"onion.it\", \"onion.city\", \"onion.direct\", \"onion.top\", \"onion.casa\", \"onion.plus\", \"onion.rip\", \"onion.dog\", \"tor2web.fi\",\n\"tor2web.blutmagie.de\", \"onion.sh\", \"onion.lu\", \"onion.pet\", \"t2w.pw\", \"tor2web.ae.org\", \"tor2web.io\", \"tor2web.xyz\", \"onion.lt\",\n\"s1.tor-gateways.de\", \"s2.tor-gateways.de\", \"s3.tor-gateways.de\", \"s4.tor-gateways.de\", \"s5.tor-gateways.de\", \"hiddenservice.net\")\n| extend timestamp = TimeGenerated, IPCustomEntity = ClientIP, HostCustomEntity = Computer",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Exfiltration"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1048"
+                ],
                 "alertRuleTemplateName": "a83ef0f4-dace-4767-bce3-ebd32599d2a0",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

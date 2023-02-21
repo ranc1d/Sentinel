@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/174a1b66-23b8-462d-84f4-3af4a4e2bf93')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Exchange SSRF Autodiscover ProxyShell - Detection",
                 "description": "This query looks for suspicious request patterns to Exchange servers that fit patterns recently\nblogged about by PeterJson. This exploitation chain utilises an SSRF vulnerability in Exchange\nwhich eventually allows the attacker to execute arbitrary Powershell on the server. In the example\npowershell can be used to write an email to disk with an encoded attachment containing a shell.\nReference: https://peterjson.medium.com/reproducing-the-proxyshell-pwn2own-exploit-49743a4ea9a1",
@@ -25,10 +25,13 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "InitialAccess"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1190"
+                ],
                 "alertRuleTemplateName": "968358d6-6af8-49bb-aaa4-187b3067fb95",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -85,7 +88,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

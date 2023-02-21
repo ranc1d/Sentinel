@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0702143c-8668-4ab9-87b3-459f8e613104')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "NOBELIUM IOCs related to FoggyWeb backdoor",
                 "description": "Identifies a match across various data feeds for IOCs related to FoggyWeb backdoor by the threat actor NOBELIUM.\n FoggyWeb is a passive and highly targeted backdoor capable of remotely exfiltrating sensitive information from a compromised AD FS server.\n It can also receive additional malicious components from a command-and-control (C2) server and execute them on the compromised server.\n Reference: https://aka.ms/nobelium-foggy-web",
@@ -25,6 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Collection"
                 ],
@@ -101,7 +102,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "2.1.1"
+                "templateVersion": "2.1.2"
             }
         }
     ]

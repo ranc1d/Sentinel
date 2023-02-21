@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/b37e4e1b-685a-454a-a4e0-eb70983829a7')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Mail.Read Permissions Granted to Application",
                 "description": "This query look for applications that have been granted (Delegated or App/Role) permissions to Read Mail (Permissions field has Mail.Read) and subsequently has been consented to. This can help identify applications that have been abused to gain access to mailboxes.",
@@ -25,10 +25,13 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Persistence"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098"
+                ],
                 "alertRuleTemplateName": "2560515c-07d1-434e-87fb-ebe3af267760",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

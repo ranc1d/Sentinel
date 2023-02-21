@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8efb9dde-c25c-46f2-b273-142c3f130788')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Detecting Impossible travel with mailbox permission tampering & Privilege Escalation attempt",
                 "description": "This hunting query will alert on any Impossible travel activity in correlation with mailbox permission tampering followed by account being added to a PIM managed privileged group.\nEnsure this impossible travel incident with increase of privileges is legitimate in your environment.",
@@ -25,11 +25,15 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "InitialAccess",
                     "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1078",
+                    "T1548"
+                ],
                 "alertRuleTemplateName": "1399664f-9434-497c-9cde-42e4d74ae20e",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -68,7 +72,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

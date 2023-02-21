@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8a872f3d-2953-472d-88d2-a802dbff78a8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Suspicious Resource deployment",
                 "description": "Identifies when a rare Resource and ResourceGroup deployment occurs by a previously unseen Caller.",
@@ -25,10 +25,13 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Impact"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1496"
+                ],
                 "alertRuleTemplateName": "9fb57e58-3ed8-4b89-afcf-c8e786508b1c",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "2.0.0"
             }
         }
     ]

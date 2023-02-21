@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/9af8b1fa-9a78-4036-b29e-211f9c468d5e')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Fake computer account created",
                 "description": "This query detects domain user accounts creation (event ID 4720) where the username ends with $. \nAccounts that end with $ are normally domain computer accounts and when they are created the event ID 4741 is generated instead.\nRef: https://blog.menasec.net/2019/02/threat-hunting-6-hiding-in-plain-sights.html",
@@ -25,10 +25,13 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "DefenseEvasion"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1564"
+                ],
                 "alertRuleTemplateName": "c1faf5e8-6958-11ec-90d6-0242ac120003",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

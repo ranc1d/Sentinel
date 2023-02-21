@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e62a6629-aa39-41e1-bdb5-831c5586acfd')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Detect PIM Alert Disabling activity",
                 "description": "Privileged Identity Management (PIM) generates alerts when there is suspicious or unsafe activity in Azure Active Directory (Azure AD) organization. \nThis query will help detect attackers attempts to disable in product PIM alerts which are associated with Azure MFA requirements and could indicate activation of privileged access",
@@ -25,11 +25,15 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Persistence",
                     "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098",
+                    "T1078"
+                ],
                 "alertRuleTemplateName": "1f3b4dfd-21ff-4ed3-8e27-afc219e05c50",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -77,7 +81,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

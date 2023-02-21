@@ -1,3 +1,4 @@
+# Modifications and watchlists
 
 Modified policies:
 | Policy  | Modified value | Justification |
@@ -18,6 +19,8 @@ Modified policies:
 | User added to Azure Active Directory Privileged Groups | "createIncident": false  | Managed via PIM Mails, but alerts are of interest on demand |
 | Mails containing malicious urls | Query | external watchlist |
 | Missing Domain Controller Heartbeat | Query | DomainControllers watchlist integration |
+| Failed logon attempts by valid accounts within 10 mins | Query | FailedLogonExclusions watchlist integration |
+| Exchange workflow MailItemsAccessed operation anomaly | Query | ExchangeWorkflowAnomalyExclusions watchlist integration |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
@@ -27,3 +30,5 @@ Watchlists:
 | Rare RDP Connections | JumpHosts | JumpHosts | excluded hosts fqdn |
 | Break the glass admin account used for signin | BreakGlassAccounts | BreakGlassAccounts | admin upn |
 | Missing Domain Controller Heartbeat | DomainControllers | DomainControllers | domain controller fqdn |
+| Failed logon attempts by valid accounts within 10 mins | FailedLogonExclusions | Computername | end device fqdn |
+| Exchange workflow MailItemsAccessed operation anomaly | ExchangeWorkflowAnomalyExclusions | UserId | excluded user upn |

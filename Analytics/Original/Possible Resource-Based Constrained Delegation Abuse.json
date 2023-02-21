@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f1aa2f05-0186-4a3f-b33d-b1a8004b0fa1')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Possible Resource-Based Constrained Delegation Abuse",
                 "description": "This query identifies Active Directory computer objects modifications that allow an adversary to abuse the Resource-based constrained delegation. \nThis query checks for event id 5136 that the Object Class field is \"computer\" and the LDAP Display Name is \"msDS-AllowedToActOnBehalfOfOtherIdentity\" which is an indicator of Resource-based constrained delegation.\nRef: https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html",
@@ -25,10 +25,13 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1134"
+                ],
                 "alertRuleTemplateName": "2937bc6b-7cda-4fba-b452-ea43ba8e835f",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

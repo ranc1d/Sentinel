@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/acb6ae9e-1afd-4fe3-a7b4-951fad24b19e')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Base64 encoded Windows process command-lines",
                 "description": "Identifies instances of a base64 encoded PE file header seen in the process command line parameter.",
@@ -25,6 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Execution",
                     "DefenseEvasion"
@@ -73,7 +74,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.1.1"
+                "templateVersion": "1.1.2"
             }
         }
     ]

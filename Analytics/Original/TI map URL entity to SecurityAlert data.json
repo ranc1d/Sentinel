@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e18ac44a-9b68-45e0-8e52-889bf335daf2')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "TI map URL entity to SecurityAlert data",
                 "description": "Identifies a match in SecurityAlert data from any URL IOC from TI",
@@ -25,6 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Impact"
                 ],
@@ -67,7 +68,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.2"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.2.3"
             }
         }
     ]

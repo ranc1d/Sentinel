@@ -12,19 +12,20 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/3b88fb98-f52e-4cf3-a927-a60009094ee4')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Missing Domain Controller Heartbeat",
                 "description": "This detection will go over the heartbeats received from the agents of Domain Controllers over the last hour, and will create alerts if the last heartbeats were received an hour ago.",
                 "severity": "High",
                 "enabled": true,
-                "query": "let query_frequency = 15m;\nlet missing_period = 1h;\n//Enter a reference list of hostnames for your DC servers\nlet watchlist = (_GetWatchlist('DomainControllers') | project SearchKey);\n//Alternatively, a Watchlist can be used\n//let DCServersList = _GetWatchlist('HostName-DomainControllers') | project HostName;\nHeartbeat\n| summarize arg_max(TimeGenerated, *) by Computer\n| where Computer has_any (watchlist)\n//You may specify the OS type of your Domain Controllers\n//| where OSType == 'Windows'\n| where TimeGenerated between (ago(query_frequency + missing_period) .. ago(missing_period))\n| project TimeGenerated, Computer, OSType, Version, ComputerEnvironment, Type, Solutions\n| sort by TimeGenerated asc",
+                "query": "let query_frequency = 15m;\nlet missing_period = 1h;\n//Enter a reference list of hostnames for your DC servers\n//let DCServersList = dynamic ([\"DC01.simulandlabs.com\",\"DC02.simulandlabs.com\"]);\n//Alternatively, a Watchlist can be used\nlet DCServersList = (_GetWatchlist('DomainControllers') | project SearchKey);\nHeartbeat\n| summarize arg_max(TimeGenerated, *) by Computer\n| where Computer has_any (DCServersList)\n//You may specify the OS type of your Domain Controllers\n//| where OSType == 'Windows'\n| where TimeGenerated between (ago(query_frequency + missing_period) .. ago(missing_period))\n| project TimeGenerated, Computer, OSType, Version, ComputerEnvironment, Type, Solutions\n| sort by TimeGenerated asc",
                 "queryFrequency": "PT15M",
                 "queryPeriod": "PT2H",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Impact",
                     "DefenseEvasion"
@@ -59,7 +60,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.4"
             }
         }
     ]

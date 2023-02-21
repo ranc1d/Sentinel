@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/29de89bc-5596-485b-8942-c023d94e1c80')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "TI map IP entity to SigninLogs",
                 "description": "Identifies a match in SigninLogs from any IP IOC from TI",
@@ -25,6 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Impact"
                 ],
@@ -76,7 +77,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.2.2"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.2.3"
             }
         }
     ]

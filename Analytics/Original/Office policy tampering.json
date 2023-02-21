@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0b213ab7-2445-4df6-bb03-4fbaa598035b')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Office policy tampering",
                 "description": "Identifies if any tampering is done to either auditlog, ATP Safelink, SafeAttachment, AntiPhish or Dlp policy. \nAn adversary may use this technique to evade detection or avoid other policy based defenses.\nReferences: https://docs.microsoft.com/powershell/module/exchange/advanced-threat-protection/remove-antiphishrule?view=exchange-ps.",
@@ -25,11 +25,15 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Persistence",
                     "DefenseEvasion"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1098",
+                    "T1562"
+                ],
                 "alertRuleTemplateName": "fbd72eb8-087e-466b-bd54-1ca6ea08c6d3",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -68,7 +72,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "2.0.0"
             }
         }
     ]

@@ -12,7 +12,7 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/c82e6fbe-f273-4c62-9306-cc8d653a8711')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Service Principal Name (SPN) Assigned to User Account",
                 "description": "This query identifies whether a Active Directory user object was assigned a service principal name which could indicate that an adversary is preparing for performing Kerberoasting. \nThis query checks for event id 5136 that the Object Class field is \"user\" and the LDAP Display Name is \"servicePrincipalName\".\nRef: https://thevivi.net/assets/docs/2019/theVIVI-AD-Security-Workshop_AfricaHackon2019.pdf",
@@ -25,10 +25,13 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "PrivilegeEscalation"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1134"
+                ],
                 "alertRuleTemplateName": "875d0eb1-883a-4191-bd0e-dbfdeb95a464",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -67,7 +70,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.1"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.2"
             }
         }
     ]

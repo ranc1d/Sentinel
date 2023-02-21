@@ -12,23 +12,26 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/82cec47c-ec2e-487e-b206-c00f28ed5565')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2021-09-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
                 "displayName": "Rare client observed with high reverse DNS lookup count",
                 "description": "Identifies clients with a high reverse DNS counts which could be carrying out reconnaissance or discovery activity.\nAlert is generated if the IP performing such reverse DNS lookups was not seen doing so in the preceding 7-day period.",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let starttime = 8d;\nlet endtime = 1d;\nlet threshold = 10;\nDnsEvents \n| where TimeGenerated > ago(endtime)\n| where Name contains \"in-addr.arpa\" \n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), dcount(Name) by ClientIP\n| where dcount_Name > threshold\n| project StartTimeUtc, EndTimeUtc, ClientIP , dcount_Name \n| join kind=leftanti (DnsEvents \n    | where TimeGenerated between(ago(starttime)..ago(endtime))\n    | where Name contains \"in-addr.arpa\" \n    | summarize dcount(Name) by ClientIP, bin(TimeGenerated, 1d)\n    | where dcount_Name > threshold\n    | project ClientIP , dcount_Name \n) on ClientIP\n| extend timestamp = StartTimeUtc, IPCustomEntity = ClientIP",
+                "query": "let starttime = 8d;\nlet endtime = 1d;\nlet threshold = 10;\nDnsEvents\n| where TimeGenerated > ago(endtime)\n| where Name contains \"in-addr.arpa\"\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), dcount(Name) by ClientIP\n| where dcount_Name > threshold\n| project StartTimeUtc, EndTimeUtc, ClientIP , dcount_Name\n| join kind=leftanti (DnsEvents\n    | where TimeGenerated between(ago(starttime)..ago(endtime))\n    | where Name contains \"in-addr.arpa\"\n    | summarize dcount(Name) by ClientIP, bin(TimeGenerated, 1d)\n    | where dcount_Name > threshold\n    | project ClientIP , dcount_Name\n) on ClientIP\n| extend timestamp = StartTimeUtc, IPCustomEntity = ClientIP",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P8D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Discovery"
                 ],
-                "techniques": [],
+                "techniques": [
+                    "T1046"
+                ],
                 "alertRuleTemplateName": "15ae38a2-2e29-48f7-883f-863fb25a5a06",
                 "incidentConfiguration": {
                     "createIncident": true,
@@ -58,7 +61,8 @@
                         ]
                     }
                 ],
-                "templateVersion": "1.0.0"
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "1.0.1"
             }
         }
     ]

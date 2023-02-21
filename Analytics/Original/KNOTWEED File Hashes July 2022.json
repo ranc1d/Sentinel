@@ -25,6 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": null,
                 "tactics": [
                     "Execution"
                 ],
@@ -50,6 +51,15 @@
                 "alertDetailsOverride": null,
                 "customDetails": null,
                 "entityMappings": [
+                    {
+                        "entityType": "File",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Name",
+                                "columnName": "FileHashCustomEntity_string"
+                            }
+                        ]
+                    },
                     {
                         "entityType": "Account",
                         "fieldMappings": [
@@ -79,7 +89,7 @@
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.0"
+                "templateVersion": "1.0.1"
             }
         }
     ]
