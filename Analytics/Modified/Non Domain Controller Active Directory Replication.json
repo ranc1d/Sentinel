@@ -20,11 +20,12 @@
                 "enabled": true,
                 "query": "let Userexclusionlist = (_GetWatchlist('NonDomainControllerReplicationExclusion') | project SearchKey);\nSecurityEvent\n| where Account !in (Userexclusionlist)\n| where EventID == 4662 and ObjectServer == 'DS'\n| where AccountType != 'Machine'\n| where Properties has '1131f6aa-9c07-11d1-f79f-00c04fc2dcd2' //DS-Replication-Get-Changes\n    or Properties has '1131f6ad-9c07-11d1-f79f-00c04fc2dcd2' //DS-Replication-Get-Changes-All\n    or Properties has '89e95b76-444d-4c62-991a-0facbeda640c' //DS-Replication-Get-Changes-In-Filtered-Set\n| project TimeGenerated, Account, Activity, Properties, SubjectLogonId, Computer\n| join kind=leftouter\n(\n    SecurityEvent\n    //| where Computer in (DCServersList)\n    | where EventID == 4624 and LogonType == 3\n    | where AccountType != 'Machine'\n    | project TargetLogonId, IpAddress\n)\non $left.SubjectLogonId == $right.TargetLogonId\n| project-reorder TimeGenerated, Computer, Account, IpAddress\n| extend timestamp = TimeGenerated, AccountCustomEntity = Account, HostCustomEntity = Computer, SourceAddress = IpAddress",
                 "queryFrequency": "P1D",
-                "queryPeriod": "P7D",
+                "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": "2023-03-14T08:00:00.000Z",
                 "tactics": [
                     "CredentialAccess"
                 ],

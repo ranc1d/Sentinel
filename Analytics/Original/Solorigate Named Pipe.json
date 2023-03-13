@@ -25,6 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
+                "startTimeUtc": "2023-03-14T08:00:00.000Z",
                 "tactics": [
                     "DefenseEvasion",
                     "PrivilegeEscalation"
