@@ -1,250 +1,250 @@
 FileName, CommitSha
-Analytics/Original/New executable via Office FileUploaded Operation.json,60b450ef7af48e55ddda2d799fd5154650d01a23
-Analytics/Original/ACTINIUM Actor IOCs - Feb 2022.json,b37d6eca87b2adda9213d6a26276df9703d571a7
-Analytics/Original/URL Added to Application from Unknown Domain.json,5a5d64b199c75f2ed975d8d7f5c90f2c13604bbd
-Analytics/Original/Brute Force Attack against GitHub Account.json,602fbb22cd5ea672d95fafe1ea3cc2282a69cddd
-Analytics/Modified/Anomalous sign-in location by user account and authenticating application.json,8847507404a36f207e81cf53612366aba5f5af24
-Analytics/Original/Attempts to sign in to disabled accounts.json,785d4bda6f12b2380a4d1b4e96fb7585b631732e
-Analytics/Original/NRT PIM Elevation Request Rejected.json,d429e7baf9cf763816af3f56adc12cf268961b41
-Analytics/Original/AV detections related to SpringShell Vulnerability.json,c9b0b12656f17f268fc79e7166a57654d463a22b
-Analytics/Modified/Exchange workflow MailItemsAccessed operation anomaly.json,f24ae3892cc5480f7b4d33c5de38f4a5086b3eab
-Analytics/Original/Credential Dumping Tools - Service Installation.json,0448687f7a83d385c7928009d7aa093c493ed9e1
-Analytics/Original/Zinc Actor IOCs files - October 2022.json,34f04cae0a9f62bfa7033e1e80cb2a5428d7b543
-Analytics/Original/AdminSDHolder Modifications.json,c91f50c0a8bae900da9eefc500ea090e68036816
-Analytics/Original/Suspicious number of resource creation or deployment activities.json,9213a38fcc1a0d08bea55edf97924418b5b1c901
-Analytics/Original/External guest invitation followed by Azure AD PowerShell signin.json,aa985a3885ba0d2429a684b2fab976ea305e693b
-Analytics/Original/Failed host logons but success logon to AzureAD.json,6318ae3601485c6d525cc43856eb7b19e5088fa4
-Analytics/Original/Solorigate Defender Detections.json,b19f4e327c6038e4a6a21f8b25ac9ad5ed0718e1
-Analytics/Original/Base64 encoded Windows process command-lines.json,db8ddaae0ada9f18a49fc2844fddcd0299d32a00
-Analytics/Original/Scheduled Task Hide.json,c7e2477bdadae2546c592b43e16136a6402ffa43
-Analytics/Custom/Global admin elevated access to User Access Management.json,8fe597be876a1d999f9723d68aea2ae032e33127
-Analytics/Original/New internet-exposed SSH endpoints.json,e4ef3d18991c338bc20899f3eb6e6e9db4110b90
-Analytics/Modified/Log4j vulnerability exploit aka Log4Shell IP IOC.json,67e4106fce00ca8c2632fa1017087e9a0eb2fb04
-Analytics/Original/SEABORGIUM C2 Domains August 2022.json,f2f87d0dd4fab560b53baeca0bb322e41bf469a7
-Analytics/Original/NOBELIUM - suspicious rundll32.exe execution of vbscript.json,92794bc63576b2ad94991280f9760c193cda206c
-Analytics/Original/Suspicious modification of Global Administrator user properties.json,ed10a50555675ee33d63002a9eb8bde828e0dc96
-Analytics/Original/Authentication Attempt from New Country.json,8d9b650f0110f99b1729a385c7cdc44838c72b15
-Analytics/Original/New EXE deployed via Default Domain or Default Domain Controller Policies.json,087d3635f84387261a68a1f13585f9535b1335fa
-Analytics/Original/Creation of expensive computes in Azure.json,a007b0a2cbd7b0903886615b96ccffe42fbbbd51
-Analytics/Original/Squid proxy events for ToR proxies.json,35d4d10ca37b07ce3213337479a048ff3ca50c76
-Analytics/Original/Privileged Role was Assigned Outside PIM.json,901feda4b61d4dbdb11a6acb91e591c89d024696
-Analytics/Original/External user added and removed in short timeframe.json,821670755748bd0a1700448afea4f344cb7d477f
-Analytics/Original/Privileged Accounts - Sign in Failure Spikes.json,5d56e296a72c35eefc113e476f82efe87d4470d8
-Analytics/Original/Known Phosphorus group domainsIP.json,a590efbce5da4a5d69905ea7099ce1b9402aa033
-Analytics/Original/Sdelete deployed via GPO and run recursively.json,43e82f35c75ceefeb3ea6df8ac6b0c9f4db747a6
-Analytics/Original/Malware in the recycle bin.json,cca406a87645d714c4bf5cc603975f94fae99655
-Analytics/Original/Exchange Server Vulnerabilities Disclosed March 2021 IoC Match.json,7e9e80b1a0172b6edc6dc580a82c92f81bf16991
-Analytics/Modified/Failed logon attempts by valid accounts within 10 mins.json,af4a80882338a045382425fb3ac69029b0314f97
-Analytics/Original/DEV-0322 Serv-U related IOCs - July 2021.json,b4340fe20653a6d65e5669a092c6f94e8d1d109c
-Analytics/Original/Windows Binaries Executed from Non-Default Directory.json,d4594fe1fe982dce114cd82ae949f11e5be49406
-Analytics/Original/Azure VM Run Command operation executed during suspicious login window.json,5252b50593c95384f39afaed34487baff50a8f9c
-Analytics/Original/External guest invitations by default guest followed by Azure AD powershell signin.json,01d21975de4fb36b8bd0522ed0137f35050b8a8f
-Analytics/Original/Explicit MFA Deny.json,615ed3924205b7bfbf3d325dfcf62f50328fe492
-Analytics/Original/TI map Email entity to SecurityEvent.json,f8df1ce71df68232e32f7043c6f5f1b37bce605c
-Analytics/Original/Distributed Password cracking attempts in AzureAD.json,5d5bafd164261f741c063c1c7de07a3a8155f438
-Analytics/Modified/Anomalous login followed by Teams action.json,6ebb8fc9d9c8316650cee9c355dfa867acf3b2d4
-Analytics/Original/TI map Domain entity to SecurityAlert.json,2a51b54ac9755136b7532e80eb0c1bfca8e9f5e0
-Analytics/Original/Security Service Registry ACL Modification.json,ce59d7577aecd2600b80a4b2e87a54f629ff3676
-Analytics/Original/TI map URL entity to OfficeActivity data.json,5cb99547b91714c2ead1310d5948e6b8c54b9df2
-Analytics/Original/TEARDROP memory-only dropper.json,9064c70bc15a3eebe9d2db23cb056b4d633c45e7
-Analytics/Original/Security Event log cleared.json,49772e0d3685df569caa23656fa7796966f98b38
-Analytics/Original/Audit policy manipulation using auditpol utility.json,d12c5db170f9183d13ad7a1ae13b8f9f417d9156
-Analytics/Original/SUPERNOVA webshell.json,f8b2e8f26a4c9ac677214cebb84f2357e1ee9ad6
-Analytics/Original/THALLIUM domains included in DCU takedown.json,9938cf5c3f8c34fdb97ef5f27a551f871ed0ab95
-Analytics/Modified/AD account with Don't Expire Password.json,d2ece60c3603fa1e23cb585c972709a23b57b0dc
-Analytics/Modified/Correlate Unfamiliar sign-in properties and atypical travel alerts.json,e1562e2fbec9521eda592a7b8f04e93b98990a17
-Analytics/Original/Prestige ransomware IOCs Oct 2022.json,dc8a78e9bad33ad5048ce905fac0e2e58929f5a3
-Analytics/Original/HAFNIUM Suspicious Exchange Request.json,b0162635d27ab31371af96402244766ee8fd439b
-Analytics/Original/TI map File Hash to Security Event.json,7f9040174291b75c767aa5f3774901b424d04c62
-Analytics/Original/DSRM Account Abuse.json,a27479e4fb9e66e6c1f78be528b061bf902d5fab
-Analytics/Original/Exchange AuditLog disabled.json,92be60776fb84f2816933dd94db32f0bb922482e
-Analytics/Original/TI map URL entity to AuditLogs.json,de29896c0933eca3a93e5ff39470b2c52107a078
-Analytics/Original/AV detections related to Hive Ransomware.json,b1c30126f7965152a0579dfd9630f5fbcd2f4ce3
-Analytics/Original/Tarrask malware IOC - April 2022.json,7e9eb706c8d848ee8efc272dea87ac577043fe70
-Analytics/Original/Dev-0228 File Path Hashes November 2021.json,ee875223490cda58cc920004bf079836aa2f3751
-Analytics/Original/Conditional Access Policy Modified by New User.json,6ab25d6e48a7303912c402f795e44a88706cfc88
-Analytics/Original/Mass secret retrieval from Azure Key Vault.json,de6d7efe126b98afb62d4eacd30790fc73e98555
-Analytics/Original/Potential re-named sdelete usage.json,38a087b3fb59f20aa6e2449c6299e059d5ceace2
-Analytics/Original/Solorigate Named Pipe.json,4ec503dea53c40f944cf4f8d114c2006a3dead87
-Analytics/Original/Azure AD Role Management Permission Grant.json,4eebf1b4129e693604cbc6500375ad7eacec5b2b
-Analytics/Original/TI map Email entity to SigninLogs.json,2991c94c90bea6f7a1e026bef6e71f9d0b3c5575
-Analytics/ServiceIntegration/Create incidents based on Microsoft Defender for Cloud.json,0d46c0f728e8b6cc972bf63b574cc517dcb9c556
-Analytics/Original/DEV-0586 Actor IOC - January 2022.json,f088ecaa9bd14f8030741197a47de2481f065f8f
-Analytics/Original/Hive Ransomware IOC - July 2022.json,951877f00e390bd39b62accfaa2f2537eb3dc1f7
-Analytics/Original/Addition of a Temporary Access Pass to a Privileged Account.json,d0eef4b3508dc3e06024dc6a3efee7a366fccf85
-Analytics/Original/Process executed from binary hidden in Base64 encoded file.json,e1f15479c57eb7a8b7ceebaaecdc67de986a90d4
-Analytics/Original/Exchange SSRF Autodiscover ProxyShell - Detection.json,5e69db2f32740cacc58c19616530f6cbbc31b8ec
-Analytics/Original/Modification of Accessibility Features.json,b12f2b420f14790b9f1e17e9507c728f9b9de712
-Analytics/Modified/Brute force attack against a Cloud PC.json,4b913f1de9ba18842d92923eb1d67533b6b0b7a8
-Analytics/Original/TI map Domain entity to Syslog.json,0a8a7aa7a7ce158ea6323b824a945e1bdb416fbd
-Analytics/Custom/Data collection anomaly.json,c9f6101b13c2c8070b9aeae57ddeb56e41634523
-Analytics/Original/DEV-0270 New User Creation.json,c03539de35d758f36bf7cde6b213361851ae0f77
-Analytics/Original/NOBELIUM - Script payload stored in Registry.json,7e2f214ff38db7575aa24017168261dff33f9063
-Analytics/Custom/Track Active Directory group modifications.json,b8c7a0e5db449d4955c2c2e199684c3d7849b870
-Analytics/Modified/SharePointFileOperation via devices with previously unseen user agents.json,495ce48aae5ded9aadbce3a661ff6d56c049c4ed
-Analytics/Original/NRT Modified domain federation trust settings.json,2c01a6b9e5f4c318f85d2e20e13a20aa2ff7a4e9
-Analytics/Original/Possible STRONTIUM attempted credential harvesting - Sept 2020.json,df438a9eddb3b48abe8b13e6731c8a9889cd16c9
-Analytics/Original/Known POLONIUM IP.json,6b5a4af68fed1c60eab39c9e34fc5d55e34e4443
-Analytics/Original/Known ZINC related maldoc hash.json,008c195ac027adf1a2f6f74ad47ca2e0a9efc1a5
-Analytics/Original/First access credential added to Application or Service Principal where no credential was present.json,775dab601150fa1bcfedeec082df384cf8eb6d77
-Analytics/Original/Possible STRONTIUM attempted credential harvesting - Oct 2020.json,4cc28902a348a04ebf4368abb6c5321798235e02
-Analytics/Original/Suspicious Service Principal creation activity.json,e8d896b714331236d55a109e0561c601606e790d
-Analytics/Original/KNOTWEED File Hashes July 2022.json,552f5478035415fe2f728cde7a998dcf9cdac710
-Analytics/Original/Probable AdFind Recon Tool Usage.json,4e61f08536d269a97e780b699acb8efd9dcd24b7
-Analytics/Original/Guest Users Invited to Tenant by New Inviters.json,854a3b498d4ee369721199876873d43e45b0a8c0
-Analytics/Original/Credential added after admin consented to Application.json,6f02b155b006c06c13fe6411c5dc87a06262b9eb
-Analytics/Original/SOURGUM Actor IOC - July 2021.json,1f13218d8cf2053b12f3cfacd30e5b6026b50f65
-Analytics/Original/Exchange OAB Virtual Directory Attribute Containing Potential Webshell.json,74c2347b82ccbb6cd3be6d2918b54e836434d413
-Analytics/Original/NRT Malicious Inbox Rule.json,54c9867719aff6401425c3fb719a6694e35d363a
-Analytics/Original/Office policy tampering.json,32839ea88b657a0bf7fff5f88e6ec1d91e6cc124
-Analytics/Original/Starting or Stopping HealthService to Avoid Detection.json,668da6b86f764956f5d87c1132d0a93e0940fac9
-Analytics/Original/GitHub Signin Burst from Multiple Locations.json,7cba0132b6bed2b17656339da85c22881275563f
 Analytics/Original/Application ID URI Changed.json,63490fbc4c0e2387030985f299c3a6e15da6c3e9
-Analytics/Original/Credential Dumping Tools - File Artifacts.json,b98945e91b2061b70b07ae8e1a5a8d0d831ecf43
-Analytics/Custom/Conditional_Access_Sentinel_Analytics_Rules_Pack.json,3bf00dca39610e6b69794799d2a05f9a47c4699f
-Analytics/Original/Account added and removed from privileged groups.json,5c664e5fd48423ed56349cf7f2d88c28f9017b9b
-Analytics/Original/Multiple admin membership removals from newly created admin..json,3e070b6b7de95025152e815683981c716fb64b61
-Analytics/Original/AAD Local Device Join Information and Transport Key Registry Keys Access.json,585fcc622689ded52278613f4172ac8a81d00f27
-Analytics/Original/NRT Creation of expensive computes in Azure.json,9f45b589b01ec0db38b387839ba81ff08eb3eee3
+Analytics/Modified/Exchange workflow MailItemsAccessed operation anomaly.json,f24ae3892cc5480f7b4d33c5de38f4a5086b3eab
+Analytics/Modified/SharePointFileOperation via devices with previously unseen user agents.json,495ce48aae5ded9aadbce3a661ff6d56c049c4ed
 Analytics/Modified/Rare subscription-level operations in Azure.json,5cf51e018219978a94fdfb77d49df7ed38468984
-Analytics/Original/User State changed from Guest to Member.json,cfeb118cbe9b360648d0ec1aa4a0c0ebc51367e4
-Analytics/Original/Authentication Method Changed for Privileged Account.json,f20d24be1f982f4f61d16f75e3d33e37ed8c032e
-Analytics/Custom/Detect Azure cloud shell.json,44338737cf8f74ba140361e5d267b57964fa41ac
-Analytics/Original/Accessed files shared by temporary external user.json,1c061cc3567d247a3f1be4a1a5731c9de36ee467
-Analytics/Original/Potential Build Process Compromise.json,c72bc455ceb449a7c25f62bb12b65dc68a07d3f6
-Analytics/Original/Password spray attack against Azure AD Seamless SSO.json,1dc462bdb95b0ea55404bb584d8c5809f72e4666
-Analytics/Original/Suspicious Resource deployment.json,7630d70c9929fbbdd2040cd07945d538558f65a0
-Analytics/Original/NOBELIUM - Domain, Hash and IP IOCs - May 2021.json,5d67e55dabf05ed4299623ab16596d621738513a
-Analytics/Original/Mass Download & copy to USB device by single user.json,86239b912fa2a1fab9c847c81d0831487d308daf
-Analytics/Original/Process execution frequency anomaly.json,9b72e5951d3a45181ec0f5ad999656413cc8d4ad
-Analytics/Original/Detect PIM Alert Disabling activity.json,a36a1a12699910dc4bfc252fbbb6c6daca65c448
-Analytics/Original/KNOTWEED C2 Domains July 2022.json,bf75c86eb8aa103abd56f96e11abac9d027a9ace
-Analytics/Original/Dumping LSASS Process Into a File.json,5b2a13d6b161c3bd922076c2583841c91c9e6a9d
-Analytics/Original/NOBELIUM IOCs related to FoggyWeb backdoor.json,ed9748cc9785a3e6f093c9dddda1ee7c74d6383d
-Analytics/Original/Squid proxy events related to mining pools.json,d3e584b16968b8eb8b9cac5f9e13435f4ce9bc6b
-Analytics/Original/Known Manganese IP and UserAgent activity.json,203725d7c7e9bf3a2c5654c8285fca08bf73844d
-Analytics/Original/WDigest downgrade attack.json,6e4dcb15fab547026159a7b96f7ce3eea4ae48b8
-Analytics/Modified/User added to Azure Active Directory Privileged Groups.json,d72e0b302316de78515f8dbe8188184226bfae97
-Analytics/Original/Service Principal Assigned Privileged Role.json,c9b6d1c576516cb025e6ab20748d55b050716d9e
-Analytics/Original/Group created then added to built in domain local or global group.json,4b29dd369381eea837f1cce231bafa0b0aaa91c0
-Analytics/Original/Potential Kerberoasting.json,57c41aa7bfbed8ed557f1039890c1116a8f5dae5
-Analytics/Original/User agent search for log4j exploitation attempt.json,80f4861ca547c2c50637256acb48a0de3e80639d
-Analytics/ServiceIntegration/(Preview) Anomalous SSH Login Detection.json,f04db39dea901fa98c6d360740fd491e17e5fc55
-Analytics/Original/New access credential added to Application or Service Principal.json,d9949b3cdeffed9cdf8bd74b595a6cb88d74a248
-Analytics/Original/Dev-0270 Malicious Powershell usage.json,94416cfa0703a7840a333f78956e37772b2db056
-Analytics/Modified/Non Domain Controller Active Directory Replication.json,4a0fd85598d91841946f2e9bc4d53b6dd7c022e6
-Analytics/Original/HAFNIUM UM Service writing suspicious file.json,d4b5bce29e90ee6a2b6f0b81ea567525c575f74e
-Analytics/Original/PIM Elevation Request Rejected.json,1874957880388d955bea4007c5cf7d188127d70d
-Analytics/Original/MFA disabled for a user.json,37865ba2d11937c91373eb6f7c86c53f3e7bbe8b
-Analytics/Original/Known ZINC Comebacker and Klackring malware hashes.json,540d157c3136280fa6dffba499828df594df579c
-Analytics/Original/SSH - Potential Brute Force.json,7d58237ab434ba1c83a04625de787a16dabbb326
-Analytics/Original/Microsoft Defender for Endpoint (MDE) signatures for Azure Synapse pipelines and Azure Data Factory.json,07b12ce5ebfc7274f090514f41ae7e1bc0d58f0b
-Analytics/Original/Azure AD Health Monitoring Agent Registry Keys Access.json,ae37225e3429f1447d81d029195aa53fc676cd37
-Analytics/Custom/NRT Break the glass admin account used for signin.json,442c7791cd96ab6b5332a704a9b35cdeb4c202f6
-Analytics/Original/Mail redirect via ExO transport rule.json,068c5585baf3c5b44be9c4be27c317f97ad71f3d
-Analytics/Original/New user created and added to the built-in administrators group.json,803b9a35eb0e6b3eafa52e290f1895b19a6f7fd7
-Analytics/Modified/Multiple Password Reset by user.json,a923594395de6a83f2e5feb22fe3b2708c6f4e6b
-Analytics/Modified/AD user enabled and password not set within 48 hours.json,9d95e6ef43232472d2c6be9c197a5560fe572b35
-Analytics/Custom/New assets without Defender for Endpoint discovered.json,9d1e57029e50e9d09ad12bc93c84a25f7e384629
-Analytics/Modified/SecurityEvent - Multiple authentication failures followed by a success.json,cb5f8179048198aa3e332313ea0d2de2c8ead845
-Analytics/Original/Changes to PIM Settings.json,4b42626a08a0689c58c5fae509ac4580bd7e7b83
-Analytics/Original/TI map IP entity to OfficeActivity.json,5aa1971363fa5a1d739f4166b6dbad75e5e1187f
-Analytics/Original/TI map IP entity to AzureActivity.json,bf0ac8271eaeb9457d13f2ae27ed88dbb828f302
-Analytics/Original/Known NICKEL domains and hashes.json,25288dd88c889982d27b482ebd0e0df0341c530f
-Analytics/Custom/Mails containing malicious urls.json,6cd65e77cd7a58fb550b510fbf6a4d3004fd7a72
-Analytics/Original/Suspicious application consent for offline access.json,313bc4630665d4e28c07bad8b227b57ee5da8209
-Analytics/Original/Solorigate Network Beacon.json,4d0ab5f8da7c381c1ad382b19f7fa02a0e270506
-Analytics/Original/AV detections related to Tarrask malware.json,4714513777bce65097da763732da4597b0cc4586
-Analytics/Original/Email access via active sync.json,fb1969c82a26bc315366e04c2da5ae0f163979c3
-Analytics/Original/Malformed user agent.json,ffb52e68b6cbc2f5930e483e78731a6903519e37
-Analytics/Original/Rare application consent.json,25e19a9bc5000272689e4779378dd9f91dc1ee0b
-Analytics/Original/TI map Email entity to OfficeActivity.json,f12b48956a165989bf0dab4f348ff85f5ff994ca
-Analytics/Original/NRT Security Event log cleared.json,36c7f7945cc87733978fed499495b25341a48de7
-Analytics/Original/New CloudShell User.json,38d2cc814789a2ff1a19d23ce0e1d13e5b2e2a1f
-Analytics/Original/Excessive Windows logon failures.json,a027cb8cce43ea760766ef3feaa98a63828f32f0
-Analytics/Original/ACTINIUM AV hits - Feb 2022.json,62a375bf496cf1ac0bfd6a25326a2834d7760e9d
-Analytics/Original/User account created and deleted within 10 mins.json,422d04d189109bf405f306d6668dec27d37c9f5b
-Analytics/Original/Account created from non-approved sources.json,2994e1920b2d6eaa1e43a1bb7e4b1bd5fdd1ff3d
-Analytics/Original/Known GALLIUM domains and hashes.json,7b086cdf822b37cf6148b6d87b497c0daf7f8854
-Analytics/Original/Identify MERCURY powershell commands.json,765f4c12e8e5a3f3b7ddbe85b5e1ed131cc31a4d
-Analytics/Original/TI map URL entity to SecurityAlert data.json,37451e8bda20cf35e10f42b31ecce8ebaa30a452
-Analytics/Modified/Missing Domain Controller Heartbeat.json,fa0ac1b9676f5685c5cc37641e7f5e7f82627efc
-Analytics/Original/Known IRIDIUM IP.json,1c59445b3a0461e2a5798240759b63704f130853
-Analytics/Original/MSHTML vulnerability CVE-2021-40444 attack.json,56e94ca62930730c06df6a60f16e5d2fa9be1680
-Analytics/Original/Admin promotion after Role Management Application Permission Grant.json,0fcd7e2955614fc31c3ec22f9bb12cc141b187c4
-Analytics/Original/Failed logon attempts in authpriv.json,f031c3007ab974fa3f099bf97dc1c850d94ae150
-Analytics/Original/Azure AD Health Service Agents Registry Keys Access.json,837b077ab80fbfd4cc64e6249b5ce3c91f423252
-Analytics/Original/Bulk Changes to Privileged Account Permissions.json,f594784daee4c4c9873b98b4e87022dad01f7984
-Analytics/Original/TI map Email entity to SecurityAlert.json,e3cfb7ec19faaded889b06e9e9bfd15144af51ee
-Analytics/Original/NRT Process executed from binary hidden in Base64 encoded file.json,1006d22b7eab1fd01b1bf22f97fb874e09fcf68e
-Analytics/Original/Suspicious granting of permissions to an account.json,876080a43220e96687230e7779826b960ef5d45f
-Analytics/Original/Potential Fodhelper UAC Bypass.json,6301998509e0f66e0fd14c60a53b2f7a7c360837
-Analytics/Modified/User Assigned Privileged Role.json,08b25106e5fe8e45d84d804023953a6f45b65e55
-Analytics/Original/Possible Resource-Based Constrained Delegation Abuse.json,a9ac795c7b99ebb847040868c5fae424a100ba52
-Analytics/Original/TI map IP entity to Azure Key Vault logs.json,d1dbc3b849edd7f0c9ed84262bb0c0b557524dcc
-Analytics/Original/Multiple Teams deleted by a single user.json,508310868d93f47b5d3b1d543c739a99726b9e94
-Analytics/Original/User account enabled and disabled within 10 mins.json,ba61c6c89627d36815b606252b163e843d623c11
-Analytics/Original/NOBELIUM - Domain and IP IOCs - March 2021.json,66d65097402677d689791622d5780e332b59e80b
-Analytics/Original/Unusual identity creation using exchange powershell.json,de4510f091a5b18fd844d45123d17e6414801bac
-Analytics/Original/Multiple users email forwarded to same destination.json,e25e5dc72582c9b7fca9ef85fd31893ddb7f7693
-Analytics/Original/MFA Rejected by User.json,bfb9406c48f8feec49425f83bc612bac11c3bc0b
-Analytics/Modified/Rare RDP Connections.json,914a2872ea605a3d36bc9ad978135ab1aa4be4c1
-Analytics/Original/TI map IP entity to SigninLogs.json,c94c9846f1561b89767926b35a1b2f3dfeaa587f
-Analytics/Modified/SharePointFileOperation via previously unseen IPs.json,9419a47a410d525eaabda4f1235d35419e6c7c8c
-Analytics/Original/NRT Multiple users email forwarded to same destination.json,fe9214eae485a1c9f45cc93a9c456d6478006947
-Analytics/Original/High count of failed attempts from same client IP.json,acfd56aa7bc707d1258b2121699248106584d889
-Analytics/Original/Multiple RDP connections from Single System.json,293fc715c99ecea5de8a5bc200334ccdc0e6fec2
-Analytics/Original/Sensitive Azure Key Vault operations.json,e7eb6abe87536192b49a5856a12509d09691b1f5
-Analytics/Original/High count of connections by client IP on many ports.json,fbdef86bca31c56629ac174182e570110d7f8de4
-Analytics/Original/TI map IP entity to W3CIISLog.json,93677687e97f32369cdb617d2b726f6558afd4c6
-Analytics/Original/Account Created and Deleted in Short Timeframe.json,26c59512a967a602dd105364008879cdd3ab3f2e
-Analytics/Original/Workspace deletion attempt from an infected device.json,12cfb3664e6f69a5845d24d36c0463a8240b1dd6
-Analytics/Original/Malicious web application requests linked with Microsoft Defender for Endpoint (formerly Microsoft Defender ATP) alerts.json,77dd4a0562831d90a80e41b3760cbe38d7f37faf
-Analytics/Original/Suspicious Login from deleted guest account.json,6316a96c835f4786926daeb3f60f54ad9516b42f
-Analytics/Original/Changes to Application Ownership.json,ba618d73aac96b410e48587c7be0aa3e42c8e815
-Analytics/Original/Fake computer account created.json,aad8c1ef68fb592fd55cf6aafb138fb1657954d2
-Analytics/Original/KNOTWEED AV Detection.json,097fa3a5eb8e180a105b2e9f126da654e28fd2fc
-Analytics/Original/Known Barium IP.json,c44a63f513a5a83dc8e6bcd732f7befae2790750
-Analytics/Original/Known Barium domains.json,59d84f4bdd0aebd0f82406e10a9ac746f51e845d
-Analytics/Original/Dev-0530 IOC - July 2022.json,c134b53fb3c011d1880a596e90a4a59c6af489a1
-Analytics/Original/Account created or deleted by non-approved user.json,44cefae9646281a63bac208ba32fefa6f48a80b4
-Analytics/Original/HAFNIUM New UM Service Child Process.json,ea2441815038f1c3bd5bb9ebc94afee5256575ab
-Analytics/Original/High count of failed logons by a user.json,f99bcbd725803f4b88ec6f98f45814c4ef2a147c
-Analytics/Modified/RDP Nesting.json,29b791a4f54d0ecfef1ebd3fa69ebe5987113c85
-Analytics/Original/Potential Remote Desktop Tunneling.json,4c55c184050b7978fc2207d9f2cc5103fcbfb287
-Analytics/Original/Azure Key Vault access TimeSeries anomaly.json,594193ca49592b3755dc38ff6e741127ae1f6ca1
-Analytics/Original/Brute force attack against Azure Portal.json,436b9874cc02b50daed2bf6130ee76594f41b99d
-Analytics/Original/Mail.Read Permissions Granted to Application.json,6b1f4cf89ae77efd24674bc2952c8d8bb4298230
-Analytics/Original/Modified domain federation trust settings.json,5da6ba6238ad8c2084466f02de25a1fe84137e06
-Analytics/Original/Azure Active Directory PowerShell accessing non-AAD resources.json,46904f54c846e81adeedcec3a32391c705c3f811
-Analytics/Original/Suspicious application consent similar to O365 Attack Toolkit.json,8d5ac92a25c999536f4a8744d65934197546f62d
-Analytics/Original/TI map Email entity to AzureActivity.json,6a2f94f2602ff1150f0f83c60128e36f6bb94a53
-Analytics/Original/AV detections related to Ukraine threats.json,e48dcfd1d7786adefca3253f0adba6cc312d96b2
-Analytics/Original/User Accounts - Sign in Failure due to CA Spikes.json,923018a87770fce273c5f6b770fba8ba8484cd8d
-Analytics/Original/Detecting Impossible travel with mailbox permission tampering & Privilege Escalation attempt.json,5b65a248848bfbbd47ad8c030c55e490145b0c3b
-Analytics/Original/SUNBURST and SUPERNOVA backdoor hashes.json,ab7992a8944737c6b450184c14a73b3b5c2b331d
-Analytics/Original/AV detections related to Dev-0530 actors.json,e555d6687d2be0ffb6669cb3837f26b3c5b13070
-Analytics/Modified/Attempt to bypass conditional access rule in Azure AD.json,cdf0c76155d488a287fe9b9b6bc56ef3f61be5c5
-Analytics/Original/Privileged Account Permissions Changed.json,c29e969186130e7e4a4673027920748228d254ae
 Analytics/Original/Authentications of Privileged Accounts Outside of Expected Controls.json,b83355463afc00792290581d59bb911319f20be1
-Analytics/Modified/Failed AzureAD logons but success logon to host.json,2a0e2c0932cdee96117428357af8179fcbbf55c5
-Analytics/Custom/Track Azure Active Directory group modifications.json,4d64d2849a6f4f2179dc1f0c28616477cb4b107a
-Analytics/Custom/Connection to C2 server based on Feodo Tracker.json,80ccbbb08bdb4448f06a206ee45479c5cc313119
-Analytics/Original/Dev-0530 File Extension Rename.json,3578acd4c6b325386fe5564634e2cba17ebd63a4
-Analytics/Modified/Rare and potentially high-risk Office operations.json,692d85c7de57fa4792e4be0aba93e4daebdb3cd0
-Analytics/Original/Service Principal Authentication Attempt from New Country.json,dee02129d31f30d5bee5925b2a75406e34db2d9d
-Analytics/Original/Failed login attempts to Azure Portal.json,279125fbb5780f5cf18253babc4b0d615d4bbe1b
-Analytics/Modified/Successful logon from IP and failure from a different IP.json,a7285239ab6287d0f18baff4a4691599ca7784bf
-Analytics/Original/Mercury - Domain, Hash and IP IOCs - August 2022.json,e1a3e2ab10e322c3d52ee67a7164d24fb7c48daf
-Analytics/Original/Powershell Empire cmdlets seen in command line.json,f831af6daf6d9c4a5f6ccf3f991c2c573cdc0254
-Analytics/Original/Malicious Inbox Rule.json,aacde10ad974234617f46c7c267f82e23a655b80
+Analytics/Modified/SecurityEvent - Multiple authentication failures followed by a success.json,cb5f8179048198aa3e332313ea0d2de2c8ead845
+Analytics/Original/Detect PIM Alert Disabling activity.json,a36a1a12699910dc4bfc252fbbb6c6daca65c448
+Analytics/Original/MFA disabled for a user.json,37865ba2d11937c91373eb6f7c86c53f3e7bbe8b
+Analytics/Original/Suspicious Login from deleted guest account.json,6316a96c835f4786926daeb3f60f54ad9516b42f
+Analytics/Modified/Log4j vulnerability exploit aka Log4Shell IP IOC.json,67e4106fce00ca8c2632fa1017087e9a0eb2fb04
 Analytics/Original/New External User Granted Admin.json,ddfd9b64a25fe244f4d4833e499decce14b9214b
+Analytics/Original/Potential re-named sdelete usage.json,38a087b3fb59f20aa6e2449c6299e059d5ceace2
+Analytics/Original/Brute Force Attack against GitHub Account.json,602fbb22cd5ea672d95fafe1ea3cc2282a69cddd
+Analytics/Original/ACTINIUM AV hits - Feb 2022.json,62a375bf496cf1ac0bfd6a25326a2834d7760e9d
+Analytics/Original/Creation of expensive computes in Azure.json,a007b0a2cbd7b0903886615b96ccffe42fbbbd51
+Analytics/Original/Workspace deletion attempt from an infected device.json,12cfb3664e6f69a5845d24d36c0463a8240b1dd6
+Analytics/Original/Suspicious Service Principal creation activity.json,e8d896b714331236d55a109e0561c601606e790d
+Analytics/Modified/Successful logon from IP and failure from a different IP.json,a7285239ab6287d0f18baff4a4691599ca7784bf
+Analytics/Original/AAD Local Device Join Information and Transport Key Registry Keys Access.json,585fcc622689ded52278613f4172ac8a81d00f27
+Analytics/Original/KNOTWEED File Hashes July 2022.json,552f5478035415fe2f728cde7a998dcf9cdac710
+Analytics/Custom/Track Active Directory group modifications.json,b8c7a0e5db449d4955c2c2e199684c3d7849b870
+Analytics/Original/Zinc Actor IOCs files - October 2022.json,34f04cae0a9f62bfa7033e1e80cb2a5428d7b543
+Analytics/Original/Suspicious number of resource creation or deployment activities.json,9213a38fcc1a0d08bea55edf97924418b5b1c901
+Analytics/Original/Multiple RDP connections from Single System.json,293fc715c99ecea5de8a5bc200334ccdc0e6fec2
+Analytics/Original/KNOTWEED AV Detection.json,097fa3a5eb8e180a105b2e9f126da654e28fd2fc
+Analytics/Original/Authentication Attempt from New Country.json,8d9b650f0110f99b1729a385c7cdc44838c72b15
+Analytics/Original/Failed logon attempts in authpriv.json,f031c3007ab974fa3f099bf97dc1c850d94ae150
+Analytics/Original/Dumping LSASS Process Into a File.json,5b2a13d6b161c3bd922076c2583841c91c9e6a9d
+Analytics/Original/User agent search for log4j exploitation attempt.json,80f4861ca547c2c50637256acb48a0de3e80639d
+Analytics/Original/Credential added after admin consented to Application.json,6f02b155b006c06c13fe6411c5dc87a06262b9eb
+Analytics/Original/Known Barium IP.json,c44a63f513a5a83dc8e6bcd732f7befae2790750
+Analytics/Modified/Brute force attack against a Cloud PC.json,4b913f1de9ba18842d92923eb1d67533b6b0b7a8
+Analytics/Original/Mercury - Domain, Hash and IP IOCs - August 2022.json,e1a3e2ab10e322c3d52ee67a7164d24fb7c48daf
+Analytics/Original/ACTINIUM Actor IOCs - Feb 2022.json,b37d6eca87b2adda9213d6a26276df9703d571a7
+Analytics/Original/Unusual identity creation using exchange powershell.json,de4510f091a5b18fd844d45123d17e6414801bac
+Analytics/Original/TI map Domain entity to Syslog.json,0a8a7aa7a7ce158ea6323b824a945e1bdb416fbd
+Analytics/Original/HAFNIUM UM Service writing suspicious file.json,d4b5bce29e90ee6a2b6f0b81ea567525c575f74e
+Analytics/Original/Bulk Changes to Privileged Account Permissions.json,f594784daee4c4c9873b98b4e87022dad01f7984
+Analytics/Original/User State changed from Guest to Member.json,cfeb118cbe9b360648d0ec1aa4a0c0ebc51367e4
+Analytics/Original/Powershell Empire cmdlets seen in command line.json,f831af6daf6d9c4a5f6ccf3f991c2c573cdc0254
+Analytics/Modified/Failed AzureAD logons but success logon to host.json,2a0e2c0932cdee96117428357af8179fcbbf55c5
+Analytics/Original/THALLIUM domains included in DCU takedown.json,9938cf5c3f8c34fdb97ef5f27a551f871ed0ab95
+Analytics/Original/Azure AD Role Management Permission Grant.json,4eebf1b4129e693604cbc6500375ad7eacec5b2b
+Analytics/Original/Potential Fodhelper UAC Bypass.json,6301998509e0f66e0fd14c60a53b2f7a7c360837
+Analytics/Original/AdminSDHolder Modifications.json,c91f50c0a8bae900da9eefc500ea090e68036816
+Analytics/Original/Squid proxy events related to mining pools.json,d3e584b16968b8eb8b9cac5f9e13435f4ce9bc6b
+Analytics/Original/Suspicious Resource deployment.json,7630d70c9929fbbdd2040cd07945d538558f65a0
 Analytics/ServiceIntegration/(Preview) Anomalous RDP Login Detections.json,08f0fbc23187171a5b501c90c4b5f23a472171fe
-Analytics/Original/Service Principal Name (SPN) Assigned to User Account.json,01fed03a24413e705824d889c45cc8bbcf3bcaa3
+Analytics/Original/Potential Kerberoasting.json,57c41aa7bfbed8ed557f1039890c1116a8f5dae5
+Analytics/Original/Privileged Role was Assigned Outside PIM.json,901feda4b61d4dbdb11a6acb91e591c89d024696
+Analytics/Original/Potential Build Process Compromise.json,c72bc455ceb449a7c25f62bb12b65dc68a07d3f6
+Analytics/Original/Known Manganese IP and UserAgent activity.json,203725d7c7e9bf3a2c5654c8285fca08bf73844d
+Analytics/Original/TI map Domain entity to SecurityAlert.json,2a51b54ac9755136b7532e80eb0c1bfca8e9f5e0
+Analytics/Original/Exchange SSRF Autodiscover ProxyShell - Detection.json,5e69db2f32740cacc58c19616530f6cbbc31b8ec
+Analytics/Original/Scheduled Task Hide.json,c7e2477bdadae2546c592b43e16136a6402ffa43
+Analytics/Original/WDigest downgrade attack.json,6e4dcb15fab547026159a7b96f7ce3eea4ae48b8
+Analytics/Original/Probable AdFind Recon Tool Usage.json,4e61f08536d269a97e780b699acb8efd9dcd24b7
+Analytics/Original/Sdelete deployed via GPO and run recursively.json,43e82f35c75ceefeb3ea6df8ac6b0c9f4db747a6
+Analytics/Original/Possible STRONTIUM attempted credential harvesting - Sept 2020.json,df438a9eddb3b48abe8b13e6731c8a9889cd16c9
+Analytics/Original/Multiple users email forwarded to same destination.json,e25e5dc72582c9b7fca9ef85fd31893ddb7f7693
+Analytics/Original/Known ZINC Comebacker and Klackring malware hashes.json,540d157c3136280fa6dffba499828df594df579c
+Analytics/Original/Dev-0228 File Path Hashes November 2021.json,ee875223490cda58cc920004bf079836aa2f3751
 Analytics/Original/Suspicious application consent similar to PwnAuth.json,b8950c309c537cacefceb74772d99b675079c404
-Analytics/Original/Known STRONTIUM group domains - July 2019.json,6c0376b4675e8b99b9d0fa86fddf1090fe89b182
-Analytics/Original/Sign-ins from IPs that attempt sign-ins to disabled accounts.json,1a71ccd25fd081eb04e77f95798bfa5fbfc9734c
-Analytics/Original/Known CERIUM domains and hashes.json,fa8f0ba1748b062d01add927946c1915ec084bfd
-Analytics/Original/User account added to built in domain local or global group.json,3ce4b3fa85cfbf3f3e2fb91fcb0834f0c71e07e9
-Analytics/Original/Authentication Methods Changed for Privileged Account.json,d1b10f592fd4cf74e26d4bb33354589cdfdf8e8a
+Analytics/Modified/Attempt to bypass conditional access rule in Azure AD.json,cdf0c76155d488a287fe9b9b6bc56ef3f61be5c5
+Analytics/Modified/Non Domain Controller Active Directory Replication.json,4a0fd85598d91841946f2e9bc4d53b6dd7c022e6
+Analytics/Original/URL Added to Application from Unknown Domain.json,5a5d64b199c75f2ed975d8d7f5c90f2c13604bbd
+Analytics/Original/Mail redirect via ExO transport rule.json,068c5585baf3c5b44be9c4be27c317f97ad71f3d
+Analytics/Original/NOBELIUM - Script payload stored in Registry.json,7e2f214ff38db7575aa24017168261dff33f9063
+Analytics/Original/Admin promotion after Role Management Application Permission Grant.json,0fcd7e2955614fc31c3ec22f9bb12cc141b187c4
+Analytics/Modified/AD account with Don't Expire Password.json,d2ece60c3603fa1e23cb585c972709a23b57b0dc
+Analytics/Modified/Mass secret retrieval from Azure Key Vault.json,cc397c272e230bc57fc6a600cf726a80057b49d9
+Analytics/Original/Azure VM Run Command operation executed during suspicious login window.json,5252b50593c95384f39afaed34487baff50a8f9c
+Analytics/Original/Suspicious application consent for offline access.json,313bc4630665d4e28c07bad8b227b57ee5da8209
+Analytics/Original/High count of failed attempts from same client IP.json,acfd56aa7bc707d1258b2121699248106584d889
+Analytics/Original/Distributed Password cracking attempts in AzureAD.json,5d5bafd164261f741c063c1c7de07a3a8155f438
+Analytics/Original/DEV-0270 New User Creation.json,c03539de35d758f36bf7cde6b213361851ae0f77
+Analytics/Original/New executable via Office FileUploaded Operation.json,60b450ef7af48e55ddda2d799fd5154650d01a23
 Analytics/Original/Password spray attack against Azure AD application.json,b8500baa90a61508eaea8346dacecbff392680c6
+Analytics/Original/AV detections related to Hive Ransomware.json,b1c30126f7965152a0579dfd9630f5fbcd2f4ce3
+Analytics/Original/Addition of a Temporary Access Pass to a Privileged Account.json,d0eef4b3508dc3e06024dc6a3efee7a366fccf85
+Analytics/Original/Service Principal Authentication Attempt from New Country.json,dee02129d31f30d5bee5925b2a75406e34db2d9d
+Analytics/Original/New internet-exposed SSH endpoints.json,e4ef3d18991c338bc20899f3eb6e6e9db4110b90
+Analytics/Original/HAFNIUM Suspicious Exchange Request.json,b0162635d27ab31371af96402244766ee8fd439b
+Analytics/Original/Known IRIDIUM IP.json,1c59445b3a0461e2a5798240759b63704f130853
+Analytics/Original/Identify MERCURY powershell commands.json,765f4c12e8e5a3f3b7ddbe85b5e1ed131cc31a4d
+Analytics/Original/Changes to Application Ownership.json,ba618d73aac96b410e48587c7be0aa3e42c8e815
+Analytics/Original/Prestige ransomware IOCs Oct 2022.json,dc8a78e9bad33ad5048ce905fac0e2e58929f5a3
+Analytics/Custom/Detect Azure cloud shell.json,44338737cf8f74ba140361e5d267b57964fa41ac
+Analytics/Custom/Track Azure Active Directory group modifications.json,4d64d2849a6f4f2179dc1f0c28616477cb4b107a
+Analytics/Original/Account Created and Deleted in Short Timeframe.json,26c59512a967a602dd105364008879cdd3ab3f2e
+Analytics/Modified/SharePointFileOperation via previously unseen IPs.json,9419a47a410d525eaabda4f1235d35419e6c7c8c
+Analytics/Original/Fake computer account created.json,aad8c1ef68fb592fd55cf6aafb138fb1657954d2
+Analytics/Original/TI map Email entity to SecurityAlert.json,e3cfb7ec19faaded889b06e9e9bfd15144af51ee
+Analytics/Original/TEARDROP memory-only dropper.json,9064c70bc15a3eebe9d2db23cb056b4d633c45e7
+Analytics/Original/Guest Users Invited to Tenant by New Inviters.json,854a3b498d4ee369721199876873d43e45b0a8c0
+Analytics/Original/SUNBURST and SUPERNOVA backdoor hashes.json,ab7992a8944737c6b450184c14a73b3b5c2b331d
+Analytics/Original/Process execution frequency anomaly.json,9b72e5951d3a45181ec0f5ad999656413cc8d4ad
+Analytics/Modified/User added to Azure Active Directory Privileged Groups.json,d72e0b302316de78515f8dbe8188184226bfae97
+Analytics/Original/TI map Email entity to AzureActivity.json,6a2f94f2602ff1150f0f83c60128e36f6bb94a53
+Analytics/Original/Multiple Teams deleted by a single user.json,508310868d93f47b5d3b1d543c739a99726b9e94
+Analytics/Original/TI map URL entity to OfficeActivity data.json,5cb99547b91714c2ead1310d5948e6b8c54b9df2
+Analytics/Original/Account added and removed from privileged groups.json,5c664e5fd48423ed56349cf7f2d88c28f9017b9b
+Analytics/Original/Known STRONTIUM group domains - July 2019.json,6c0376b4675e8b99b9d0fa86fddf1090fe89b182
+Analytics/Original/First access credential added to Application or Service Principal where no credential was present.json,775dab601150fa1bcfedeec082df384cf8eb6d77
+Analytics/Original/Group created then added to built in domain local or global group.json,4b29dd369381eea837f1cce231bafa0b0aaa91c0
+Analytics/Original/High count of connections by client IP on many ports.json,fbdef86bca31c56629ac174182e570110d7f8de4
+Analytics/Original/Password spray attack against Azure AD Seamless SSO.json,1dc462bdb95b0ea55404bb584d8c5809f72e4666
+Analytics/Custom/Data collection anomaly.json,c9f6101b13c2c8070b9aeae57ddeb56e41634523
+Analytics/Original/Security Service Registry ACL Modification.json,ce59d7577aecd2600b80a4b2e87a54f629ff3676
+Analytics/Original/Known NICKEL domains and hashes.json,25288dd88c889982d27b482ebd0e0df0341c530f
+Analytics/Original/Solorigate Named Pipe.json,4ec503dea53c40f944cf4f8d114c2006a3dead87
+Analytics/Original/Credential Dumping Tools - File Artifacts.json,b98945e91b2061b70b07ae8e1a5a8d0d831ecf43
+Analytics/Custom/Global admin elevated access to User Access Management.json,8fe597be876a1d999f9723d68aea2ae032e33127
+Analytics/Original/TI map IP entity to AzureActivity.json,bf0ac8271eaeb9457d13f2ae27ed88dbb828f302
+Analytics/Original/TI map File Hash to Security Event.json,7f9040174291b75c767aa5f3774901b424d04c62
+Analytics/Original/DEV-0322 Serv-U related IOCs - July 2021.json,b4340fe20653a6d65e5669a092c6f94e8d1d109c
+Analytics/Original/Detecting Impossible travel with mailbox permission tampering & Privilege Escalation attempt.json,5b65a248848bfbbd47ad8c030c55e490145b0c3b
+Analytics/Original/PIM Elevation Request Rejected.json,1874957880388d955bea4007c5cf7d188127d70d
+Analytics/Original/TI map IP entity to Azure Key Vault logs.json,d1dbc3b849edd7f0c9ed84262bb0c0b557524dcc
+Analytics/Original/Azure Active Directory PowerShell accessing non-AAD resources.json,46904f54c846e81adeedcec3a32391c705c3f811
+Analytics/Original/GitHub Signin Burst from Multiple Locations.json,7cba0132b6bed2b17656339da85c22881275563f
+Analytics/Original/Security Event log cleared.json,49772e0d3685df569caa23656fa7796966f98b38
+Analytics/Original/Failed host logons but success logon to AzureAD.json,6318ae3601485c6d525cc43856eb7b19e5088fa4
+Analytics/Custom/NRT Break the glass admin account used for signin.json,442c7791cd96ab6b5332a704a9b35cdeb4c202f6
+Analytics/Original/Multiple admin membership removals from newly created admin..json,3e070b6b7de95025152e815683981c716fb64b61
+Analytics/Original/Azure AD Health Monitoring Agent Registry Keys Access.json,ae37225e3429f1447d81d029195aa53fc676cd37
+Analytics/Original/Mass Download & copy to USB device by single user.json,86239b912fa2a1fab9c847c81d0831487d308daf
+Analytics/Original/New user created and added to the built-in administrators group.json,803b9a35eb0e6b3eafa52e290f1895b19a6f7fd7
+Analytics/Original/MFA Rejected by User.json,bfb9406c48f8feec49425f83bc612bac11c3bc0b
+Analytics/Original/HAFNIUM New UM Service Child Process.json,ea2441815038f1c3bd5bb9ebc94afee5256575ab
+Analytics/Original/New access credential added to Application or Service Principal.json,d9949b3cdeffed9cdf8bd74b595a6cb88d74a248
+Analytics/Original/TI map Email entity to OfficeActivity.json,f12b48956a165989bf0dab4f348ff85f5ff994ca
+Analytics/Original/Conditional Access Policy Modified by New User.json,6ab25d6e48a7303912c402f795e44a88706cfc88
+Analytics/Original/DEV-0586 Actor IOC - January 2022.json,f088ecaa9bd14f8030741197a47de2481f065f8f
+Analytics/Original/Modified domain federation trust settings.json,5da6ba6238ad8c2084466f02de25a1fe84137e06
+Analytics/Modified/Anomalous sign-in location by user account and authenticating application.json,8847507404a36f207e81cf53612366aba5f5af24
+Analytics/Original/Suspicious modification of Global Administrator user properties.json,ed10a50555675ee33d63002a9eb8bde828e0dc96
+Analytics/Original/AV detections related to Dev-0530 actors.json,e555d6687d2be0ffb6669cb3837f26b3c5b13070
+Analytics/Original/External guest invitations by default guest followed by Azure AD powershell signin.json,01d21975de4fb36b8bd0522ed0137f35050b8a8f
+Analytics/Modified/Multiple Password Reset by user.json,a923594395de6a83f2e5feb22fe3b2708c6f4e6b
+Analytics/Original/Exchange Server Vulnerabilities Disclosed March 2021 IoC Match.json,7e9e80b1a0172b6edc6dc580a82c92f81bf16991
+Analytics/Original/NRT Security Event log cleared.json,36c7f7945cc87733978fed499495b25341a48de7
+Analytics/Original/Malicious web application requests linked with Microsoft Defender for Endpoint (formerly Microsoft Defender ATP) alerts.json,77dd4a0562831d90a80e41b3760cbe38d7f37faf
+Analytics/Original/Sign-ins from IPs that attempt sign-ins to disabled accounts.json,1a71ccd25fd081eb04e77f95798bfa5fbfc9734c
+Analytics/Original/Known Barium domains.json,59d84f4bdd0aebd0f82406e10a9ac746f51e845d
+Analytics/Original/Rare application consent.json,25e19a9bc5000272689e4779378dd9f91dc1ee0b
+Analytics/Original/TI map IP entity to W3CIISLog.json,93677687e97f32369cdb617d2b726f6558afd4c6
+Analytics/Original/Possible STRONTIUM attempted credential harvesting - Oct 2020.json,4cc28902a348a04ebf4368abb6c5321798235e02
+Analytics/Original/AV detections related to Tarrask malware.json,4714513777bce65097da763732da4597b0cc4586
+Analytics/Original/User account created and deleted within 10 mins.json,422d04d189109bf405f306d6668dec27d37c9f5b
+Analytics/Original/Privileged Accounts - Sign in Failure Spikes.json,5d56e296a72c35eefc113e476f82efe87d4470d8
+Analytics/Original/Accessed files shared by temporary external user.json,1c061cc3567d247a3f1be4a1a5731c9de36ee467
+Analytics/Original/Mail.Read Permissions Granted to Application.json,6b1f4cf89ae77efd24674bc2952c8d8bb4298230
+Analytics/Original/Sensitive Azure Key Vault operations.json,e7eb6abe87536192b49a5856a12509d09691b1f5
+Analytics/Original/Account created or deleted by non-approved user.json,44cefae9646281a63bac208ba32fefa6f48a80b4
+Analytics/Modified/Missing Domain Controller Heartbeat.json,fa0ac1b9676f5685c5cc37641e7f5e7f82627efc
+Analytics/Original/Dev-0530 IOC - July 2022.json,c134b53fb3c011d1880a596e90a4a59c6af489a1
+Analytics/Original/Known Phosphorus group domainsIP.json,a590efbce5da4a5d69905ea7099ce1b9402aa033
+Analytics/Original/Malware in the recycle bin.json,cca406a87645d714c4bf5cc603975f94fae99655
+Analytics/Custom/Conditional_Access_Sentinel_Analytics_Rules_Pack.json,3bf00dca39610e6b69794799d2a05f9a47c4699f
+Analytics/Original/Tarrask malware IOC - April 2022.json,7e9eb706c8d848ee8efc272dea87ac577043fe70
+Analytics/ServiceIntegration/(Preview) Anomalous SSH Login Detection.json,f04db39dea901fa98c6d360740fd491e17e5fc55
+Analytics/ServiceIntegration/Create incidents based on Microsoft Defender for Cloud.json,0d46c0f728e8b6cc972bf63b574cc517dcb9c556
+Analytics/Original/Windows Binaries Executed from Non-Default Directory.json,d4594fe1fe982dce114cd82ae949f11e5be49406
+Analytics/Custom/Connection to C2 server based on Feodo Tracker.json,80ccbbb08bdb4448f06a206ee45479c5cc313119
+Analytics/Original/AV detections related to Ukraine threats.json,e48dcfd1d7786adefca3253f0adba6cc312d96b2
+Analytics/Original/Microsoft Defender for Endpoint (MDE) signatures for Azure Synapse pipelines and Azure Data Factory.json,07b12ce5ebfc7274f090514f41ae7e1bc0d58f0b
+Analytics/Original/Explicit MFA Deny.json,615ed3924205b7bfbf3d325dfcf62f50328fe492
+Analytics/Original/SOURGUM Actor IOC - July 2021.json,1f13218d8cf2053b12f3cfacd30e5b6026b50f65
+Analytics/Original/NRT Multiple users email forwarded to same destination.json,fe9214eae485a1c9f45cc93a9c456d6478006947
+Analytics/Original/Known ZINC related maldoc hash.json,008c195ac027adf1a2f6f74ad47ca2e0a9efc1a5
+Analytics/Original/AV detections related to SpringShell Vulnerability.json,c9b0b12656f17f268fc79e7166a57654d463a22b
+Analytics/Original/Process executed from binary hidden in Base64 encoded file.json,e1f15479c57eb7a8b7ceebaaecdc67de986a90d4
+Analytics/Original/Malformed user agent.json,ffb52e68b6cbc2f5930e483e78731a6903519e37
+Analytics/Original/Credential Dumping Tools - Service Installation.json,0448687f7a83d385c7928009d7aa093c493ed9e1
+Analytics/Original/NOBELIUM - Domain and IP IOCs - March 2021.json,66d65097402677d689791622d5780e332b59e80b
+Analytics/Original/Failed login attempts to Azure Portal.json,279125fbb5780f5cf18253babc4b0d615d4bbe1b
+Analytics/Original/Service Principal Assigned Privileged Role.json,c9b6d1c576516cb025e6ab20748d55b050716d9e
+Analytics/Original/KNOTWEED C2 Domains July 2022.json,bf75c86eb8aa103abd56f96e11abac9d027a9ace
+Analytics/Original/Exchange AuditLog disabled.json,92be60776fb84f2816933dd94db32f0bb922482e
+Analytics/Original/NOBELIUM IOCs related to FoggyWeb backdoor.json,ed9748cc9785a3e6f093c9dddda1ee7c74d6383d
+Analytics/Original/New EXE deployed via Default Domain or Default Domain Controller Policies.json,087d3635f84387261a68a1f13585f9535b1335fa
+Analytics/Modified/Rare RDP Connections.json,914a2872ea605a3d36bc9ad978135ab1aa4be4c1
+Analytics/Original/Service Principal Name (SPN) Assigned to User Account.json,01fed03a24413e705824d889c45cc8bbcf3bcaa3
+Analytics/Original/Account created from non-approved sources.json,2994e1920b2d6eaa1e43a1bb7e4b1bd5fdd1ff3d
+Analytics/Original/Attempts to sign in to disabled accounts.json,785d4bda6f12b2380a4d1b4e96fb7585b631732e
+Analytics/Modified/Anomalous login followed by Teams action.json,6ebb8fc9d9c8316650cee9c355dfa867acf3b2d4
+Analytics/Custom/Mails containing malicious urls.json,6cd65e77cd7a58fb550b510fbf6a4d3004fd7a72
+Analytics/Original/New CloudShell User.json,38d2cc814789a2ff1a19d23ce0e1d13e5b2e2a1f
+Analytics/Modified/Failed logon attempts by valid accounts within 10 mins.json,af4a80882338a045382425fb3ac69029b0314f97
+Analytics/Original/Known GALLIUM domains and hashes.json,7b086cdf822b37cf6148b6d87b497c0daf7f8854
+Analytics/Original/Excessive Windows logon failures.json,a027cb8cce43ea760766ef3feaa98a63828f32f0
+Analytics/Original/NRT Process executed from binary hidden in Base64 encoded file.json,1006d22b7eab1fd01b1bf22f97fb874e09fcf68e
+Analytics/Modified/RDP Nesting.json,29b791a4f54d0ecfef1ebd3fa69ebe5987113c85
+Analytics/Original/Malicious Inbox Rule.json,aacde10ad974234617f46c7c267f82e23a655b80
+Analytics/Original/User Accounts - Sign in Failure due to CA Spikes.json,923018a87770fce273c5f6b770fba8ba8484cd8d
+Analytics/Original/Solorigate Network Beacon.json,4d0ab5f8da7c381c1ad382b19f7fa02a0e270506
+Analytics/Original/Privileged Account Permissions Changed.json,c29e969186130e7e4a4673027920748228d254ae
+Analytics/Original/Squid proxy events for ToR proxies.json,35d4d10ca37b07ce3213337479a048ff3ca50c76
+Analytics/Original/SUPERNOVA webshell.json,f8b2e8f26a4c9ac677214cebb84f2357e1ee9ad6
+Analytics/Original/Solorigate Defender Detections.json,b19f4e327c6038e4a6a21f8b25ac9ad5ed0718e1
+Analytics/Original/User account added to built in domain local or global group.json,3ce4b3fa85cfbf3f3e2fb91fcb0834f0c71e07e9
+Analytics/Original/SSH - Potential Brute Force.json,7d58237ab434ba1c83a04625de787a16dabbb326
+Analytics/Original/User account enabled and disabled within 10 mins.json,ba61c6c89627d36815b606252b163e843d623c11
+Analytics/Original/Base64 encoded Windows process command-lines.json,db8ddaae0ada9f18a49fc2844fddcd0299d32a00
+Analytics/Original/External user added and removed in short timeframe.json,821670755748bd0a1700448afea4f344cb7d477f
+Analytics/Modified/AD user enabled and password not set within 48 hours.json,9d95e6ef43232472d2c6be9c197a5560fe572b35
+Analytics/Original/TI map URL entity to AuditLogs.json,de29896c0933eca3a93e5ff39470b2c52107a078
+Analytics/Original/Authentication Method Changed for Privileged Account.json,f20d24be1f982f4f61d16f75e3d33e37ed8c032e
+Analytics/Original/Dev-0270 Malicious Powershell usage.json,94416cfa0703a7840a333f78956e37772b2db056
+Analytics/Original/TI map URL entity to SecurityAlert data.json,37451e8bda20cf35e10f42b31ecce8ebaa30a452
+Analytics/Original/Starting or Stopping HealthService to Avoid Detection.json,668da6b86f764956f5d87c1132d0a93e0940fac9
+Analytics/Original/Office policy tampering.json,32839ea88b657a0bf7fff5f88e6ec1d91e6cc124
+Analytics/Original/Known CERIUM domains and hashes.json,fa8f0ba1748b062d01add927946c1915ec084bfd
+Analytics/Original/TI map IP entity to OfficeActivity.json,5aa1971363fa5a1d739f4166b6dbad75e5e1187f
+Analytics/Original/TI map Email entity to SigninLogs.json,2991c94c90bea6f7a1e026bef6e71f9d0b3c5575
+Analytics/Original/NOBELIUM - suspicious rundll32.exe execution of vbscript.json,92794bc63576b2ad94991280f9760c193cda206c
+Analytics/Custom/New assets without Defender for Endpoint discovered.json,9d1e57029e50e9d09ad12bc93c84a25f7e384629
+Analytics/Original/High count of failed logons by a user.json,f99bcbd725803f4b88ec6f98f45814c4ef2a147c
+Analytics/Original/Modification of Accessibility Features.json,b12f2b420f14790b9f1e17e9507c728f9b9de712
+Analytics/Original/Known POLONIUM IP.json,6b5a4af68fed1c60eab39c9e34fc5d55e34e4443
+Analytics/Original/NRT Creation of expensive computes in Azure.json,9f45b589b01ec0db38b387839ba81ff08eb3eee3
+Analytics/Original/NRT Modified domain federation trust settings.json,2c01a6b9e5f4c318f85d2e20e13a20aa2ff7a4e9
+Analytics/Original/Dev-0530 File Extension Rename.json,3578acd4c6b325386fe5564634e2cba17ebd63a4
+Analytics/Original/Azure Key Vault access TimeSeries anomaly.json,594193ca49592b3755dc38ff6e741127ae1f6ca1
+Analytics/Original/Exchange OAB Virtual Directory Attribute Containing Potential Webshell.json,74c2347b82ccbb6cd3be6d2918b54e836434d413
+Analytics/Original/Hive Ransomware IOC - July 2022.json,951877f00e390bd39b62accfaa2f2537eb3dc1f7
+Analytics/Original/DSRM Account Abuse.json,a27479e4fb9e66e6c1f78be528b061bf902d5fab
+Analytics/Original/Authentication Methods Changed for Privileged Account.json,d1b10f592fd4cf74e26d4bb33354589cdfdf8e8a
+Analytics/Original/NRT Malicious Inbox Rule.json,54c9867719aff6401425c3fb719a6694e35d363a
+Analytics/Original/SEABORGIUM C2 Domains August 2022.json,f2f87d0dd4fab560b53baeca0bb322e41bf469a7
+Analytics/Original/Suspicious granting of permissions to an account.json,876080a43220e96687230e7779826b960ef5d45f
+Analytics/Modified/Rare and potentially high-risk Office operations.json,692d85c7de57fa4792e4be0aba93e4daebdb3cd0
+Analytics/Original/External guest invitation followed by Azure AD PowerShell signin.json,aa985a3885ba0d2429a684b2fab976ea305e693b
+Analytics/Original/Suspicious application consent similar to O365 Attack Toolkit.json,8d5ac92a25c999536f4a8744d65934197546f62d
+Analytics/Original/Email access via active sync.json,fb1969c82a26bc315366e04c2da5ae0f163979c3
+Analytics/Original/MSHTML vulnerability CVE-2021-40444 attack.json,56e94ca62930730c06df6a60f16e5d2fa9be1680
+Analytics/Original/Brute force attack against Azure Portal.json,436b9874cc02b50daed2bf6130ee76594f41b99d
+Analytics/Original/TI map IP entity to SigninLogs.json,c94c9846f1561b89767926b35a1b2f3dfeaa587f
+Analytics/Original/TI map Email entity to SecurityEvent.json,f8df1ce71df68232e32f7043c6f5f1b37bce605c
+Analytics/Original/NRT PIM Elevation Request Rejected.json,d429e7baf9cf763816af3f56adc12cf268961b41
+Analytics/Original/Changes to PIM Settings.json,4b42626a08a0689c58c5fae509ac4580bd7e7b83
+Analytics/Original/NOBELIUM - Domain, Hash and IP IOCs - May 2021.json,5d67e55dabf05ed4299623ab16596d621738513a
+Analytics/Original/Audit policy manipulation using auditpol utility.json,d12c5db170f9183d13ad7a1ae13b8f9f417d9156
+Analytics/Original/Potential Remote Desktop Tunneling.json,4c55c184050b7978fc2207d9f2cc5103fcbfb287
+Analytics/Modified/Correlate Unfamiliar sign-in properties and atypical travel alerts.json,e1562e2fbec9521eda592a7b8f04e93b98990a17
+Analytics/Original/Possible Resource-Based Constrained Delegation Abuse.json,a9ac795c7b99ebb847040868c5fae424a100ba52
+Analytics/Original/Azure AD Health Service Agents Registry Keys Access.json,837b077ab80fbfd4cc64e6249b5ce3c91f423252
+Analytics/Modified/User Assigned Privileged Role.json,08b25106e5fe8e45d84d804023953a6f45b65e55
