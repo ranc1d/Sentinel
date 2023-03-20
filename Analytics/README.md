@@ -34,4 +34,4 @@ Watchlists:
 | Missing Domain Controller Heartbeat | DomainControllers | DomainControllers | domain controller fqdn |
 | Failed logon attempts by valid accounts within 10 mins | FailedLogonExclusions | Computername | end device fqdn |
 | Exchange workflow MailItemsAccessed operation anomaly | ExchangeWorkflowAnomalyExclusions | UserId | excluded user upn |
-| ass secret retrieval from Azure Key Vault | MassSecretRetrievalExclusions | AppIds | excluded azure app id |
+| Mass secret retrieval from Azure Key Vault | MassSecretRetrievalExclusions | AppId | excluded azure app id |
