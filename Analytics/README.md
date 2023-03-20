@@ -21,6 +21,8 @@ Modified policies:
 | Missing Domain Controller Heartbeat | Query | DomainControllers watchlist integration |
 | Failed logon attempts by valid accounts within 10 mins | Query | FailedLogonExclusions watchlist integration |
 | Exchange workflow MailItemsAccessed operation anomaly | Query | ExchangeWorkflowAnomalyExclusions watchlist integration |
+| Non Domain Controller Active Directory Replication | "queryPeriod": "P1D" | Opening incidents for old events |
+| Mass secret retrieval from Azure Key Vault | Query | MassSecretRetrievalExclusions watchlist integration |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
@@ -32,3 +34,4 @@ Watchlists:
 | Missing Domain Controller Heartbeat | DomainControllers | DomainControllers | domain controller fqdn |
 | Failed logon attempts by valid accounts within 10 mins | FailedLogonExclusions | Computername | end device fqdn |
 | Exchange workflow MailItemsAccessed operation anomaly | ExchangeWorkflowAnomalyExclusions | UserId | excluded user upn |
+| ass secret retrieval from Azure Key Vault | MassSecretRetrievalExclusions | AppIds | excluded azure app id |
