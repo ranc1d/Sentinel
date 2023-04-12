@@ -23,6 +23,7 @@ Modified policies:
 | Exchange workflow MailItemsAccessed operation anomaly | Query | ExchangeWorkflowAnomalyExclusions watchlist integration |
 | Non Domain Controller Active Directory Replication | "queryPeriod": "P1D" | Opening incidents for old events |
 | Mass secret retrieval from Azure Key Vault | Query | MassSecretRetrievalExclusions watchlist integration |
+| User account added to built in domain local or global group | Query | MAC-address exclusion and AccountAddedToBuildinGroupOuExclusion watchlist integration |
 
 Watchlists:
 | Policy  | Watchlist | SearchKey | value type |
@@ -35,3 +36,4 @@ Watchlists:
 | Failed logon attempts by valid accounts within 10 mins | FailedLogonExclusions | Computername | end device fqdn |
 | Exchange workflow MailItemsAccessed operation anomaly | ExchangeWorkflowAnomalyExclusions | UserId | excluded user upn |
 | Mass secret retrieval from Azure Key Vault | MassSecretRetrievalExclusions | AppId | excluded azure app id |
+| User account added to built in domain local or global group | AccountAddedToBuildinGroupOuExclusion | OuDistinguishedName | distinguished name of excluded ou |

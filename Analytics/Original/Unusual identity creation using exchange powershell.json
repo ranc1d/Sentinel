@@ -8,8 +8,8 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/f57bdcb1-77eb-46cc-ba36-913d2640ebd0')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f57bdcb1-77eb-46cc-ba36-913d2640ebd0')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/f79f0c2c-8f57-4215-ae9c-3f4b51376309')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/f79f0c2c-8f57-4215-ae9c-3f4b51376309')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2022-09-01-preview",
@@ -25,7 +25,7 @@
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
-                "startTimeUtc": "2023-03-14T08:00:00.000Z",
+                "startTimeUtc": null,
                 "tactics": [
                     "Persistence"
                 ],
