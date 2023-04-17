@@ -1,0 +1,42 @@
+id: 3c92bb82-8f26-4c72-8dab-99811c9c3f69
+name: Mails containing malicious urls
+description: |
+  This rule alerts on delivered mails that contain urls or domains marked as malicious via the MaliciousDomains watchlist
+severity: Medium
+requiredDataConnectors: []
+queryFrequency: 1h
+queryPeriod: 2h
+triggerOperator: gt
+triggerThreshold: 0
+status: Available
+tactics:
+  - Phishing
+relevantTechniques:
+  - T1566.002
+query: |
+  EmailUrlInfo
+  | join EmailEvents on NetworkMessageId
+  | where DeliveryAction == "Delivered"
+  | where Url has_any (externaldata(MaliciousDomain:string)[h@"https://raw.githubusercontent.com/ranc1d/Sentinel/main/Watchlists/MaliciousDomains.list"])
+  | project TimeGenerated, SenderFromAddress, SenderDisplayName, RecipientEmailAddress, UrlDomain, Url, DeliveryAction, NetworkMessageId",
+eventGroupingSettings:
+  aggregationKind: SingleAlert
+entityMappings:
+  - entityType: Mailbox
+    fieldMappings:
+      - identifier: MailboxPrimaryAddress
+        columnName: SenderFromAddress
+  - entityType: Account
+    fieldMappings:
+      - identifier: FullName
+        columnName: RecipientEmailAddress
+  - entityType: URL
+    fieldMappings:
+      - identifier: URL
+        columnName: URL
+  - entityType: MailMessage
+    fieldMappings:
+      - identifier: NetworkMessageId
+        columnName: NetworkMessageId
+version: 1.0.0
+kind: Scheduled

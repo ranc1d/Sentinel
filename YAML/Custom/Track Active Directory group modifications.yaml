@@ -1,0 +1,41 @@
+id: a8d2f84b-5023-4a9e-a706-a884e4923bd6
+name: Track Active Directory group modifications
+description: Track changes on group-membership in active directory
+severity: Informational
+requiredDataConnectors: []
+queryFrequency: 1d
+queryPeriod: 1d
+triggerOperator: gt
+triggerThreshold: 0
+status: Available
+tactics:
+  - Permission Groups Discovery
+relevantTechniques:
+  - T1069.002
+query: |
+  IdentityDirectoryEvents
+  | where Application == "Active Directory"
+  | where ActionType == "Group Membership changed"
+  | where DestinationDeviceName != "" // Exclude activites coming AD Sync changes. 
+  | extend ToGroup = tostring(parse_json(AdditionalFields).["TO.GROUP"]) // Extracts the group name if action is add enity to a group.
+  | extend FromGroup = tostring(parse_json(AdditionalFields).["FROM.GROUP"]) // etracts the group name if action is remove entity from a group.
+  | extend Action = iff(isempty(ToGroup), "Remove", "Add") // calculates if the action is Remove or Add
+  | extend GroupModified = iff(isempty(ToGroup), FromGroup, ToGroup) // group name that the action was taken on 
+  | extend Target_Group = tostring(parse_json(AdditionalFields).["TARGET_OBJECT.GROUP"])
+  | project Timestamp, Action, GroupModified,  Target_Account = TargetAccountDisplayName, Target_UPN = TargetAccountUpn, Target_Group,  DC=DestinationDeviceName, Actor=AccountName, ActorDomain=AccountDomain, AdditionalFields
+  | sort by Timestamp desc
+customDetails:
+  GroupModified: GroupModified
+eventGroupingSettings:
+  aggregationKind: SingleAlert
+entityMappings:
+  - entityType: Account
+    fieldMappings:
+      - identifier: FullName
+        columnName: Target_UPN
+  - entityType: Account
+    fieldMappings:
+      - identifier: FullName
+        columnName: Actor
+version: 1.0.0
+kind: Scheduled

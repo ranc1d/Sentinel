@@ -1,0 +1,30 @@
+id: aeb58e72-7c26-4d5b-9965-970af5b6530a
+name: Data collection anomaly
+description: |
+  'Generates an alert if there is no new data present since the last 48h-24h excluding the following tables:
+  SecurityAlert, SecurityIncident, Watchlist, AlertEvidence'
+severity: Medium
+requiredDataConnectors: []
+queryFrequency: 1d
+queryPeriod: 2d
+triggerOperator: gt
+triggerThreshold: 0
+status: Available
+tactics:
+  - Defense Evasion
+relevantTechniques:
+  - T1562.001
+query: |
+  Usage
+  | where DataType !in ("SecurityAlert","SecurityIncident","Watchlist","AlertEvidence")
+  | summarize TimeGenerated=max(TimeGenerated) by DataType
+  | where TimeGenerated between (ago(2d) .. ago(1d))
+eventGroupingSettings:
+  aggregationKind: AlertPerResult
+entityMappings:
+  - entityType: AzureResource
+    fieldMappings:
+      - identifier: ResourceId
+        columnName: DataType
+version: 1.0.0
+kind: Scheduled
