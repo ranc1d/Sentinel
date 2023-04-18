@@ -15,9 +15,9 @@ requiredDataConnectors:
   - connectorId: WindowsForwardedEvents
     dataTypes:
       - WindowsEvent
-queryFrequency: 1d
-queryPeriod: 8d
-triggerOperator: gt
+queryFrequency: P1D
+queryPeriod: P8D
+triggerOperator: GreaterThen
 triggerThreshold: 0
 tactics:
   - LateralMovement

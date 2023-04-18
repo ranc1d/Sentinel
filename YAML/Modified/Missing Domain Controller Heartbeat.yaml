@@ -4,9 +4,9 @@ description: |
   'This detection will go over the heartbeats received from the agents of Domain Controllers over the last hour, and will create alerts if the last heartbeats were received an hour ago.'
 severity: High
 requiredDataConnectors: []
-queryFrequency: 15m
-queryPeriod: 2h
-triggerOperator: gt
+queryFrequency: P15M
+queryPeriod: P2H
+triggerOperator: GreaterThen
 triggerThreshold: 0
 tactics:
   - Impact

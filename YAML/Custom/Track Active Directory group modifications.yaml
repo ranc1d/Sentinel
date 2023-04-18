@@ -3,13 +3,13 @@ name: Track Active Directory group modifications
 description: Track changes on group-membership in active directory
 severity: Informational
 requiredDataConnectors: []
-queryFrequency: 1d
-queryPeriod: 1d
-triggerOperator: gt
+queryFrequency: P1D
+queryPeriod: P1D
+triggerOperator: GreaterThen
 triggerThreshold: 0
 status: Available
 tactics:
-  - Permission Groups Discovery
+  - PermissionGroupsDiscovery
 relevantTechniques:
   - T1069.002
 query: |

@@ -4,9 +4,9 @@ description: |
   This rule alerts on delivered mails that contain urls or domains marked as malicious via the MaliciousDomains watchlist
 severity: Medium
 requiredDataConnectors: []
-queryFrequency: 1h
-queryPeriod: 2h
-triggerOperator: gt
+queryFrequency: P1H
+queryPeriod: P2H
+triggerOperator: GreaterThen
 triggerThreshold: 0
 status: Available
 tactics:

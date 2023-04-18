@@ -5,13 +5,13 @@ description: |
   SecurityAlert, SecurityIncident, Watchlist, AlertEvidence'
 severity: Medium
 requiredDataConnectors: []
-queryFrequency: 1d
-queryPeriod: 2d
-triggerOperator: gt
+queryFrequency: P1D
+queryPeriod: P2D
+triggerOperator: GreaterThen
 triggerThreshold: 0
 status: Available
 tactics:
-  - Defense Evasion
+  - DefenseEvasion
 relevantTechniques:
   - T1562.001
 query: |
