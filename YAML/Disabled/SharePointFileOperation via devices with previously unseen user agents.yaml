@@ -11,7 +11,7 @@ requiredDataConnectors:
       - OfficeActivity
 queryFrequency: P1D
 queryPeriod: P14D
-triggerOperator: GreaterThen
+triggerOperator: GreaterThan
 triggerThreshold: 0
 tactics:
   - Exfiltration

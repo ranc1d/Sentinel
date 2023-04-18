@@ -7,7 +7,7 @@ severity: Medium
 requiredDataConnectors: []
 queryFrequency: P1D
 queryPeriod: P2D
-triggerOperator: GreaterThen
+triggerOperator: GreaterThan
 triggerThreshold: 0
 status: Available
 tactics:

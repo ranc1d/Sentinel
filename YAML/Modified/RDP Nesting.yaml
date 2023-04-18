@@ -17,7 +17,7 @@ requiredDataConnectors:
       - WindowsEvent
 queryFrequency: P1D
 queryPeriod: P8D
-triggerOperator: GreaterThen
+triggerOperator: GreaterThan
 triggerThreshold: 0
 tactics:
   - LateralMovement

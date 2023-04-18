@@ -5,7 +5,7 @@ severity: Informational
 requiredDataConnectors: []
 queryFrequency: P1D
 queryPeriod: P1D
-triggerOperator: GreaterThen
+triggerOperator: GreaterThan
 triggerThreshold: 0
 status: Available
 tactics:
