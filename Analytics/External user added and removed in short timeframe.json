@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/35a7be57-f23b-4779-8e63-c69fe0fa9c7d')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/35a7be57-f23b-4779-8e63-c69fe0fa9c7d')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2022-09-01-preview",
+            "properties": {
+                "displayName": "External user added and removed in short timeframe",
+                "description": "This detection flags the occurances of external user accounts that are added to a Team and then removed within\none hour.",
+                "severity": "Low",
+                "enabled": true,
+                "query": "let TeamsAddDel = (Op:string){\nOfficeActivity\n| where OfficeWorkload =~ \"MicrosoftTeams\"\n| where Operation == Op\n| where Members has (\"#EXT#\")\n| mv-expand Members\n| extend UPN = tostring(Members.UPN)\n| where UPN has (\"#EXT#\")\n| project TimeGenerated, Operation, UPN, UserId, TeamName\n};\nlet TeamsAdd = TeamsAddDel(\"MemberAdded\")\n| project TimeAdded=TimeGenerated, Operation, UPN, UserWhoAdded = UserId, TeamName;\nlet TeamsDel = TeamsAddDel(\"MemberRemoved\")\n| project TimeDeleted=TimeGenerated, Operation, UPN, UserWhoDeleted = UserId, TeamName;\nTeamsAdd\n| join kind=inner (TeamsDel) on UPN\n| where TimeDeleted > TimeAdded\n| project TimeAdded, TimeDeleted, UPN, UserWhoAdded, UserWhoDeleted, TeamName",
+                "queryFrequency": "PT1H",
+                "queryPeriod": "PT1H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "startTimeUtc": "2023-03-14T08:00:00.000Z",
+                "tactics": [
+                    "Persistence"
+                ],
+                "techniques": [
+                    "T1136"
+                ],
+                "alertRuleTemplateName": "bff093b2-500e-4ae5-bb49-a5b1423cbd5b",
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": null,
+                "entityMappings": [
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "FullName",
+                                "columnName": "UPN"
+                            }
+                        ]
+                    }
+                ],
+                "sentinelEntitiesMappings": null,
+                "templateVersion": "2.0.0"
+            }
+        }
+    ]
+}

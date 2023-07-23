@@ -8,31 +8,31 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/80791731-a7d8-4418-962e-5bf245a8389b')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/80791731-a7d8-4418-962e-5bf245a8389b')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/0de1664f-c2d5-4160-af14-f0058e4530dc')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0de1664f-c2d5-4160-af14-f0058e4530dc')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2022-10-01-preview",
+            "apiVersion": "2022-09-01-preview",
             "properties": {
-                "displayName": "Authentication Method Changed for Privileged Account",
-                "description": "Identifies authentication methods being changed for a privileged account. This could be an indicated of an attacker adding an auth method to the account so they can have continued access.\nRef : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor-1",
-                "severity": "High",
+                "displayName": "Security Event log cleared",
+                "description": "Checks for event id 1102 which indicates the security event log was cleared.\nIt uses Event Source Name \"Microsoft-Windows-Eventlog\" to avoid generating false positives from other sources, like AD FS servers for instance.",
+                "severity": "Medium",
                 "enabled": true,
-                "query": "let VIPUsers = (IdentityInfo\n| where AssignedRoles contains \"Admin\"\n| summarize by tolower(AccountUPN));\nAuditLogs\n| where Category =~ \"UserManagement\"\n| where ActivityDisplayName =~ \"User registered security info\"\n| where LoggedByService =~ \"Authentication Methods\"\n| extend AccountCustomEntity = tostring(TargetResources[0].userPrincipalName), IPCustomEntity = tostring(parse_json(tostring(InitiatedBy.user)).ipAddress)\n| where AccountCustomEntity in (VIPUsers)",
-                "queryFrequency": "PT2H",
-                "queryPeriod": "PT2H",
+                "query": "(union isfuzzy=true\n(\nSecurityEvent\n| where EventID == 1102 and EventSourceName == \"Microsoft-Windows-Eventlog\"\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), EventCount = count() by Computer, Account, EventID, Activity\n| extend timestamp = StartTimeUtc, AccountCustomEntity = Account, HostCustomEntity = Computer\n),\n(\nWindowsEvent\n| where EventID == 1102 and Provider == \"Microsoft-Windows-Eventlog\"\n| extend Account =  strcat(tostring(EventData.SubjectDomainName),\"\\\\\", tostring(EventData.SubjectUserName))\n| extend Activity= \"1102 - The audit log was cleared.\"\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), EventCount = count() by Computer, Account, EventID, Activity\n| extend timestamp = StartTimeUtc, AccountCustomEntity = Account, HostCustomEntity = Computer\n)\n)",
+                "queryFrequency": "P1D",
+                "queryPeriod": "P1D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
                 "startTimeUtc": "2023-03-14T08:00:00.000Z",
                 "tactics": [
-                    "Persistence"
+                    "DefenseEvasion"
                 ],
                 "techniques": [
-                    "T1098"
+                    "T1070"
                 ],
-                "alertRuleTemplateName": "feb0a2fb-ae75-4343-8cbc-ed545f1da289",
+                "alertRuleTemplateName": "80da0a8f-cfe1-4cd0-a895-8bc1771a720e",
                 "incidentConfiguration": {
                     "createIncident": true,
                     "groupingConfiguration": {
@@ -61,17 +61,17 @@
                         ]
                     },
                     {
-                        "entityType": "IP",
+                        "entityType": "Host",
                         "fieldMappings": [
                             {
-                                "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "identifier": "FullName",
+                                "columnName": "HostCustomEntity"
                             }
                         ]
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.0.1"
+                "templateVersion": "1.1.2"
             }
         }
     ]
