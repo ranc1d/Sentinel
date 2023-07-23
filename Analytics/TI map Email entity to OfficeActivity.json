@@ -12,20 +12,20 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/e8050731-0fa9-4e37-b1fa-cd897333c0cd')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2022-09-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "properties": {
                 "displayName": "TI map Email entity to OfficeActivity",
                 "description": "Identifies a match in OfficeActivity table from any Email IOC from TI",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "let dt_lookBack = 1h;\nlet ioc_lookBack = 14d;\nlet emailregex = @'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$';\nThreatIntelligenceIndicator\n| where TimeGenerated >= ago(ioc_lookBack) and ExpirationDateTime > now()\n| summarize LatestIndicatorTime = arg_max(TimeGenerated, *) by IndicatorId\n| where Active == true\n//Filtering the table for Email related IOCs\n| where isnotempty(EmailSenderAddress)\n// using innerunique to keep perf fast and result set low, we only need one match to indicate potential malicious activity that needs to be investigated\n| join kind=innerunique (\n    OfficeActivity | where TimeGenerated >= ago(dt_lookBack) and isnotempty(UserId)\n    | where UserId matches regex emailregex\n    | extend OfficeActivity_TimeGenerated = TimeGenerated\n)\non $left.EmailSenderAddress == $right.UserId\n| where OfficeActivity_TimeGenerated < ExpirationDateTime\n| summarize OfficeActivity_TimeGenerated = arg_max(OfficeActivity_TimeGenerated, *) by IndicatorId, UserId\n| project OfficeActivity_TimeGenerated, Description, ActivityGroupNames, IndicatorId, ThreatType, Url, ExpirationDateTime, ConfidenceScore,\nEmailSenderName, EmailRecipient, EmailSourceDomain, EmailSourceIpAddress, EmailSubject, FileHashValue, FileHashType, UserId, ClientIP, Operation, UserType, RecordType, OfficeWorkload, Parameters\n| extend timestamp = OfficeActivity_TimeGenerated, AccountCustomEntity = UserId, IPCustomEntity = ClientIP, URLCustomEntity = Url",
+                "query": "let dt_lookBack = 1h;\nlet ioc_lookBack = 14d;\nlet emailregex = @'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$';\nThreatIntelligenceIndicator\n| where TimeGenerated >= ago(ioc_lookBack) and ExpirationDateTime > now()\n| summarize LatestIndicatorTime = arg_max(TimeGenerated, *) by IndicatorId\n| where Active == true\n//Filtering the table for Email related IOCs\n| where isnotempty(EmailSenderAddress)\n// using innerunique to keep perf fast and result set low, we only need one match to indicate potential malicious activity that needs to be investigated\n| join kind=innerunique (\n    OfficeActivity | where TimeGenerated >= ago(dt_lookBack) and isnotempty(UserId)\n    | where UserId matches regex emailregex\n    | extend OfficeActivity_TimeGenerated = TimeGenerated\n)\non $left.EmailSenderAddress == $right.UserId\n| where OfficeActivity_TimeGenerated < ExpirationDateTime\n| summarize OfficeActivity_TimeGenerated = arg_max(OfficeActivity_TimeGenerated, *) by IndicatorId, UserId\n| project OfficeActivity_TimeGenerated, Description, ActivityGroupNames, IndicatorId, ThreatType, Url, ExpirationDateTime, ConfidenceScore,\nEmailSenderName, EmailRecipient, EmailSourceDomain, EmailSourceIpAddress, EmailSubject, FileHashValue, FileHashType, UserId, ClientIP, Operation, UserType, RecordType, OfficeWorkload, Parameters\n| extend Name = tostring(split(UserId, '@', 0)[0]), UPNSuffix = tostring(split(UserId, '@', 1)[0])\n| extend timestamp = OfficeActivity_TimeGenerated\n",
                 "queryFrequency": "PT1H",
                 "queryPeriod": "P14D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
-                "startTimeUtc": "2023-03-14T08:00:00.000Z",
+                "startTimeUtc": null,
                 "tactics": [
                     "Impact"
                 ],
@@ -53,8 +53,12 @@
                         "entityType": "Account",
                         "fieldMappings": [
                             {
-                                "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
+                                "identifier": "Name",
+                                "columnName": "Name"
+                            },
+                            {
+                                "identifier": "UPNSuffix",
+                                "columnName": "UPNSuffix"
                             }
                         ]
                     },
@@ -63,7 +67,7 @@
                         "fieldMappings": [
                             {
                                 "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "columnName": "ClientIP"
                             }
                         ]
                     },
@@ -72,13 +76,13 @@
                         "fieldMappings": [
                             {
                                 "identifier": "Url",
-                                "columnName": "URLCustomEntity"
+                                "columnName": "Url"
                             }
                         ]
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "1.2.2"
+                "templateVersion": "1.2.4"
             }
         }
     ]

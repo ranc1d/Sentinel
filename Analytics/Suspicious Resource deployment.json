@@ -12,20 +12,20 @@
             "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8a872f3d-2953-472d-88d2-a802dbff78a8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
-            "apiVersion": "2022-09-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "properties": {
                 "displayName": "Suspicious Resource deployment",
-                "description": "Identifies when a rare Resource and ResourceGroup deployment occurs by a previously unseen Caller.",
+                "description": "Identifies when a rare Resource and ResourceGroup deployment occurs by a previously unseen caller.",
                 "severity": "Low",
                 "enabled": true,
-                "query": "let szOperationNames = dynamic([\"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Resources/deployments/write\"]);\nlet starttime = 14d;\nlet endtime = 1d;\nlet RareCaller = AzureActivity\n| where TimeGenerated between (ago(starttime) .. ago(endtime))\n| where OperationNameValue in~ (szOperationNames)\n| project ResourceGroup, Caller, OperationNameValue, CallerIpAddress\n| join kind=rightantisemi (\nAzureActivity\n| where TimeGenerated > ago(endtime)\n| where OperationNameValue in~ (szOperationNames)\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), ActivityStatusValue = makeset(ActivityStatusValue), OperationIds = makeset(OperationId), CallerIpAddress = makeset(CallerIpAddress) \nby ResourceId, Caller, OperationNameValue, Resource, ResourceGroup\n) on Caller, ResourceGroup \n| mvexpand CallerIpAddress\n| where isnotempty(CallerIpAddress);\nlet Counts = RareCaller | summarize ActivityCountByCaller = count() by Caller;\nRareCaller | join kind= inner (Counts) on Caller | project-away Caller1\n| extend timestamp = StartTimeUtc, AccountCustomEntity = Caller, IPCustomEntity = tostring(CallerIpAddress)\n| sort by ActivityCountByCaller desc nulls last",
+                "query": "// Add or remove operation names below as per your requirements. For operations lists, please refer to https://learn.microsoft.com/en-us/Azure/role-based-access-control/resource-provider-operations#all\nlet szOperationNames = dynamic([\"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Resources/deployments/write\", \"Microsoft.Resources/subscriptions/resourceGroups/write\"]);\nlet starttime = 14d;\nlet endtime = 1d;\nlet RareCaller = AzureActivity\n| where TimeGenerated between (ago(starttime) .. ago(endtime))\n| where OperationNameValue in~ (szOperationNames)\n| summarize count() by CallerIpAddress, Caller, OperationNameValue, bin(TimeGenerated,1d)\n// Returns all the records from the right side that don't have matches from the left.\n| join kind=rightantisemi (\nAzureActivity\n| where TimeGenerated > ago(endtime)\n| where OperationNameValue in~ (szOperationNames)\n| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated), ActivityTimeStamp = make_set(TimeGenerated,100), ActivityStatusValue = make_set(ActivityStatusValue,100), CorrelationIds = make_set(CorrelationId,100), ResourceGroups = make_set(ResourceGroup,100), ResourceIds = make_set(_ResourceId,100), ActivityCountByCallerIPAddress = count()\nby CallerIpAddress, Caller, OperationNameValue) on CallerIpAddress, Caller, OperationNameValue;\nRareCaller\n| extend Name = iif(Caller has '@',tostring(split(Caller,'@',0)[0]),\"\")\n| extend UPNSuffix = iif(Caller has '@',tostring(split(Caller,'@',1)[0]),\"\")\n| extend AadUserId = iif(Caller !has '@',Caller,\"\")\n",
                 "queryFrequency": "P1D",
                 "queryPeriod": "P14D",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
                 "suppressionEnabled": false,
-                "startTimeUtc": "2023-03-14T08:00:00.000Z",
+                "startTimeUtc": null,
                 "tactics": [
                     "Impact"
                 ],
@@ -55,8 +55,16 @@
                         "entityType": "Account",
                         "fieldMappings": [
                             {
-                                "identifier": "FullName",
-                                "columnName": "AccountCustomEntity"
+                                "identifier": "Name",
+                                "columnName": "Name"
+                            },
+                            {
+                                "identifier": "UPNSuffix",
+                                "columnName": "UPNSuffix"
+                            },
+                            {
+                                "identifier": "AadUserId",
+                                "columnName": "AadUserId"
                             }
                         ]
                     },
@@ -65,13 +73,13 @@
                         "fieldMappings": [
                             {
                                 "identifier": "Address",
-                                "columnName": "IPCustomEntity"
+                                "columnName": "CallerIpAddress"
                             }
                         ]
                     }
                 ],
                 "sentinelEntitiesMappings": null,
-                "templateVersion": "2.0.0"
+                "templateVersion": "2.0.2"
             }
         }
     ]
