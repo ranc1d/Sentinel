@@ -24,7 +24,7 @@ jobs:
       resourceGroupName: 'rg-sentinel-001'
       workspaceName: 'log-sentinel-001'
       workspaceId: '4f674c2c-408c-41df-899d-4659b06c4642'
-      directory: '${{ github.workspace }}'
+      directory: '${{ github.workspace }}/Analytics'
       cloudEnv: 'AzureCloud'
       creds: ${{ secrets.AZURE_SENTINEL_CREDENTIALS_e9c436926c1147d3925d615f5d832bf7 }}
       contentTypes: 'AnalyticsRule'
