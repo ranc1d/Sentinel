@@ -1,0 +1,34 @@
+FileName, CommitSha
+Analytics/Malicious Inbox Rule.json,aacde10ad974234617f46c7c267f82e23a655b80
+Analytics/User account enabled and disabled within 10 mins.json,ba61c6c89627d36815b606252b163e843d623c11
+Analytics/Suspicious application consent for offline access.json,313bc4630665d4e28c07bad8b227b57ee5da8209
+Analytics/TI map Email entity to SigninLogs.json,2991c94c90bea6f7a1e026bef6e71f9d0b3c5575
+Analytics/TI map Email entity to OfficeActivity.json,f12b48956a165989bf0dab4f348ff85f5ff994ca
+Analytics/Suspicious granting of permissions to an account.json,876080a43220e96687230e7779826b960ef5d45f
+Analytics/TI map IP entity to SigninLogs.json,c94c9846f1561b89767926b35a1b2f3dfeaa587f
+Analytics/External user added and removed in short timeframe.json,821670755748bd0a1700448afea4f344cb7d477f
+Analytics/Suspicious modification of Global Administrator user properties.json,ed10a50555675ee33d63002a9eb8bde828e0dc96
+Analytics/Account added and removed from privileged groups.json,5c664e5fd48423ed56349cf7f2d88c28f9017b9b
+Analytics/User account created and deleted within 10 mins.json,422d04d189109bf405f306d6668dec27d37c9f5b
+Analytics/First access credential added to Application or Service Principal where no credential was present.json,775dab601150fa1bcfedeec082df384cf8eb6d77
+Analytics/Group created then added to built in domain local or global group.json,4b29dd369381eea837f1cce231bafa0b0aaa91c0
+Analytics/Security Event log cleared.json,49772e0d3685df569caa23656fa7796966f98b38
+Analytics/Explicit MFA Deny.json,615ed3924205b7bfbf3d325dfcf62f50328fe492
+Analytics/Excessive Windows logon failures.json,a027cb8cce43ea760766ef3feaa98a63828f32f0
+Analytics/User State changed from Guest to Member.json,cfeb118cbe9b360648d0ec1aa4a0c0ebc51367e4
+Analytics/Changes to Application Ownership.json,ba618d73aac96b410e48587c7be0aa3e42c8e815
+Analytics/AdminSDHolder Modifications.json,c91f50c0a8bae900da9eefc500ea090e68036816
+Analytics/Suspicious Service Principal creation activity.json,e8d896b714331236d55a109e0561c601606e790d
+Analytics/Account created from non-approved sources.json,2994e1920b2d6eaa1e43a1bb7e4b1bd5fdd1ff3d
+Analytics/Changes to PIM Settings.json,4b42626a08a0689c58c5fae509ac4580bd7e7b83
+Analytics/Suspicious Resource deployment.json,7630d70c9929fbbdd2040cd07945d538558f65a0
+Analytics/TI map IP entity to AzureActivity.json,bf0ac8271eaeb9457d13f2ae27ed88dbb828f302
+Analytics/New External User Granted Admin.json,ddfd9b64a25fe244f4d4833e499decce14b9214b
+Analytics/Authentication Methods Changed for Privileged Account.json,006b3fd1236f7bb5cd0d519ccac477326e38c2cd
+Analytics/Application ID URI Changed.json,63490fbc4c0e2387030985f299c3a6e15da6c3e9
+Analytics/Conditional_Access_Sentinel_Analytics_Rules_Pack.json,3bf00dca39610e6b69794799d2a05f9a47c4699f
+Analytics/TI map IP entity to OfficeActivity.json,5aa1971363fa5a1d739f4166b6dbad75e5e1187f
+Analytics/Account Created and Deleted in Short Timeframe.json,97fa53f16d2d2c95dd8702fd395e8c3c8d61a7e8
+Analytics/TI map Email entity to AzureActivity.json,6a2f94f2602ff1150f0f83c60128e36f6bb94a53
+Analytics/Rare application consent.json,25e19a9bc5000272689e4779378dd9f91dc1ee0b
+Analytics/TI map IP entity to Network Session Events (ASIM Network Session schema).json,9b973cf396795e907ee5f747ff49858a786546e0
